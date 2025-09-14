@@ -7,7 +7,7 @@ namespace WinCalc
     public partial class MainWindow : Window
     {
         private Obchyslennya calculator = new Obchyslennya();
-
+        private DataAccess dataAccess = new DataAccess();
 
         public MainWindow()
         {
@@ -104,7 +104,6 @@ namespace WinCalc
                 cmbProfile.SelectedIndex = 0;
             }
         }
-
         private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -157,6 +156,29 @@ namespace WinCalc
             {
                 MessageBox.Show($"Помилка: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void btnTestCrud_Click(object sender, RoutedEventArgs e)
+        {
+            // Тестування CRUD для Users
+            dataAccess.CreateUser("testuser", "testpass", "user");
+            var users = dataAccess.ReadUsers();
+            foreach (var user in users)
+            {
+                Console.WriteLine($"User: {user.Login}, {user.Password}, {user.Role}");
+            }
+            dataAccess.UpdateUser("testuser", "newpass", "admin");
+            dataAccess.DeleteUser("testuser");
+
+            // Тестування CRUD для Materials
+            dataAccess.CreateMaterial("testcat", "testmat", "red", 100.0, "m", "length", "test desc");
+            var materials = dataAccess.ReadMaterials();
+            foreach (var mat in materials)
+            {
+                Console.WriteLine($"Material: {mat.Category}, {mat.Name}, {mat.Price}");
+            }
+            dataAccess.UpdateMaterial(1, "newcat", "newmat", "blue", 200.0, "m", "length", "new desc");
+            dataAccess.DeleteMaterial(1);
         }
     }
 }
