@@ -9,6 +9,7 @@ namespace WinCalc
 {
     public partial class App : Application
     {
+
         protected override void OnStartup(StartupEventArgs e)
         {
             string logPath = "app_log.txt";
