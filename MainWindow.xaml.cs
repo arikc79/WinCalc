@@ -7,46 +7,80 @@ namespace WinCalc
     public partial class MainWindow : Window
     {
         private Obchyslennya calculator = new Obchyslennya();
-      
+
 
         public MainWindow()
         {
             InitializeComponent();
-            // Прив’язуємо imgSelected до елемента з XAML, шукаючи його в контексті
+            // Прив’язуємо imgSelected до елемента з XAML
             imgSelected = this.FindName("imgSelected") as Image;
             if (imgSelected == null)
             {
-                // Якщо не знайдено, спробуємо знайти в межах Border
-                var border = this.FindName("borderWithImage") as Border; // Додаємо ім’я Border
+                var border = this.FindName("borderWithImage") as Border;
                 if (border != null)
                 {
                     imgSelected = border.Child as Image;
+                    if (imgSelected == null)
+                    {
+                        imgSelected = new Image { Width = 200, Height = 200 };
+                        border.Child = imgSelected; // Прив’язуємо новий Image до Border
+                        Console.WriteLine("Створено новий imgSelected, оскільки оригінал не знайдено.");
+                    }
                 }
-                if (imgSelected == null)
+                else
                 {
-                    throw new Exception("Елемент imgSelected не знайдено в XAML або в Border.");
+                    Console.WriteLine("Border з ім’ям borderWithImage не знайдено.");
                 }
             }
+            else
+            {
+                Console.WriteLine("imgSelected успішно знайдено через FindName.");
+            }
+
+            // Перевірка видимості
+            if (imgSelected != null)
+            {
+                imgSelected.Visibility = System.Windows.Visibility.Visible;
+                Console.WriteLine("imgSelected is visible and initialized.");
+            }
+
             // Ініціалізація ComboBox
-            // cmbConfiguration.ItemsSource = new[] { "Стандарт", "Преміум" };
             cmbWindowType.ItemsSource = new[] { "1. Одностулкове", "2. Ділене навпіл", "3. Ділене на 3", "4. 4 секції", "5. 5 секцій" };
             cmbBrand.ItemsSource = new[] { "Rehau", "Steko", "Veka", "Openteck" };
             cmbProfile.ItemsSource = new[] { "Basic-Design (4)", "Euro 70 (5)", "Delight (6)", "Synego (7)" };
             cmbGlassPack.ItemsSource = new[] { "Однокамерний", "Двокамерний", "Триплекс" };
         }
-
         private void lstImages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lstImages.SelectedItem is ListBoxItem selectedItem)
             {
                 if (selectedItem.Content is Image image)
                 {
-                    imgSelected.Source = image.Source; // Відображаємо обране зображення в Border
-                    cmbWindowType.SelectedIndex = int.Parse(selectedItem.Tag.ToString()) - 1; // Синхронізуємо з типом вікна
+                    if (imgSelected != null)
+                    {
+                        Console.WriteLine($"Setting imgSelected.Source to: {image.Source}");
+                        imgSelected.Source = image.Source; // Відображаємо обране зображення в Border
+                        if (selectedItem.Tag != null)
+                        {
+                            Console.WriteLine($"Tag value: {selectedItem.Tag}");
+                            cmbWindowType.SelectedIndex = int.Parse(selectedItem.Tag.ToString()) - 1; // Синхронізуємо з типом вікна
+                        }
+                        else
+                        {
+                            Console.WriteLine("Tag is null for selected ListBoxItem.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("imgSelected is null, cannot update image source.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Content of selected ListBoxItem is not an Image.");
                 }
             }
         }
-
         private void cmbBrand_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string selectedBrand = cmbBrand.SelectedItem?.ToString();
