@@ -62,17 +62,8 @@
         </ListBox>
 
         <!-- Border з Image для відображення обраного зображення -->
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="0,61,631,415" Grid.RowSpan="2">
-            <Image x:Name="imgSelected" Stretch="Uniform" RenderTransformOrigin="0.54,0.544" Margin="1,-1,-45,-44" >
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-0.352"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
+        <Border x:Name="borderWithImage" BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="10,10,425,240" Grid.Row="1">
+            <Image x:Name="imgSelected" Width="200" Height="200" />
         </Border>
     </Grid>
 </Window>
