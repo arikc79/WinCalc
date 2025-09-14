@@ -7,12 +7,28 @@ namespace WinCalc
     public partial class MainWindow : Window
     {
         private Obchyslennya calculator = new Obchyslennya();
+      
 
         public MainWindow()
         {
             InitializeComponent();
+            // Прив’язуємо imgSelected до елемента з XAML, шукаючи його в контексті
+            imgSelected = this.FindName("imgSelected") as Image;
+            if (imgSelected == null)
+            {
+                // Якщо не знайдено, спробуємо знайти в межах Border
+                var border = this.FindName("borderWithImage") as Border; // Додаємо ім’я Border
+                if (border != null)
+                {
+                    imgSelected = border.Child as Image;
+                }
+                if (imgSelected == null)
+                {
+                    throw new Exception("Елемент imgSelected не знайдено в XAML або в Border.");
+                }
+            }
             // Ініціалізація ComboBox
-          //  cmbConfiguration.ItemsSource = new[] { "Стандарт", "Преміум" };
+            // cmbConfiguration.ItemsSource = new[] { "Стандарт", "Преміум" };
             cmbWindowType.ItemsSource = new[] { "1. Одностулкове", "2. Ділене навпіл", "3. Ділене на 3", "4. 4 секції", "5. 5 секцій" };
             cmbBrand.ItemsSource = new[] { "Rehau", "Steko", "Veka", "Openteck" };
             cmbProfile.ItemsSource = new[] { "Basic-Design (4)", "Euro 70 (5)", "Delight (6)", "Synego (7)" };
@@ -33,7 +49,6 @@ namespace WinCalc
 
         private void cmbBrand_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Логіка оновлення профілів залежно від вибраного бренду
             string selectedBrand = cmbBrand.SelectedItem?.ToString();
             if (selectedBrand != null)
             {
@@ -52,7 +67,7 @@ namespace WinCalc
                         cmbProfile.ItemsSource = new[] { "Elit 60 (4)", "Elit 65 (5)", "Elit Soft70 (6)", "Elit 80 (7)" };
                         break;
                 }
-                cmbProfile.SelectedIndex = 0; // Встановлюємо перше значення за замовчуванням
+                cmbProfile.SelectedIndex = 0;
             }
         }
 
@@ -60,15 +75,14 @@ namespace WinCalc
         {
             try
             {
-                // Очищаємо текст від "Ширина мм." і "Висота мм."
-                double width = double.Parse(txtWidth.Text.Replace("Ширина мм.", "").Trim()) / 1000; // Переводимо мм у метри
+                double width = double.Parse(txtWidth.Text.Replace("Ширина мм.", "").Trim()) / 1000;
                 double height = double.Parse(txtHeight.Text.Replace("Висота мм.", "").Trim()) / 1000;
                 int windowType = cmbWindowType.SelectedIndex + 1;
 
-                double frameWidth = 0.06; // 60 мм
-                double midFrameWidth = 0.064; // 64 мм
-                double overlap = 0.008; // 8 мм
-                double weldingAllowance = 0.003; // 3 мм
+                double frameWidth = 0.06;
+                double midFrameWidth = 0.064;
+                double overlap = 0.008;
+                double weldingAllowance = 0.003;
 
                 double length = 0;
 
@@ -93,14 +107,12 @@ namespace WinCalc
                         throw new ArgumentException("Невірний тип вікна.");
                 }
 
-                // Приклад ціни за погонний метр (залежить від cmbProfile)
-                double pricePerMeter = 425; // За замовчуванням, можна оновити
+                double pricePerMeter = 425;
                 if (cmbProfile.SelectedItem != null)
                 {
                     string profile = cmbProfile.SelectedItem.ToString();
                     if (profile.Contains("S500") || profile.Contains("Euro 70")) pricePerMeter = 425;
                     else if (profile.Contains("Synego") || profile.Contains("Softline 82 MD")) pricePerMeter = 1096;
-                    // Додайте інші значення за потреби
                 }
 
                 double cost = length * pricePerMeter;
