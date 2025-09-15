@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using WinCalc.Services;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 using WindowProfileCalculatorLibrary;
+using WinCalc.Security;
 
 namespace WinCalc
 {
@@ -8,10 +11,11 @@ namespace WinCalc
     {
         private Obchyslennya calculator = new Obchyslennya();
 
-
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded; // AUTH-ADDED
+
             // Прив’язуємо imgSelected до елемента з XAML
             imgSelected = this.FindName("imgSelected") as Image;
             if (imgSelected == null)
@@ -50,6 +54,7 @@ namespace WinCalc
             cmbProfile.ItemsSource = new[] { "Basic-Design (4)", "Euro 70 (5)", "Delight (6)", "Synego (7)" };
             cmbGlassPack.ItemsSource = new[] { "Однокамерний", "Двокамерний", "Триплекс" };
         }
+
         private void lstImages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lstImages.SelectedItem is ListBoxItem selectedItem)
@@ -59,11 +64,11 @@ namespace WinCalc
                     if (imgSelected != null)
                     {
                         Console.WriteLine($"Setting imgSelected.Source to: {image.Source}");
-                        imgSelected.Source = image.Source; // Відображаємо обране зображення в Border
+                        imgSelected.Source = image.Source;
                         if (selectedItem.Tag != null)
                         {
                             Console.WriteLine($"Tag value: {selectedItem.Tag}");
-                            cmbWindowType.SelectedIndex = int.Parse(selectedItem.Tag.ToString()) - 1; // Синхронізуємо з типом вікна
+                            cmbWindowType.SelectedIndex = int.Parse(selectedItem.Tag.ToString()) - 1;
                         }
                         else
                         {
@@ -81,6 +86,7 @@ namespace WinCalc
                 }
             }
         }
+
         private void cmbBrand_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string selectedBrand = cmbBrand.SelectedItem?.ToString();
@@ -107,6 +113,13 @@ namespace WinCalc
 
         private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
+            // AUTH-ADDED: доступ к расчёту только для admin/manager
+            if (!Authorization.CanCalculate(AppSession.CurrentUser))
+            {
+                MessageBox.Show("Недостаточно прав (доступно для admin/manager).");
+                return;
+            }
+
             try
             {
                 double width = double.Parse(txtWidth.Text.Replace("Ширина мм.", "").Trim()) / 1000;
@@ -157,6 +170,38 @@ namespace WinCalc
             {
                 MessageBox.Show($"Помилка: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+        // AUTH-ADDED: async + сид админа
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            // создать дефолтного админа, если пользователей ещё нет
+            await new AuthService().EnsureAdminSeedAsync();
+
+            if (!AppSession.IsAuthenticated)
+            {
+                var login = new LoginWindow();
+                var ok = login.ShowDialog() == true;
+                if (!ok) { Close(); return; }
+            }
+
+            ApplyRoleUi();
+        }
+
+        private void ApplyRoleUi()
+        {
+            // Если позже появятся админские кнопки — пометь их Tag="AdminOnly",
+            // и эта строка спрячет их для менеджера:
+            SetVisibilityByTag(this, "AdminOnly", AppSession.IsInRole(Roles.Admin));
+        }
+
+        private static void SetVisibilityByTag(DependencyObject root, string tag, bool visible)
+        {
+            if (root is FrameworkElement fe && fe.Tag?.ToString() == tag)
+                fe.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
+
+            int count = System.Windows.Media.VisualTreeHelper.GetChildrenCount(root);
+            for (int i = 0; i < count; i++)
+                SetVisibilityByTag(System.Windows.Media.VisualTreeHelper.GetChild(root, i), tag, visible);
         }
     }
 }
