@@ -7,7 +7,7 @@ namespace WinCalc.Services
 {
     public class AuthService
     {
-        private readonly FileUserStore _store = new();
+        private readonly SqliteUserStore _store = new();
 
         public async Task<(bool ok, string? error)> RegisterAsync(string username, string password, string role = "manager")
         {
