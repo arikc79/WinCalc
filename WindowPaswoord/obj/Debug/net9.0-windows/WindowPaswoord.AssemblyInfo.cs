@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("WindowProfileCalculatorLibrary")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("WindowPaswoord")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a46102fcc43bfe0734640a6eab862e17a836d803")]
-[assembly: System.Reflection.AssemblyProductAttribute("WindowProfileCalculatorLibrary")]
-[assembly: System.Reflection.AssemblyTitleAttribute("WindowProfileCalculatorLibrary")]
+[assembly: System.Reflection.AssemblyProductAttribute("WindowPaswoord")]
+[assembly: System.Reflection.AssemblyTitleAttribute("WindowPaswoord")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
