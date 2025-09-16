@@ -11,7 +11,6 @@
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Repositories\" />
-    <Folder Include="Security\" />
     <Folder Include="Storage\" />
   </ItemGroup>
 
