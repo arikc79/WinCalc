@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35828.75 d17.13
+VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinCalc", "WinCalc.csproj", "{1588AC11-05C6-418F-9213-A294B31A7122}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowProfileCalculatorLibrary", "..\WindowProfileCalculatorLibrary\WindowProfileCalculatorLibrary.csproj", "{1980C801-DA1C-43C7-B696-60D68025F0D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowPaswoord", "..\WindowPaswoord\WindowPaswoord.csproj", "{689E8A40-02A9-4A31-BC8C-1142AE5C7016}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1980C801-DA1C-43C7-B696-60D68025F0D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1980C801-DA1C-43C7-B696-60D68025F0D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1980C801-DA1C-43C7-B696-60D68025F0D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{689E8A40-02A9-4A31-BC8C-1142AE5C7016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{689E8A40-02A9-4A31-BC8C-1142AE5C7016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{689E8A40-02A9-4A31-BC8C-1142AE5C7016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{689E8A40-02A9-4A31-BC8C-1142AE5C7016}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

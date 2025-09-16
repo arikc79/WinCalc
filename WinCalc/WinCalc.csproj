@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WindowPaswoord\WindowPaswoord.csproj" />
     <ProjectReference Include="..\WindowProfileCalculatorLibrary\WindowProfileCalculatorLibrary.csproj" />
   </ItemGroup>
 

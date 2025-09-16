@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using WinCalc.Security;              
+using WinCalc.Services;             
+using System;                        
+using System.Windows;
 using System.Windows.Controls;
 using WindowProfileCalculatorLibrary;
 
@@ -12,6 +15,9 @@ namespace WinCalc
         public MainWindow()
         {
             InitializeComponent();
+
+            Loaded += MainWindow_Loaded;
+
             // Прив’язуємо imgSelected до елемента з XAML
             imgSelected = this.FindName("imgSelected") as Image;
             if (imgSelected == null)
@@ -50,6 +56,7 @@ namespace WinCalc
             cmbProfile.ItemsSource = new[] { "Basic-Design (4)", "Euro 70 (5)", "Delight (6)", "Synego (7)" };
             cmbGlassPack.ItemsSource = new[] { "Однокамерний", "Двокамерний", "Триплекс" };
         }
+
         private void lstImages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lstImages.SelectedItem is ListBoxItem selectedItem)
@@ -81,6 +88,7 @@ namespace WinCalc
                 }
             }
         }
+
         private void cmbBrand_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string selectedBrand = cmbBrand.SelectedItem?.ToString();
@@ -104,8 +112,16 @@ namespace WinCalc
                 cmbProfile.SelectedIndex = 0;
             }
         }
+
         private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
+            // AUTH-ADDED: расчёт только для admin/manager
+            if (!Authorization.CanCalculate(AppSession.CurrentUser))
+            {
+                MessageBox.Show("Недостаточно прав (доступно для admin/manager).");
+                return;
+            }
+
             try
             {
                 double width = double.Parse(txtWidth.Text.Replace("Ширина мм.", "").Trim()) / 1000;
@@ -158,19 +174,28 @@ namespace WinCalc
             }
         }
 
-        private void btnTestCrud_Click(object sender, RoutedEventArgs e)
+        // AUTH-ADDED: делаем пользователей только через AuthService (хеш в БД),
+        // а операции с материалами — только для admin
+        private async void btnTestCrud_Click(object sender, RoutedEventArgs e)
         {
-            // Тестування CRUD для Users
-            dataAccess.CreateUser("testuser", "testpass", "user");
-            var users = dataAccess.ReadUsers();
-            foreach (var user in users)
-            {
-                Console.WriteLine($"User: {user.Login}, {user.Password}, {user.Role}");
-            }
-            dataAccess.UpdateUser("testuser", "newpass", "admin");
-            dataAccess.DeleteUser("testuser");
+            // USERS (через AuthService → пароль уходит в БД как ХЕШ)
+            var auth = new AuthService();
+            var (okReg, errReg) = await auth.RegisterAsync("testuser", "Test#123", Roles.Manager);
+            if (!okReg && errReg != "Пользователь уже существует")
+                MessageBox.Show(errReg ?? "Ошибка регистрации пользователя");
 
-            // Тестування CRUD для Materials
+            var (okLogin, _, errLogin) = await auth.LoginAsync("testuser", "Test#123");
+            if (!okLogin)
+                MessageBox.Show(errLogin ?? "Ошибка входа пользователя");
+
+            // MATERIALS (создание/изменение/удаление — только admin)
+            if (!Authorization.CanManageMaterials(AppSession.CurrentUser))
+            {
+                MessageBox.Show("Операции изменения материалов доступны только администратору.");
+                return;
+            }
+
+            // Тестування CRUD для Materials (оставил как было)
             dataAccess.CreateMaterial("testcat", "testmat", "red", 100.0, "m", "length", "test desc");
             var materials = dataAccess.ReadMaterials();
             foreach (var mat in materials)
@@ -179,6 +204,38 @@ namespace WinCalc
             }
             dataAccess.UpdateMaterial(1, "newcat", "newmat", "blue", 200.0, "m", "length", "new desc");
             dataAccess.DeleteMaterial(1);
+        }
+
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            // если таблица Users пуста — создаст admin/Admin#12345
+            await new AuthService().EnsureAdminSeedAsync();
+
+            // окно входа
+            if (!AppSession.IsAuthenticated)
+            {
+                var login = new LoginWindow();
+                var ok = login.ShowDialog() == true;
+                if (!ok) { Close(); return; }
+            }
+
+            // если хочешь прятать админ-кнопки с Tag="AdminOnly", раскомментируй:
+            // ApplyRoleUi();
+        }
+
+        private void ApplyRoleUi()
+        {
+            SetVisibilityByTag(this, "AdminOnly", AppSession.IsInRole(Roles.Admin));
+        }
+
+        private static void SetVisibilityByTag(DependencyObject root, string tag, bool visible)
+        {
+            if (root is FrameworkElement fe && fe.Tag?.ToString() == tag)
+                fe.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
+
+            int n = System.Windows.Media.VisualTreeHelper.GetChildrenCount(root);
+            for (int i = 0; i < n; i++)
+                SetVisibilityByTag(System.Windows.Media.VisualTreeHelper.GetChild(root, i), tag, visible);
         }
     }
 }
