@@ -1,7 +1,7 @@
 ﻿using System.IO;
-using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
-using WinCalc.Models;
+using WindowPaswoord.Models;
+
 
 namespace WinCalc.Storage
 {

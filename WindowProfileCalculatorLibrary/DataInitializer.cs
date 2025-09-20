@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
 
+
 namespace WindowProfileCalculatorLibrary
 {
     public class DataInitializer
