@@ -46,7 +46,7 @@ namespace WinCalc.Services
                 var admin = new User
                 {
                     Username = "admin",
-                    PasswordHash = PasswordHasher.Hash("Admin#12345"), // смените после первого входа
+                    PasswordHash = PasswordHasher.Hash("12345"), // смените после первого входа
                     Role = Roles.Admin
                 };
                 await _store.CreateAsync(admin);
