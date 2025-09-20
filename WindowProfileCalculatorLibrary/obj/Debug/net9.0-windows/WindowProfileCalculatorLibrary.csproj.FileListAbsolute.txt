@@ -24,3 +24,9 @@ C:\Users\Глеб\Desktop\GitGleb\WindowProfileCalculatorLibrary\obj\Debug\net9.
 C:\Users\Глеб\Desktop\GitGleb\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
 C:\Users\Глеб\Desktop\GitGleb\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\ref\WindowProfileCalculatorLibrary.dll
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0002b\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.sourcelink.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0002b\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.deps.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0002b\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.runtimeconfig.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0002b\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.exe
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0002b\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0002b\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0002b\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowPr.2DD3A9E6.Up2Date
