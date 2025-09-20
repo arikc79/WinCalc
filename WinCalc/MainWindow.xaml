@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WinCalc"
         mc:Ignorable="d"
-        Title="WinCalc" Height="700" Width="1100">
+        Title="WinCalc" Height="850" Width="1450"
+        MinHeight="850" MinWidth="1450">
 
     <Grid>
         <TabControl Grid.Row="1" Grid.Column="1" Margin="10">
@@ -27,27 +28,27 @@
                     <Label Grid.Column="1" Content="Висота:" Margin="271,412,0,0" Height="31" Width="80" Grid.Row="1"/>
                     <TextBox Grid.Column="1" Margin="10,443,0,0" Text="Ширина мм." Grid.Row="1" x:Name="txtWidth"/>
                     <TextBox Grid.Column="1" Margin="271,443,0,0" Text="Висота мм." Grid.Row="1" x:Name="txtHeight"/>
-                    <Label Grid.Column="1" Content="Комплектація вікна" Margin="448,1,0,0" Width="248" FontSize="26" Height="45" Grid.Row="1"/>
+                    <Label Grid.Column="1" Content="Комплектація вікна" HorizontalAlignment="Center"  Margin="448,1,0,0" Width="248" FontSize="26" Height="45" Grid.Row="1"/>
 
-                    <Label Grid.Column="1" Content="Обрана конструкція" Margin="430,41,0,0" Width="160" Height="32" Grid.Row="1"/>
-                    <ComboBox Grid.Column="1" Margin="430,73,0,0" Grid.Row="1" x:Name="cmbWindowType"/>
+                    <Label Grid.Column="1" Content="Обрана конструкція" HorizontalAlignment="Stretch" Margin="430,41,0,0" Width="160" Height="32" Grid.Row="1"/>
+                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="430,73,0,0" Grid.Row="1" x:Name="cmbWindowType"/>
 
-                    <Label Grid.Column="1" Content="Бренд - сортування по бренду" Margin="430,102,0,0" Grid.Row="1" Height="31" Width="395" RenderTransformOrigin="0.504,0.387"/>
-                    <ComboBox Grid.Column="1" Margin="430,133,0,0" Grid.Row="1" x:Name="cmbBrand" SelectionChanged="cmbBrand_SelectionChanged"/>
+                    <Label Grid.Column="1" Content="Бренд - сортування по бренду" HorizontalAlignment="Stretch" Margin="430,102,0,0" Grid.Row="1" Height="31" Width="243" RenderTransformOrigin="0.504,0.387"/>
+                    <ComboBox Grid.Column="1"  HorizontalAlignment="Stretch" Margin="430,133,0,0" Grid.Row="1" x:Name="cmbBrand" SelectionChanged="cmbBrand_SelectionChanged"/>
 
-                    <Label Grid.Column="1" Content="Профіль - підберіть потрібний з профільних систем" Margin="426,166,0,0" Grid.Row="1" Height="31" Width="413" Grid.ColumnSpan="2"/>
-                    <ComboBox Grid.Column="1" Margin="430,202,0,0" Grid.Row="1" x:Name="cmbProfile"/>
+                    <Label Grid.Column="1" Content="Профіль - виберіть потрібний " HorizontalAlignment="Stretch" Margin="426,166,0,0" Grid.Row="1" Height="31" Width="236"/>
+                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="430,202,0,0" Grid.Row="1" x:Name="cmbProfile"/>
 
-                    <Label Grid.Column="1" Content="Склопакет - оберіть бажаний" Margin="430,229,0,0" Grid.Row="1" Height="28" Width="262"/>
-                    <ComboBox Grid.Column="1" Margin="430,262,0,0" Grid.Row="1" x:Name="cmbGlassPack"/>
+                    <Label Grid.Column="1" Content="Склопакет - оберіть бажаний" HorizontalAlignment="Stretch" Margin="430,229,0,0" Grid.Row="1" Height="28" Width="232"/>
+                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="430,262,0,0" Grid.Row="1" x:Name="cmbGlassPack"/>
 
-                    <Button Grid.Column="1" Content="Розрахувати вартість" Margin="430,333,0,0" Width="307" Height="35" Grid.Row="1" x:Name="btnCalculate" Click="btnCalculate_Click"/>
-                    <CheckBox Grid.Column="1" Content="Підвіконник" Margin="432,297,0,0" Grid.Row="1" x:Name="chkSill"/>
-                    <CheckBox Grid.Column="1" Content="Відлив" Margin="572,297,0,0" Grid.Row="1" x:Name="chkDrain"/>
+                    <Button Grid.Column="1" Content="Розрахувати вартість" HorizontalAlignment="Stretch" Margin="608,393,161,0" Width="307" Height="35" Grid.Row="1" x:Name="btnCalculate" Click="btnCalculate_Click"/>
+                    <CheckBox Grid.Column="1" Content="Підвіконник" HorizontalAlignment="Stretch" Margin="432,297,0,0" Grid.Row="1" x:Name="chkSill"/>
+                    <CheckBox Grid.Column="1" Content="Відлив"  HorizontalAlignment="Stretch" Margin="709,323,277,0" Grid.Row="1" x:Name="chkDrain"/>
                     <Label Grid.Column="1" Content="За вибраними вами параметрами: --- вартість без встановлення ---" Margin="10,478,0,0" Grid.Row="1" Height="135" Width="740" x:Name="lblResult"/>
 
                     <!-- ListBox з зображеннями -->
-                    <ListBox Grid.Row="1" Margin="8,52,20,10" x:Name="lstImages" SelectionChanged="lstImages_SelectionChanged">
+                    <ListBox Grid.Row="1" HorizontalAlignment="Stretch" Margin="8,52,20,10" x:Name="lstImages" SelectionChanged="lstImages_SelectionChanged">
                         <ListBoxItem>
                             <Image Height="104" Source="/WinCalc;component/Image/5.png" Stretch="Fill" Width="70" Margin="10" Tag="5"/>
                         </ListBoxItem>
@@ -64,10 +65,10 @@
                             <Image Height="104" Source="/WinCalc;component/Image/7.png" Stretch="Fill" Width="162" Margin="10" Tag="1"/>
                         </ListBoxItem>
                     </ListBox>
-                    <Button Grid.Column="1" Content="Test CRUD" Margin="430,370,0,0" Width="307" Height="35" Grid.Row="1" x:Name="btnTestCrud" Click="btnTestCrud_Click"/>
+                    <Button Grid.Column="1" Content="Test CRUD"  HorizontalAlignment="Stretch" Margin="608,438,161,0" Width="307" Height="35" Grid.Row="1" x:Name="btnTestCrud" Click="btnTestCrud_Click"/>
                     <!-- Border з Image для відображення обраного зображення -->
-                    <Border x:Name="borderWithImage" BorderBrush="Black" BorderThickness="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Height="200" Margin="0,5,0,0">
-                        <Image x:Name="imgSelected" Stretch="Uniform"/>
+                    <Border x:Name="borderWithImage" BorderBrush="Black" BorderThickness="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="395" Height="358" Margin="10,10,0,0" Grid.Column="1">
+                        <Image x:Name="imgSelected" Stretch="Uniform" Margin="-1,4,0,0" HorizontalAlignment="Left" Width="388" Height="350" VerticalAlignment="Top"/>
                     </Border>
                 </Grid>
             </TabItem>
@@ -88,7 +89,7 @@
                     </ListView>
                 </Grid>
             </TabItem>
-            
+
         </TabControl>
     </Grid>
 

@@ -38,7 +38,8 @@ namespace WinCalc
             string dbPath = "window_calc.db";
             Console.WriteLine($"Starting database initialization for {dbPath} at " + DateTime.Now);
             File.AppendAllText("app_log.txt", $"Starting database initialization for {dbPath} at " + DateTime.Now + Environment.NewLine);
-            MessageBox.Show("Starting database initialization");
+            File.AppendAllText("app_log.txt", "Database initialization started (silent)" + Environment.NewLine);
+
             try
             {
                 using (var connection = new SqliteConnection($"Data Source={dbPath}"))
