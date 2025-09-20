@@ -1,6 +1,5 @@
-﻿using WinCalc.Security;              
-using WinCalc.Services;             
-using System;                        
+﻿using WinCalc.Security;
+using WinCalc.Services;
 using System.Windows;
 using System.Windows.Controls;
 using WindowProfileCalculatorLibrary;
