@@ -78,5 +78,37 @@ namespace WinCalc.Storage
             var res = (long)await cmd.ExecuteScalarAsync();
             return res == 1;
         }
+
+
+        //  Метод для отримання всіх користувачів
+        public async Task<List<User>> GetAllAsync()
+        {
+            var users = new List<User>();
+
+            // Відкриваємо підключення до бази
+            using var con = Create();
+            await con.OpenAsync();
+           
+            const string sql = @"SELECT Id, Login, Password, Role FROM Users";
+            using var cmd = new SqliteCommand(sql, con);
+
+           
+            using var rd = await cmd.ExecuteReaderAsync();
+            while (await rd.ReadAsync())
+            {
+                users.Add(new User
+                {
+                    Id = rd.GetInt32(0),         
+                    Username = rd.GetString(1),  
+                    PasswordHash = rd.GetString(2),
+                    Role = rd.GetString(3)         
+                });
+            }
+
+            return users;
+        }
+
+
+
     }
 }

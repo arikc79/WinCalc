@@ -73,23 +73,41 @@
                     </Border>
                 </Grid>
             </TabItem>
-            <!-- Нова вкладка: Перегляд матеріалів -->
+            <!-- Нова вкладка:  матеріалів -->
             <TabItem Header="Матеріали">
                 <Grid>
-                    <ListView x:Name="lvMaterials" Margin="10" >
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="True">
-                                <GridViewColumn Header="Категорія" Width="120" DisplayMemberBinding="{Binding Category}"/>
-                                <GridViewColumn Header="Назва" Width="150" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Колір" Width="100" DisplayMemberBinding="{Binding Color}"/>
-                                <GridViewColumn Header="Ціна (грн)" Width="120" DisplayMemberBinding="{Binding Price}"/>
-                                <GridViewColumn Header="Одиниця" Width="80" DisplayMemberBinding="{Binding Unit}"/>
-                                <GridViewColumn Header="Опис" Width="200" DisplayMemberBinding="{Binding Description}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <DataGrid x:Name="dgMaterials"
+                              AutoGenerateColumns="False"
+                              CanUserSortColumns="True"
+                              IsReadOnly="True"
+                              Margin="10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Категорія" Binding="{Binding Category}" Width="120"/>
+                            <DataGridTextColumn Header="Назва" Binding="{Binding Name}" Width="150"/>
+                            <DataGridTextColumn Header="Колір" Binding="{Binding Color}" Width="100"/>
+                            <DataGridTextColumn Header="Ціна (грн)" Binding="{Binding Price}" Width="120"/>
+                            <DataGridTextColumn Header="Одиниця" Binding="{Binding Unit}" Width="80"/>
+                            <DataGridTextColumn Header="Опис" Binding="{Binding Description}" Width="200"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
                 </Grid>
             </TabItem>
+            <!-- Нова вкладка:  користувчі -->
+            <TabItem Header="Користувачі" Tag="AdminOnly">
+                <DataGrid x:Name="dgUsers"
+              AutoGenerateColumns="False"
+              CanUserSortColumns="True"
+              IsReadOnly="True"
+              Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                        <DataGridTextColumn Header="Логін" Binding="{Binding Username}" Width="150"/>
+                        <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="100"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
 
         </TabControl>
     </Grid>
