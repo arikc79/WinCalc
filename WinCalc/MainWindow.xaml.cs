@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using WinCalc.Security;
 using WinCalc.Services;
@@ -12,87 +13,33 @@ namespace WinCalc
         private Obchyslennya calculator = new Obchyslennya();
         private DataAccess dataAccess = new DataAccess();
 
-
-
         public MainWindow()
         {
             InitializeComponent();
-
             this.Loaded += MainWindow_Loaded;
 
-
-
-            // Прив’язуємо imgSelected до елемента з XAML
-            imgSelected = this.FindName("imgSelected") as Image;
-            if (imgSelected == null)
-            {
-                var border = this.FindName("borderWithImage") as Border;
-                if (border != null)
-                {
-                    imgSelected = border.Child as Image;
-                    if (imgSelected == null)
-                    {
-                        imgSelected = new Image { Width = 200, Height = 200 };
-                        border.Child = imgSelected; // Прив’язуємо новий Image до Border
-                        Console.WriteLine("Створено новий imgSelected, оскільки оригінал не знайдено.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Border з ім’ям borderWithImage не знайдено.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("imgSelected успішно знайдено через FindName.");
-            }
-
-            // Перевірка видимості
-            if (imgSelected != null)
-            {
-                imgSelected.Visibility = System.Windows.Visibility.Visible;
-                Console.WriteLine("imgSelected is visible and initialized.");
-            }
-
-            // Ініціалізація ComboBox
+            // Ініціалізація ComboBox для брендів/профілів
             cmbWindowType.ItemsSource = new[] { "1. Одностулкове", "2. Ділене навпіл", "3. Ділене на 3", "4. 4 секції", "5. 5 секцій" };
             cmbBrand.ItemsSource = new[] { "Rehau", "Steko", "Veka", "Openteck" };
             cmbProfile.ItemsSource = new[] { "Basic-Design (4)", "Euro 70 (5)", "Delight (6)", "Synego (7)" };
             cmbGlassPack.ItemsSource = new[] { "Однокамерний", "Двокамерний", "Триплекс" };
         }
 
+        // 📌 Подія зміни вибраного зображення
         private void lstImages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lstImages.SelectedItem is ListBoxItem selectedItem)
             {
                 if (selectedItem.Content is Image image)
                 {
-                    if (imgSelected != null)
-                    {
-                        Console.WriteLine($"Setting imgSelected.Source to: {image.Source}");
-                        imgSelected.Source = image.Source; // Відображаємо обране зображення в Border
-                        if (selectedItem.Tag != null)
-                        {
-                            Console.WriteLine($"Tag value: {selectedItem.Tag}");
-                            cmbWindowType.SelectedIndex = int.Parse(selectedItem.Tag.ToString()) - 1; // Синхронізуємо з типом вікна
-                        }
-                        else
-                        {
-                            Console.WriteLine("Tag is null for selected ListBoxItem.");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("imgSelected is null, cannot update image source.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Content of selected ListBoxItem is not an Image.");
+                    imgSelected.Source = image.Source;
+                    if (selectedItem.Tag != null)
+                        cmbWindowType.SelectedIndex = int.Parse(selectedItem.Tag.ToString()) - 1;
                 }
             }
         }
 
+        // 📌 Подія зміни бренду → оновлення списку профілів
         private void cmbBrand_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string selectedBrand = cmbBrand.SelectedItem?.ToString();
@@ -117,12 +64,12 @@ namespace WinCalc
             }
         }
 
+        // 📌 Кнопка "Розрахувати вартість"
         private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
-            // AUTH-ADDED: расчёт только для admin/manager
             if (!Authorization.CanCalculate(AppSession.CurrentUser))
             {
-                MessageBox.Show("Недостаточно прав (доступно для admin/manager).");
+                MessageBox.Show("Недостатньо прав (доступно для admin/manager).");
                 return;
             }
 
@@ -142,22 +89,15 @@ namespace WinCalc
                 switch (windowType)
                 {
                     case 1:
-                        length = calculator.CalculateProfileLengthType1(width, height, frameWidth, overlap, weldingAllowance);
-                        break;
+                        length = calculator.CalculateProfileLengthType1(width, height, frameWidth, overlap, weldingAllowance); break;
                     case 2:
-                        length = calculator.CalculateProfileLengthType2(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance);
-                        break;
+                        length = calculator.CalculateProfileLengthType2(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance); break;
                     case 3:
-                        length = calculator.CalculateProfileLengthType3(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance);
-                        break;
+                        length = calculator.CalculateProfileLengthType3(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance); break;
                     case 4:
-                        length = calculator.CalculateProfileLengthType4(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance);
-                        break;
+                        length = calculator.CalculateProfileLengthType4(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance); break;
                     case 5:
-                        length = calculator.CalculateProfileLengthType5(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance);
-                        break;
-                    default:
-                        throw new ArgumentException("Невірний тип вікна.");
+                        length = calculator.CalculateProfileLengthType5(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance); break;
                 }
 
                 double pricePerMeter = 425;
@@ -169,7 +109,6 @@ namespace WinCalc
                 }
 
                 double cost = length * pricePerMeter;
-
                 lblResult.Content = $"За вибраними параметрами: {cost:F2} грн (Довжина: {length:F3} м)";
             }
             catch (Exception ex)
@@ -178,11 +117,9 @@ namespace WinCalc
             }
         }
 
-        // AUTH-ADDED: делаем пользователей только через AuthService (хеш в БД),
-        // а операции с материалами — только для admin
+        // 📌 Кнопка "Test CRUD" (тільки для перевірки)
         private async void btnTestCrud_Click(object sender, RoutedEventArgs e)
         {
-            // USERS (через AuthService → пароль уходит в БД как ХЕШ)
             var auth = new AuthService();
             var (okReg, errReg) = await auth.RegisterAsync("testuser", "Test#123", Roles.Manager);
             if (!okReg && errReg != "Пользователь уже существует")
@@ -192,24 +129,19 @@ namespace WinCalc
             if (!okLogin)
                 MessageBox.Show(errLogin ?? "Ошибка входа пользователя");
 
-            // MATERIALS (создание/изменение/удаление — только admin)
             if (!Authorization.CanManageMaterials(AppSession.CurrentUser))
             {
-                MessageBox.Show("Операции изменения материалов доступны только администратору.");
+                MessageBox.Show("Операції з матеріалами доступні тільки адміністратору.");
                 return;
             }
 
-            // Тестування CRUD для Materials (оставил как было)
             dataAccess.CreateMaterial("testcat", "testmat", "red", 100.0, "m", "length", "test desc");
             var materials = dataAccess.ReadMaterials();
             foreach (var mat in materials)
-            {
                 Console.WriteLine($"Material: {mat.Category}, {mat.Name}, {mat.Price}");
-            }
-            dataAccess.UpdateMaterial(1, "newcat", "newmat", "blue", 200.0, "m", "length", "new desc");
-            dataAccess.DeleteMaterial(1);
         }
 
+        // 📌 Завантаження при старті вікна
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             await new AuthService().EnsureAdminSeedAsync();
@@ -221,42 +153,30 @@ namespace WinCalc
                 if (!ok) { Close(); return; }
             }
 
-            // Завантажуємо матеріали
             dgMaterials.ItemsSource = dataAccess.ReadMaterials();
-            dgMaterials.IsReadOnly = !AppSession.IsInRole(Roles.Admin); // менеджер тільки переглядає
+            dgMaterials.IsReadOnly = !AppSession.IsInRole(Roles.Admin);
 
-            // Завантажуємо користувачів тільки для адміна
             if (AppSession.IsInRole(Roles.Admin))
             {
                 var userStore = new WinCalc.Storage.SqliteUserStore();
                 dgUsers.ItemsSource = await userStore.GetAllAsync();
-                dgUsers.IsReadOnly = false; // адмін може редагувати
+                dgUsers.IsReadOnly = false;
             }
 
             ApplyRoleUi();
         }
 
-        // Збереження змін у матеріалах
+        // 📌 Збереження змін у матеріалах
         private void dgMaterials_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            // Доступ тільки для адміна
             if (!AppSession.IsInRole(Roles.Admin)) return;
 
             if (e.Row.Item is Material mat)
             {
                 try
                 {
-                    // Оновлюємо матеріал у БД
-                    dataAccess.UpdateMaterial(
-                        mat.Id,
-                        mat.Category,
-                        mat.Name,
-                        mat.Color,
-                        mat.Price,
-                        mat.Unit,
-                        mat.QuantityType,
-                        mat.Description
-                    );
+                    dataAccess.UpdateMaterial(mat.Id, mat.Category, mat.Name, mat.Color,
+                        mat.Price, mat.Unit, mat.QuantityType, mat.Description);
                 }
                 catch (Exception ex)
                 {
@@ -265,47 +185,50 @@ namespace WinCalc
             }
         }
 
-        //  Збереження змін у користувачах (створення / редагування)
+        // Збереження змін у користувачах (асинхронно, без зациклення)
         private async void dgUsers_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             if (!AppSession.IsInRole(Roles.Admin)) return;
 
-            // Відкладений коміт, щоб уникнути рекурсії
-            Dispatcher.BeginInvoke(new Action(async () =>
+            if (e.EditAction == DataGridEditAction.Commit)
             {
-                if (e.Row.Item is User user)
+                // Виконуємо після того як WPF реально збереже дані в об’єкт User
+                Dispatcher.BeginInvoke(new Action(async () =>
                 {
-                    try
+                    if (e.Row.Item is User user)
                     {
-                        var userStore = new WinCalc.Storage.SqliteUserStore();
+                        try
+                        {
+                            var userStore = new WinCalc.Storage.SqliteUserStore();
 
-                        if (string.IsNullOrWhiteSpace(user.Username))
-                        {
-                            MessageBox.Show("Логін не може бути порожнім!", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
+                            if (string.IsNullOrWhiteSpace(user.Username))
+                            {
+                                MessageBox.Show("Логін не може бути порожнім!", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
 
-                        if (user.Id == 0)
-                        {
-                            // Новий користувач → INSERT
-                            var created = await userStore.CreateAsync(user);
-                            user.Id = created.Id; // присвоюємо Id з бази
+                            if (user.Id == 0)
+                            {
+                                // Новий користувач → INSERT
+                                var created = await userStore.CreateAsync(user);
+                                user.Id = created.Id; // Оновлюємо Id з БД
+                            }
+                            else
+                            {
+                                // Існуючий користувач → UPDATE
+                                await userStore.UpdateAsync(user);
+                            }
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            // Існуючий → UPDATE
-                            await userStore.UpdateAsync(user);
+                            MessageBox.Show($"Помилка збереження користувача: {ex.Message}");
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Помилка збереження користувача: {ex.Message}");
-                    }
-                }
-            }), System.Windows.Threading.DispatcherPriority.Background);
+                }), System.Windows.Threading.DispatcherPriority.Background);
+            }
         }
 
-
+        // Приховування вкладок з Tag="AdminOnly"
         private void ApplyRoleUi()
         {
             SetVisibilityByTag(this, "AdminOnly", AppSession.IsInRole(Roles.Admin));
