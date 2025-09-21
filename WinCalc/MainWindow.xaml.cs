@@ -1,57 +1,24 @@
-﻿using WinCalc.Security;
-using WinCalc.Services;
+﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using WinCalc.Security;
+using WinCalc.Services;
+using WinCalc.Storage;
+using WindowPaswoord.Models;
 using WindowProfileCalculatorLibrary;
 
 namespace WinCalc
 {
     public partial class MainWindow : Window
     {
-        private Obchyslennya calculator = new Obchyslennya();
-        private DataAccess dataAccess = new DataAccess();
-
-
+        private readonly Obchyslennya calculator = new Obchyslennya();
+        private readonly DataAccess dataAccess = new DataAccess();
 
         public MainWindow()
         {
             InitializeComponent();
-
             this.Loaded += MainWindow_Loaded;
-
-
-
-            // Прив’язуємо imgSelected до елемента з XAML
-            imgSelected = this.FindName("imgSelected") as Image;
-            if (imgSelected == null)
-            {
-                var border = this.FindName("borderWithImage") as Border;
-                if (border != null)
-                {
-                    imgSelected = border.Child as Image;
-                    if (imgSelected == null)
-                    {
-                        imgSelected = new Image { Width = 200, Height = 200 };
-                        border.Child = imgSelected; // Прив’язуємо новий Image до Border
-                        Console.WriteLine("Створено новий imgSelected, оскільки оригінал не знайдено.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Border з ім’ям borderWithImage не знайдено.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("imgSelected успішно знайдено через FindName.");
-            }
-
-            // Перевірка видимості
-            if (imgSelected != null)
-            {
-                imgSelected.Visibility = System.Windows.Visibility.Visible;
-                Console.WriteLine("imgSelected is visible and initialized.");
-            }
 
             // Ініціалізація ComboBox
             cmbWindowType.ItemsSource = new[] { "1. Одностулкове", "2. Ділене навпіл", "3. Ділене на 3", "4. 4 секції", "5. 5 секцій" };
@@ -60,35 +27,40 @@ namespace WinCalc
             cmbGlassPack.ItemsSource = new[] { "Однокамерний", "Двокамерний", "Триплекс" };
         }
 
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            await new AuthService().EnsureAdminSeedAsync();
+
+            if (!AppSession.IsAuthenticated)
+            {
+                var login = new LoginWindow();
+                var ok = login.ShowDialog() == true;
+                if (!ok) { Close(); return; }
+            }
+
+            // Матеріали
+            dgMaterials.ItemsSource = dataAccess.ReadMaterials();
+            dgMaterials.IsReadOnly = !AppSession.IsInRole(Roles.Admin);
+
+            // Користувачі
+            if (AppSession.IsInRole(Roles.Admin))
+            {
+                var userStore = new SqliteUserStore();
+                dgUsers.ItemsSource = await userStore.GetAllAsync();
+                dgUsers.IsReadOnly = false;
+            }
+
+            ApplyRoleUi();
+        }
+
+        // ===== Розрахунок / зображення =====
+
         private void lstImages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (lstImages.SelectedItem is ListBoxItem selectedItem)
+            if (lstImages.SelectedItem is ListBoxItem it && it.Content is Image img)
             {
-                if (selectedItem.Content is Image image)
-                {
-                    if (imgSelected != null)
-                    {
-                        Console.WriteLine($"Setting imgSelected.Source to: {image.Source}");
-                        imgSelected.Source = image.Source; // Відображаємо обране зображення в Border
-                        if (selectedItem.Tag != null)
-                        {
-                            Console.WriteLine($"Tag value: {selectedItem.Tag}");
-                            cmbWindowType.SelectedIndex = int.Parse(selectedItem.Tag.ToString()) - 1; // Синхронізуємо з типом вікна
-                        }
-                        else
-                        {
-                            Console.WriteLine("Tag is null for selected ListBoxItem.");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("imgSelected is null, cannot update image source.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Content of selected ListBoxItem is not an Image.");
-                }
+                imgSelected.Source = img.Source;
+                if (it.Tag != null) cmbWindowType.SelectedIndex = int.Parse(it.Tag.ToString()) - 1;
             }
         }
 
@@ -118,10 +90,9 @@ namespace WinCalc
 
         private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
-            // AUTH-ADDED: расчёт только для admin/manager
             if (!Authorization.CanCalculate(AppSession.CurrentUser))
             {
-                MessageBox.Show("Недостаточно прав (доступно для admin/manager).");
+                MessageBox.Show("Недостатньо прав (доступно для admin/manager).");
                 return;
             }
 
@@ -136,28 +107,15 @@ namespace WinCalc
                 double overlap = 0.008;
                 double weldingAllowance = 0.003;
 
-                double length = 0;
-
-                switch (windowType)
+                double length = windowType switch
                 {
-                    case 1:
-                        length = calculator.CalculateProfileLengthType1(width, height, frameWidth, overlap, weldingAllowance);
-                        break;
-                    case 2:
-                        length = calculator.CalculateProfileLengthType2(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance);
-                        break;
-                    case 3:
-                        length = calculator.CalculateProfileLengthType3(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance);
-                        break;
-                    case 4:
-                        length = calculator.CalculateProfileLengthType4(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance);
-                        break;
-                    case 5:
-                        length = calculator.CalculateProfileLengthType5(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance);
-                        break;
-                    default:
-                        throw new ArgumentException("Невірний тип вікна.");
-                }
+                    1 => calculator.CalculateProfileLengthType1(width, height, frameWidth, overlap, weldingAllowance),
+                    2 => calculator.CalculateProfileLengthType2(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance),
+                    3 => calculator.CalculateProfileLengthType3(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance),
+                    4 => calculator.CalculateProfileLengthType4(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance),
+                    5 => calculator.CalculateProfileLengthType5(width, height, frameWidth, midFrameWidth, overlap, weldingAllowance),
+                    _ => throw new ArgumentException("Невірний тип вікна.")
+                };
 
                 double pricePerMeter = 425;
                 if (cmbProfile.SelectedItem != null)
@@ -168,7 +126,6 @@ namespace WinCalc
                 }
 
                 double cost = length * pricePerMeter;
-
                 lblResult.Content = $"За вибраними параметрами: {cost:F2} грн (Довжина: {length:F3} м)";
             }
             catch (Exception ex)
@@ -177,11 +134,8 @@ namespace WinCalc
             }
         }
 
-        // AUTH-ADDED: делаем пользователей только через AuthService (хеш в БД),
-        // а операции с материалами — только для admin
         private async void btnTestCrud_Click(object sender, RoutedEventArgs e)
         {
-            // USERS (через AuthService → пароль уходит в БД как ХЕШ)
             var auth = new AuthService();
             var (okReg, errReg) = await auth.RegisterAsync("testuser", "Test#123", Roles.Manager);
             if (!okReg && errReg != "Пользователь уже существует")
@@ -191,65 +145,130 @@ namespace WinCalc
             if (!okLogin)
                 MessageBox.Show(errLogin ?? "Ошибка входа пользователя");
 
-            // MATERIALS (создание/изменение/удаление — только admin)
             if (!Authorization.CanManageMaterials(AppSession.CurrentUser))
             {
-                MessageBox.Show("Операции изменения материалов доступны только администратору.");
+                MessageBox.Show("Операції з матеріалами доступні тільки адміністратору.");
                 return;
             }
 
-            // Тестування CRUD для Materials (оставил как было)
             dataAccess.CreateMaterial("testcat", "testmat", "red", 100.0, "m", "length", "test desc");
-            var materials = dataAccess.ReadMaterials();
-            foreach (var mat in materials)
-            {
+            foreach (var mat in dataAccess.ReadMaterials())
                 Console.WriteLine($"Material: {mat.Category}, {mat.Name}, {mat.Price}");
-            }
-            dataAccess.UpdateMaterial(1, "newcat", "newmat", "blue", 200.0, "m", "length", "new desc");
-            dataAccess.DeleteMaterial(1);
         }
 
-        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        // ===== Матеріали: збереження змін =====
+
+        private void dgMaterials_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            // якщо таблиця Users пуста — створюем admin
-            await new AuthService().EnsureAdminSeedAsync();
+            if (!AppSession.IsInRole(Roles.Admin)) return;
 
-            // Вікно входу
-            if (!AppSession.IsAuthenticated)
-            {
-                var login = new LoginWindow();
-                var ok = login.ShowDialog() == true;
-                if (!ok) { Close(); return; }
-            }
-
-            // Завантаження матеріалів
-            try
-            {
-                dgMaterials.ItemsSource = dataAccess.ReadMaterials(); 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Помилка завантаження матеріалів: {ex.Message}");
-            }
-
-            // Завантаження користувачів тільки якщо роль = admin
-            if (AppSession.IsInRole(Roles.Admin))
+            if (e.Row.Item is Material mat)
             {
                 try
                 {
-                    var userStore = new WinCalc.Storage.SqliteUserStore();
-                    dgUsers.ItemsSource = await userStore.GetAllAsync();
+                    dataAccess.UpdateMaterial(mat.Id, mat.Category, mat.Name, mat.Color,
+                        mat.Price, mat.Unit, mat.QuantityType, mat.Description);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Помилка завантаження користувачів: {ex.Message}");
+                    MessageBox.Show($"Помилка збереження матеріалу: {ex.Message}");
                 }
             }
-
-           
-            ApplyRoleUi();
         }
 
+        // ===== Користувачі: збереження змін (без рекурсії) =====
+
+        private void dgUsers_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (!AppSession.IsInRole(Roles.Admin)) return;
+
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                // Відкласти виконання після завершення редагування
+                Dispatcher.BeginInvoke(new Action(async () =>
+                {
+                    if (e.Row.Item is User user)
+                    {
+                        try
+                        {
+                            var userStore = new SqliteUserStore();
+
+                            if (string.IsNullOrWhiteSpace(user.Username))
+                            {
+                                MessageBox.Show("Логін не може бути порожнім!", "Помилка",
+                                    MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+
+                            if (user.Id == 0)
+                            {
+                                // Новий користувач → INSERT (якщо пароль не вказано — буде 12345)
+                                var created = await userStore.CreateAsync(user);
+                                user.Id = created.Id;
+                            }
+                            else
+                            {
+                                // Існуючий → UPDATE (Role/Login)
+                                await userStore.UpdateAsync(user);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Помилка збереження користувача: {ex.Message}");
+                        }
+                    }
+                }), System.Windows.Threading.DispatcherPriority.Background);
+            }
+        }
+
+        // Кнопка "Змінити…" пароль у колонці Пароль
+        private async void BtnChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            if (!AppSession.IsInRole(Roles.Admin)) return;
+
+            if (sender is Button btn && btn.DataContext is User user)
+            {
+                var dlg = new ChangePasswordWindow(user.Username);
+                if (dlg.ShowDialog() == true)
+                {
+                    string newPlain = dlg.NewPassword;
+                    var (ok, msg) = ValidatePassword(newPlain);
+                    if (!ok)
+                    {
+                        MessageBox.Show(msg, "Пароль занадто слабкий",
+                            MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    try
+                    {
+                        var store = new SqliteUserStore();
+                        await store.UpdatePasswordAsync(user.Id, newPlain);
+                        MessageBox.Show($"Пароль для {user.Username} змінено.", "Готово",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Не вдалося оновити пароль: {ex.Message}", "Помилка",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+        }
+
+        // Мінімальні вимоги до пароля
+        private static (bool ok, string message) ValidatePassword(string pwd)
+        {
+            if (string.IsNullOrWhiteSpace(pwd) || pwd.Length < 6)
+                return (false, "Пароль має містити не менше 6 символів.");
+            if (!Regex.IsMatch(pwd, @"[A-Za-z]"))
+                return (false, "Пароль має містити принаймні одну літеру.");
+            if (!Regex.IsMatch(pwd, @"\d"))
+                return (false, "Пароль має містити принаймні одну цифру.");
+            return (true, "");
+        }
+
+        // ===== Приховування вкладок для ролей =====
 
         private void ApplyRoleUi()
         {

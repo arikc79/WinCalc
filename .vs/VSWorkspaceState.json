@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\WinCalc"
   ],
-  "SelectedNode": "\\WinCalc.sln",
+  "SelectedNode": "\\WinCalc\\WinCalc.sln",
   "PreviewInSolutionExplorer": false
 }
