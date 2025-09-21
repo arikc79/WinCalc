@@ -211,10 +211,10 @@ namespace WinCalc
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // якщо таблиця Users пуста — створюем admin
+            // Якщо таблиця Users порожня → створюємо admin/admin
             await new AuthService().EnsureAdminSeedAsync();
 
-            // Вікно входу
+            //  Вікно входу
             if (!AppSession.IsAuthenticated)
             {
                 var login = new LoginWindow();
@@ -222,17 +222,17 @@ namespace WinCalc
                 if (!ok) { Close(); return; }
             }
 
-            // Завантаження матеріалів
+            // Завантаження матеріалів у DataGrid
             try
             {
-                dgMaterials.ItemsSource = dataAccess.ReadMaterials(); 
+                dgMaterials.ItemsSource = dataAccess.ReadMaterials();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Помилка завантаження матеріалів: {ex.Message}");
             }
 
-            // Завантаження користувачів тільки якщо роль = admin
+            // Завантаження користувачів тільки для Admin
             if (AppSession.IsInRole(Roles.Admin))
             {
                 try
@@ -246,7 +246,7 @@ namespace WinCalc
                 }
             }
 
-           
+            //Ховаємо вкладки з Tag="AdminOnly", якщо користувач не Admin
             ApplyRoleUi();
         }
 
