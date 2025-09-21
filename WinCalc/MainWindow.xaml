@@ -73,14 +73,17 @@
                     </Border>
                 </Grid>
             </TabItem>
-            <!-- Нова вкладка:  матеріалів -->
+
+
+            <!-- Вкладка: Матеріали -->
             <TabItem Header="Матеріали">
                 <Grid>
+                    <!-- DataGrid для матеріалів -->
                     <DataGrid x:Name="dgMaterials"
-                              AutoGenerateColumns="False"
-                              CanUserSortColumns="True"
-                              IsReadOnly="True"
-                              Margin="10">
+                  AutoGenerateColumns="False"
+                  CanUserSortColumns="True"
+                  IsReadOnly="True"  
+                        Margin="10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Категорія" Binding="{Binding Category}" Width="120"/>
                             <DataGridTextColumn Header="Назва" Binding="{Binding Name}" Width="150"/>
@@ -90,24 +93,26 @@
                             <DataGridTextColumn Header="Опис" Binding="{Binding Description}" Width="200"/>
                         </DataGrid.Columns>
                     </DataGrid>
-
                 </Grid>
             </TabItem>
-            <!-- Нова вкладка:  користувчі -->
-            <TabItem Header="Користувачі" Tag="AdminOnly">
-                <DataGrid x:Name="dgUsers"
-              AutoGenerateColumns="False"
-              CanUserSortColumns="True"
-              IsReadOnly="True"
-              Margin="10">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
-                        <DataGridTextColumn Header="Логін" Binding="{Binding Username}" Width="150"/>
-                        <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="100"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </TabItem>
 
+            <!-- Вкладка: Користувачі -->
+            <TabItem Header="Користувачі" Tag="AdminOnly">
+                <Grid>
+                    <!-- DataGrid для користувачів -->
+                    <DataGrid x:Name="dgUsers"
+                  AutoGenerateColumns="False"
+                  CanUserSortColumns="True"
+                  IsReadOnly="True" 
+                        Margin="10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                            <DataGridTextColumn Header="Логін" Binding="{Binding Username}" Width="150"/>
+                            <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
 
         </TabControl>
     </Grid>
