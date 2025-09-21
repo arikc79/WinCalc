@@ -125,6 +125,11 @@
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True"/>
                             <DataGridTextColumn Header="Логін" Binding="{Binding Username}" Width="150"/>
                             <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="100"/>
+                            <DataGridTextColumn Header="Пароль" Binding="{Binding PasswordHash}" Width="150"/>
+                            <DataGridTextColumn Header="Пароль (введіть новий — буде захешовано)"
+                                                Binding="{Binding PasswordHash}" Width="220"/>
+
+
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
