@@ -3,15 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         Title="WinCalc" Height="700" Width="1100"
         MinHeight="700" MinWidth="1100"
         MaxHeight="900" MaxWidth="1600">
 
+    <!-- CHANGED: стабільне джерело ItemsSource для ролей -->
+    <Window.Resources>
+        <x:Array x:Key="RolesList" Type="{x:Type sys:String}">
+            <sys:String>admin</sys:String>
+            <sys:String>manager</sys:String>
+        </x:Array>
+    </Window.Resources>
+
     <Grid>
         <TabControl Grid.Row="1" Grid.Column="1" Margin="10">
 
-            <!-- Вкладка: Розрахунок -->
+            <!-- Вкладка: Розрахунок (без змін по суті) -->
             <TabItem Header="Розрахунок">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -113,7 +121,7 @@
                 </Grid>
             </TabItem>
 
-            <!-- Вкладка: Користувачі (тільки для Admin) -->
+            <!-- Вкладка: Користувачі (AdminOnly) -->
             <TabItem Header="Користувачі" Tag="AdminOnly">
                 <Grid>
                     <DataGrid x:Name="dgUsers"
@@ -124,13 +132,38 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True"/>
                             <DataGridTextColumn Header="Логін" Binding="{Binding Username}" Width="150"/>
-                            <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="100"/>
-                            <DataGridTextColumn Header="Пароль" Binding="{Binding PasswordHash}" Width="150"/>
-                            <DataGridTextColumn Header="Пароль (введіть новий — буде захешовано)"
-                                                Binding="{Binding PasswordHash}" Width="220"/>
 
+                            <!-- CHANGED: ComboBox з фіксованим ItemsSource -->
+                            <DataGridComboBoxColumn Header="Роль"
+                                                    ItemsSource="{StaticResource RolesList}"
+                                                    SelectedItemBinding="{Binding Role, UpdateSourceTrigger=PropertyChanged}"
+                                                    Width="120"/>
 
+                            <!-- CHANGED: Маскований “Пароль” + кнопка -->
+                            <DataGridTemplateColumn Header="Пароль" Width="180">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="••••••" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                            <Button Content="Змінити…" Padding="6,2"
+                                                    Click="BtnChangePassword_Click"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
+
+                        <!-- Підсвічування проблемних рядків -->
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Username}" Value="">
+                                        <Setter Property="Background" Value="#FFFDE2E2"/>
+                                        <Setter Property="ToolTip" Value="Логін не може бути порожнім"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
                     </DataGrid>
                 </Grid>
             </TabItem>
