@@ -1,7 +1,8 @@
-﻿using WinCalc.Security;
-using WinCalc.Services;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using WinCalc.Security;
+using WinCalc.Services;
+using WindowPaswoord.Models;
 using WindowProfileCalculatorLibrary;
 
 namespace WinCalc
@@ -211,10 +212,8 @@ namespace WinCalc
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // Якщо таблиця Users порожня → створюємо admin/admin
             await new AuthService().EnsureAdminSeedAsync();
 
-            //  Вікно входу
             if (!AppSession.IsAuthenticated)
             {
                 var login = new LoginWindow();
@@ -222,32 +221,88 @@ namespace WinCalc
                 if (!ok) { Close(); return; }
             }
 
-            // Завантаження матеріалів у DataGrid
-            try
+            // Завантажуємо матеріали
+            dgMaterials.ItemsSource = dataAccess.ReadMaterials();
+            dgMaterials.IsReadOnly = !AppSession.IsInRole(Roles.Admin); // менеджер тільки переглядає
+
+            // Завантажуємо користувачів тільки для адміна
+            if (AppSession.IsInRole(Roles.Admin))
             {
-                dgMaterials.ItemsSource = dataAccess.ReadMaterials();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Помилка завантаження матеріалів: {ex.Message}");
+                var userStore = new WinCalc.Storage.SqliteUserStore();
+                dgUsers.ItemsSource = await userStore.GetAllAsync();
+                dgUsers.IsReadOnly = false; // адмін може редагувати
             }
 
-            // Завантаження користувачів тільки для Admin
-            if (AppSession.IsInRole(Roles.Admin))
+            ApplyRoleUi();
+        }
+
+        // Збереження змін у матеріалах
+        private void dgMaterials_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            // Доступ тільки для адміна
+            if (!AppSession.IsInRole(Roles.Admin)) return;
+
+            if (e.Row.Item is Material mat)
             {
                 try
                 {
-                    var userStore = new WinCalc.Storage.SqliteUserStore();
-                    dgUsers.ItemsSource = await userStore.GetAllAsync();
+                    // Оновлюємо матеріал у БД
+                    dataAccess.UpdateMaterial(
+                        mat.Id,
+                        mat.Category,
+                        mat.Name,
+                        mat.Color,
+                        mat.Price,
+                        mat.Unit,
+                        mat.QuantityType,
+                        mat.Description
+                    );
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Помилка завантаження користувачів: {ex.Message}");
+                    MessageBox.Show($"Помилка збереження матеріалу: {ex.Message}");
                 }
             }
+        }
 
-            //Ховаємо вкладки з Tag="AdminOnly", якщо користувач не Admin
-            ApplyRoleUi();
+        //  Збереження змін у користувачах (створення / редагування)
+        private async void dgUsers_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (!AppSession.IsInRole(Roles.Admin)) return;
+
+            // Відкладений коміт, щоб уникнути рекурсії
+            Dispatcher.BeginInvoke(new Action(async () =>
+            {
+                if (e.Row.Item is User user)
+                {
+                    try
+                    {
+                        var userStore = new WinCalc.Storage.SqliteUserStore();
+
+                        if (string.IsNullOrWhiteSpace(user.Username))
+                        {
+                            MessageBox.Show("Логін не може бути порожнім!", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        if (user.Id == 0)
+                        {
+                            // Новий користувач → INSERT
+                            var created = await userStore.CreateAsync(user);
+                            user.Id = created.Id; // присвоюємо Id з бази
+                        }
+                        else
+                        {
+                            // Існуючий → UPDATE
+                            await userStore.UpdateAsync(user);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Помилка збереження користувача: {ex.Message}");
+                    }
+                }
+            }), System.Windows.Threading.DispatcherPriority.Background);
         }
 
 

@@ -74,7 +74,6 @@
                 </Grid>
             </TabItem>
 
-
             <!-- Вкладка: Матеріали -->
             <TabItem Header="Матеріали">
                 <Grid>
@@ -82,8 +81,8 @@
                     <DataGrid x:Name="dgMaterials"
                   AutoGenerateColumns="False"
                   CanUserSortColumns="True"
-                  IsReadOnly="True"  
-                        Margin="10">
+                  Margin="10"
+                  CellEditEnding="dgMaterials_CellEditEnding">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Категорія" Binding="{Binding Category}" Width="120"/>
                             <DataGridTextColumn Header="Назва" Binding="{Binding Name}" Width="150"/>
@@ -103,10 +102,11 @@
                     <DataGrid x:Name="dgUsers"
                   AutoGenerateColumns="False"
                   CanUserSortColumns="True"
-                  IsReadOnly="True" 
-                        Margin="10">
+                  Margin="10"
+                    RowEditEnding="dgUsers_RowEditEnding">
+                        
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True"/>
                             <DataGridTextColumn Header="Логін" Binding="{Binding Username}" Width="150"/>
                             <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="100"/>
                         </DataGrid.Columns>
