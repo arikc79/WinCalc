@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WinCalc"
         mc:Ignorable="d"
-        Title="WinCalc" Height="850" Width="1450"
-        MinHeight="850" MinWidth="1450">
+        Title="WinCalc" Height="700" Width="1100"
+        MinHeight="700" MinWidth="1100"
+       MaxHeight="900" MaxWidth="1600">
 
     <Grid>
         <TabControl Grid.Row="1" Grid.Column="1" Margin="10">
@@ -42,7 +43,7 @@
                     <Label Grid.Column="1" Content="Склопакет - оберіть бажаний" HorizontalAlignment="Stretch" Margin="430,229,0,0" Grid.Row="1" Height="28" Width="232"/>
                     <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="430,262,0,0" Grid.Row="1" x:Name="cmbGlassPack"/>
 
-                    <Button Grid.Column="1" Content="Розрахувати вартість" HorizontalAlignment="Stretch" Margin="608,393,161,0" Width="307" Height="35" Grid.Row="1" x:Name="btnCalculate" Click="btnCalculate_Click"/>
+                    <Button Grid.Column="1" Content="Розрахувати вартість" HorizontalAlignment="Stretch" Margin="465,372,39,0" Width="307" Height="35" Grid.Row="1" x:Name="btnCalculate" Click="btnCalculate_Click"/>
                     <CheckBox Grid.Column="1" Content="Підвіконник" HorizontalAlignment="Stretch" Margin="432,297,0,0" Grid.Row="1" x:Name="chkSill"/>
                     <CheckBox Grid.Column="1" Content="Відлив"  HorizontalAlignment="Stretch" Margin="709,323,277,0" Grid.Row="1" x:Name="chkDrain"/>
                     <Label Grid.Column="1" Content="За вибраними вами параметрами: --- вартість без встановлення ---" Margin="10,478,0,0" Grid.Row="1" Height="135" Width="740" x:Name="lblResult"/>
@@ -65,30 +66,48 @@
                             <Image Height="104" Source="/WinCalc;component/Image/7.png" Stretch="Fill" Width="162" Margin="10" Tag="1"/>
                         </ListBoxItem>
                     </ListBox>
-                    <Button Grid.Column="1" Content="Test CRUD"  HorizontalAlignment="Stretch" Margin="608,438,161,0" Width="307" Height="35" Grid.Row="1" x:Name="btnTestCrud" Click="btnTestCrud_Click"/>
+                    <Button Grid.Column="1" Content="Test CRUD"  HorizontalAlignment="Stretch" Margin="466,427,38,0" Width="307" Height="35" Grid.Row="1" x:Name="btnTestCrud" Click="btnTestCrud_Click"/>
                     <!-- Border з Image для відображення обраного зображення -->
                     <Border x:Name="borderWithImage" BorderBrush="Black" BorderThickness="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="395" Height="358" Margin="10,10,0,0" Grid.Column="1">
                         <Image x:Name="imgSelected" Stretch="Uniform" Margin="-1,4,0,0" HorizontalAlignment="Left" Width="388" Height="350" VerticalAlignment="Top"/>
                     </Border>
                 </Grid>
             </TabItem>
-            <!-- Нова вкладка: Перегляд матеріалів -->
+            <!-- Нова вкладка:  матеріалів -->
             <TabItem Header="Матеріали">
                 <Grid>
-                    <ListView x:Name="lvMaterials" Margin="10" >
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="True">
-                                <GridViewColumn Header="Категорія" Width="120" DisplayMemberBinding="{Binding Category}"/>
-                                <GridViewColumn Header="Назва" Width="150" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Колір" Width="100" DisplayMemberBinding="{Binding Color}"/>
-                                <GridViewColumn Header="Ціна (грн)" Width="120" DisplayMemberBinding="{Binding Price}"/>
-                                <GridViewColumn Header="Одиниця" Width="80" DisplayMemberBinding="{Binding Unit}"/>
-                                <GridViewColumn Header="Опис" Width="200" DisplayMemberBinding="{Binding Description}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <DataGrid x:Name="dgMaterials"
+                              AutoGenerateColumns="False"
+                              CanUserSortColumns="True"
+                              IsReadOnly="True"
+                              Margin="10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Категорія" Binding="{Binding Category}" Width="120"/>
+                            <DataGridTextColumn Header="Назва" Binding="{Binding Name}" Width="150"/>
+                            <DataGridTextColumn Header="Колір" Binding="{Binding Color}" Width="100"/>
+                            <DataGridTextColumn Header="Ціна (грн)" Binding="{Binding Price}" Width="120"/>
+                            <DataGridTextColumn Header="Одиниця" Binding="{Binding Unit}" Width="80"/>
+                            <DataGridTextColumn Header="Опис" Binding="{Binding Description}" Width="200"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
                 </Grid>
             </TabItem>
+            <!-- Нова вкладка:  користувчі -->
+            <TabItem Header="Користувачі" Tag="AdminOnly">
+                <DataGrid x:Name="dgUsers"
+              AutoGenerateColumns="False"
+              CanUserSortColumns="True"
+              IsReadOnly="True"
+              Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                        <DataGridTextColumn Header="Логін" Binding="{Binding Username}" Width="150"/>
+                        <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="100"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
 
         </TabControl>
     </Grid>

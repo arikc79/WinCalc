@@ -1,4 +1,4 @@
-﻿using WinCalc.Models;
+﻿using WindowPaswoord.Models;
 
 namespace WinCalc.Security
 {

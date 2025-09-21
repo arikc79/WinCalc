@@ -1,6 +1,5 @@
-﻿using WinCalc.Security;              
-using WinCalc.Services;             
-using System;                        
+﻿using WinCalc.Security;
+using WinCalc.Services;
 using System.Windows;
 using System.Windows.Controls;
 using WindowProfileCalculatorLibrary;
@@ -12,11 +11,15 @@ namespace WinCalc
         private Obchyslennya calculator = new Obchyslennya();
         private DataAccess dataAccess = new DataAccess();
 
+
+
         public MainWindow()
         {
             InitializeComponent();
 
-            Loaded += MainWindow_Loaded;
+            this.Loaded += MainWindow_Loaded;
+
+
 
             // Прив’язуємо imgSelected до елемента з XAML
             imgSelected = this.FindName("imgSelected") as Image;
@@ -208,10 +211,10 @@ namespace WinCalc
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // если таблица Users пуста — создаст admin/Admin#12345
+            // якщо таблиця Users пуста — створюем admin
             await new AuthService().EnsureAdminSeedAsync();
 
-            // окно входа
+            // Вікно входу
             if (!AppSession.IsAuthenticated)
             {
                 var login = new LoginWindow();
@@ -219,9 +222,34 @@ namespace WinCalc
                 if (!ok) { Close(); return; }
             }
 
-            // если хочешь прятать админ-кнопки с Tag="AdminOnly", раскомментируй:
-            // ApplyRoleUi();
+            // Завантаження матеріалів
+            try
+            {
+                dgMaterials.ItemsSource = dataAccess.ReadMaterials(); 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка завантаження матеріалів: {ex.Message}");
+            }
+
+            // Завантаження користувачів тільки якщо роль = admin
+            if (AppSession.IsInRole(Roles.Admin))
+            {
+                try
+                {
+                    var userStore = new WinCalc.Storage.SqliteUserStore();
+                    dgUsers.ItemsSource = await userStore.GetAllAsync();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Помилка завантаження користувачів: {ex.Message}");
+                }
+            }
+
+           
+            ApplyRoleUi();
         }
+
 
         private void ApplyRoleUi()
         {

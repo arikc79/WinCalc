@@ -1,12 +1,14 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
 
+
 namespace WindowProfileCalculatorLibrary
 {
     public class DataInitializer
     {
         /// <summary>
-        /// Вставляє початкові дані в таблиці Users і Materials.
+        /// Вставляє початкові дані в таблицю Materials.
+        /// Користувачі створюються тільки через AuthService.EnsureAdminSeedAsync().
         /// </summary>
         /// <param name="dbPath">Шлях до файлу бази даних</param>
         public void InsertInitialData(string dbPath)
@@ -24,27 +26,10 @@ namespace WindowProfileCalculatorLibrary
                         return;
                     }
 
-                    // Вставка тестових користувачів
-                    string insertUsers = @"
-                        INSERT OR IGNORE INTO Users (Login, Password, Role) VALUES
-                        ('admin', 'hashedpassword1', 'admin'),
-                        ('manager1', 'hashedpassword2', 'manager')";
-                    try
-                    {
-                        using (var command = new SqliteCommand(insertUsers, connection))
-                        {
-                            int rowsAffected = command.ExecuteNonQuery();
-                            Console.WriteLine($"Users inserted/checked. Rows affected: {rowsAffected}");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error inserting Users: {ex.Message}");
-                    }
-
                     // Вставка тестових матеріалів
                     string insertMaterials = @"
-                        INSERT OR IGNORE INTO Materials (Category, Name, Color, Price, Unit, QuantityType, Description) VALUES
+                        INSERT OR IGNORE INTO Materials 
+                        (Category, Name, Color, Price, Unit, QuantityType, Description) VALUES
                         ('профіль', 'Basic-Design (4)', 'білий', 425.00, 'м.пог.', 'довжина', '4-камерний профіль'),
                         ('скло', 'Однокамерний', NULL, 1500.00, 'м²', 'площа', 'Стандартне скло'),
                         ('фурнітура', 'Ручка стандартна', 'срібляста', 50.00, 'шт', 'шт', 'Базова ручка')";

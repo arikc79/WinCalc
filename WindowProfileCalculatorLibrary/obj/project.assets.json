@@ -175,6 +175,22 @@
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
         }
+      },
+      "WindowPaswoord/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "Microsoft.Data.Sqlite": "9.0.9"
+        },
+        "compile": {
+          "bin/placeholder/WindowPaswoord.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WindowPaswoord.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
       }
     }
   },
@@ -324,12 +340,18 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "WindowPaswoord/1.0.0": {
+      "type": "project",
+      "path": "../WindowPaswoord/WindowPaswoord.csproj",
+      "msbuildProject": "../WindowPaswoord/WindowPaswoord.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net9.0-windows7.0": [
       "Microsoft.Data.Sqlite >= 9.0.9",
-      "Microsoft.Data.Sqlite.Core >= 9.0.9"
+      "Microsoft.Data.Sqlite.Core >= 9.0.9",
+      "WindowPaswoord >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -364,7 +386,11 @@
       "frameworks": {
         "net9.0-windows7.0": {
           "targetAlias": "net9.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0002b\\WindowPaswoord\\WindowPaswoord.csproj": {
+              "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0002b\\WindowPaswoord\\WindowPaswoord.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

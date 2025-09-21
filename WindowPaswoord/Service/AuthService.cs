@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using WinCalc.Models;
+﻿using WindowPaswoord.Models;
 using WinCalc.Security;
 using WinCalc.Storage;
+
 
 namespace WinCalc.Services
 {
@@ -46,7 +46,7 @@ namespace WinCalc.Services
                 var admin = new User
                 {
                     Username = "admin",
-                    PasswordHash = PasswordHasher.Hash("Admin#12345"), // смените после первого входа
+                    PasswordHash = PasswordHasher.Hash("admin"), // смените после первого входа
                     Role = Roles.Admin
                 };
                 await _store.CreateAsync(admin);
