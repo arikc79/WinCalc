@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {}
+    "C:\\Users\\Глеб\\Desktop\\Новая папка (2)\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {}
   },
   "projects": {
-    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
+    "C:\\Users\\Глеб\\Desktop\\Новая папка (2)\\WindowPaswoord\\WindowPaswoord.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
+        "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\Новая папка (2)\\WindowPaswoord\\WindowPaswoord.csproj",
         "projectName": "WindowPaswoord",
-        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
-        "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\obj\\",
+        "projectPath": "C:\\Users\\Глеб\\Desktop\\Новая папка (2)\\WindowPaswoord\\WindowPaswoord.csproj",
+        "packagesPath": "C:\\Users\\Глеб\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Глеб\\Desktop\\Новая папка (2)\\WindowPaswoord\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\arikc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Глеб\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -79,20 +79,20 @@
         }
       }
     },
-    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
+    "C:\\Users\\Глеб\\Desktop\\Новая папка (2)\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\Новая папка (2)\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
         "projectName": "WindowProfileCalculatorLibrary",
-        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
-        "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowProfileCalculatorLibrary\\obj\\",
+        "projectPath": "C:\\Users\\Глеб\\Desktop\\Новая папка (2)\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+        "packagesPath": "C:\\Users\\Глеб\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Глеб\\Desktop\\Новая папка (2)\\WindowProfileCalculatorLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\arikc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Глеб\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -108,8 +108,8 @@
           "net9.0-windows7.0": {
             "targetAlias": "net9.0-windows",
             "projectReferences": {
-              "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
-                "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj"
+              "C:\\Users\\Глеб\\Desktop\\Новая папка (2)\\WindowPaswoord\\WindowPaswoord.csproj": {
+                "projectPath": "C:\\Users\\Глеб\\Desktop\\Новая папка (2)\\WindowPaswoord\\WindowPaswoord.csproj"
               }
             }
           }

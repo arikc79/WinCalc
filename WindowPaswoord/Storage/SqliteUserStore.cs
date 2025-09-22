@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using Microsoft.Data.Sqlite;
 using WindowPaswoord.Models;
+using WinCalc.Security; 
+
 
 
 namespace WinCalc.Storage
@@ -106,6 +108,27 @@ namespace WinCalc.Storage
 
             return users;
         }
+        public async Task UpdatePasswordAsync(int userId, string newPlainPassword)
+        {
+            if (string.IsNullOrWhiteSpace(newPlainPassword))
+                throw new ArgumentException("New password is empty.", nameof(newPlainPassword));
+
+            var hash = PasswordHasher.Hash(newPlainPassword);
+
+            using var con = Create();
+
+            await con.OpenAsync();
+
+            const string sql = @"UPDATE Users
+                         SET Password = @pass
+                         WHERE Id = @id;";
+            using var cmd = new SqliteCommand(sql, con);
+            cmd.Parameters.AddWithValue("@pass", hash);
+            cmd.Parameters.AddWithValue("@id", userId);
+
+            await cmd.ExecuteNonQueryAsync();
+        }
+
 
 
 
