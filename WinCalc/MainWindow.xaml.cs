@@ -127,6 +127,23 @@ namespace WinCalc
 
                 double cost = length * pricePerMeter;
                 lblResult.Content = $"За вибраними параметрами: {cost:F2} грн (Довжина: {length:F3} м)";
+
+                // сохранить строку в отчёт
+                ReportService.Append(new ReportRow
+                {
+                    User = AppSession.CurrentUser?.Username, 
+                    WindowType = cmbWindowType.Text,
+                    Brand = cmbBrand.Text,
+                    Profile = cmbProfile.Text,
+                    GlassPack = cmbGlassPack.Text,
+                    Width = width,
+                    Height = height,
+                    Length = length,
+                    PricePerMeter = pricePerMeter,
+                    Cost = cost,
+                    Sill = chkSill.IsChecked == true,
+                    Drain = chkDrain.IsChecked == true
+                });
             }
             catch (Exception ex)
             {
