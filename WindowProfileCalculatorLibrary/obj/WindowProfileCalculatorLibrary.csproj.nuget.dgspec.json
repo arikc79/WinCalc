@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {}
+    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {}
   },
   "projects": {
-    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
+    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\WindowPaswoord\\WindowPaswoord.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
+        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\WindowPaswoord\\WindowPaswoord.csproj",
         "projectName": "WindowPaswoord",
-        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
+        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\WindowPaswoord\\WindowPaswoord.csproj",
         "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\obj\\",
+        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\WindowPaswoord\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -79,14 +79,14 @@
         }
       }
     },
-    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
+    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
         "projectName": "WindowProfileCalculatorLibrary",
-        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
         "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowProfileCalculatorLibrary\\obj\\",
+        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\WindowProfileCalculatorLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -108,8 +108,8 @@
           "net9.0-windows7.0": {
             "targetAlias": "net9.0-windows",
             "projectReferences": {
-              "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
-                "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.3b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj"
+              "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\WindowPaswoord\\WindowPaswoord.csproj": {
+                "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\WindowPaswoord\\WindowPaswoord.csproj"
               }
             }
           }

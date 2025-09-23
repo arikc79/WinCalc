@@ -1,0 +1,51 @@
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WinCalc.deps.json
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WinCalc.runtimeconfig.json
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.deps.json
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.runtimeconfig.json
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.exe
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WinCalc.exe
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.deps.json
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.dll
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.pdb
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WinCalc.dll
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.dll
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.dll
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WinCalc.pdb
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.pdb
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.AssemblyReference.cache
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.AssemblyInfoInputs.cache
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.AssemblyInfo.cs
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.CoreCompileInputs.cache
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.Up2Date
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.dll
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\obj\Debug\net9.0-windows\refint\ReportLIb.dll
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.pdb
+C:\Users\arikc\Downloads\WinCalc--\WinCalc--\ReportLIb\obj\Debug\net9.0-windows\ref\ReportLIb.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WinCalc.deps.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WinCalc.runtimeconfig.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.deps.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.runtimeconfig.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.exe
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WinCalc.exe
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.deps.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WinCalc.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WinCalc.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.AssemblyReference.cache
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.GeneratedMSBuildEditorConfig.editorconfig
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.AssemblyInfoInputs.cache
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.AssemblyInfo.cs
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.CoreCompileInputs.cache
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.sourcelink.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.Up2Date
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\obj\Debug\net9.0-windows\refint\ReportLIb.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\ReportLIb\obj\Debug\net9.0-windows\ref\ReportLIb.dll
