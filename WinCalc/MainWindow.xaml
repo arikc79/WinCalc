@@ -102,52 +102,96 @@
 
             <!-- Вкладка: Матеріали -->
             <TabItem Header="Матеріали">
+                <!-- Дві рядки: 1 — грід, 2 — панель кнопок -->
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- DataGrid з мультивибором -->
                     <DataGrid x:Name="dgMaterials"
-                              AutoGenerateColumns="False"
-                              CanUserSortColumns="True"
-                              Margin="10"
-                              CellEditEnding="dgMaterials_CellEditEnding">
+              Grid.Row="0"
+              AutoGenerateColumns="False"
+              CanUserSortColumns="True"
+              SelectionMode="Extended"
+              SelectionUnit="FullRow"
+              Margin="10"
+              CellEditEnding="dgMaterials_CellEditEnding">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Категорія" Binding="{Binding Category}" Width="120"/>
-                            <DataGridTextColumn Header="Назва" Binding="{Binding Name}" Width="150"/>
-                            <DataGridTextColumn Header="Колір" Binding="{Binding Color}" Width="100"/>
-                            <DataGridTextColumn Header="Ціна (грн)" Binding="{Binding Price}" Width="120"/>
-                            <DataGridTextColumn Header="Одиниця" Binding="{Binding Unit}" Width="80"/>
-                            <DataGridTextColumn Header="Опис" Binding="{Binding Description}" Width="200"/>
+                            <DataGridTextColumn Header="Категорія" Binding="{Binding Category}" Width="140"/>
+                            <DataGridTextColumn Header="Назва" Binding="{Binding Name}" Width="220"/>
+                            <DataGridTextColumn Header="Колір" Binding="{Binding Color}" Width="120"/>
+                            <DataGridTextColumn Header="Ціна" Binding="{Binding Price}" Width="100"/>
+                            <DataGridTextColumn Header="Од." Binding="{Binding Unit}" Width="80"/>
+                            <!-- НОВЕ: кількість на складі -->
+                            <DataGridTextColumn Header="Кількість" Binding="{Binding Quantity}" Width="110"/>
+                            <DataGridTextColumn Header="Тип к-ті" Binding="{Binding QuantityType}" Width="110"/>
+                            <DataGridTextColumn Header="Опис" Binding="{Binding Description}" Width="300"/>
                         </DataGrid.Columns>
                     </DataGrid>
+
+                    <!-- Нижня панель керування -->
+                    <DockPanel Grid.Row="1" LastChildFill="False" Margin="10" >
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" >
+                            <Button x:Name="btnDeleteSelectedMaterials"
+                Content="Видалити вибрані"
+                Padding="10,4"
+                Margin="0,0,8,0"
+                Click="btnDeleteSelectedMaterials_Click"/>
+                            <Button x:Name="btnAddMaterial"
+                Content="Додати матеріал"
+                Padding="10,4"
+                Margin="0,0,8,0"
+                Click="btnAddMaterial_Click"/>
+                            <Button x:Name="btnImportCsv"
+                Content="Імпорт з CSV…"
+                Padding="10,4"
+                Click="btnImportCsv_Click"/>
+                        </StackPanel>
+                    </DockPanel>
                 </Grid>
             </TabItem>
+
 
             <!-- Вкладка: Користувачі (AdminOnly) -->
             <TabItem Header="Користувачі" Tag="AdminOnly">
                 <Grid>
                     <DataGrid x:Name="dgUsers"
-                              AutoGenerateColumns="False"
-                              CanUserSortColumns="True"
-                              Margin="10"
-                              RowEditEnding="dgUsers_RowEditEnding">
+              AutoGenerateColumns="False"
+              CanUserSortColumns="True"
+              Margin="10"
+              RowEditEnding="dgUsers_RowEditEnding">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True"/>
                             <DataGridTextColumn Header="Логін" Binding="{Binding Username}" Width="150"/>
 
-                            <!-- CHANGED: ComboBox з фіксованим ItemsSource -->
+                            <!-- Роль через ComboBox -->
                             <DataGridComboBoxColumn Header="Роль"
-                                                    ItemsSource="{StaticResource RolesList}"
-                                                    SelectedItemBinding="{Binding Role, UpdateSourceTrigger=PropertyChanged}"
-                                                    Width="120"/>
+                                ItemsSource="{StaticResource RolesList}"
+                                SelectedItemBinding="{Binding Role, UpdateSourceTrigger=PropertyChanged}"
+                                Width="120"/>
 
-                            <!-- CHANGED: Маскований “Пароль” + кнопка -->
+                            <!-- Маскований “Пароль” + кнопка зміни -->
                             <DataGridTemplateColumn Header="Пароль" Width="180">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="••••••" VerticalAlignment="Center" Margin="0,0,8,0"/>
                                             <Button Content="Змінити…" Padding="6,2"
-                                                    Click="BtnChangePassword_Click"/>
+                        Click="BtnChangePassword_Click"/>
                                         </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- НОВЕ: кнопка Видалити -->
+                            <DataGridTemplateColumn Header="Дії" Width="110">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Видалити" Padding="6,2"
+                      Click="BtnDeleteUser_Click"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -167,6 +211,7 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
+
 
         </TabControl>
     </Grid>
