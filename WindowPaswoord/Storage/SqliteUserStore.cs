@@ -129,7 +129,17 @@ namespace WinCalc.Storage
             await cmd.ExecuteNonQueryAsync();
         }
 
+        //Видалення користувача за його Id
+        public async Task DeleteAsync(int id)
+        {
+            using var con = Create();
+            await con.OpenAsync();
 
+            const string sql = @"DELETE FROM Users WHERE Id=@id;";
+            using var cmd = new SqliteCommand(sql, con);
+            cmd.Parameters.AddWithValue("@id", id);
+            await cmd.ExecuteNonQueryAsync();
+        }
 
 
     }
