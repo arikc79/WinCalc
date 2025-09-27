@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using WinCalc.Security;
@@ -7,6 +6,12 @@ using WinCalc.Services;
 using WinCalc.Storage;
 using WindowPaswoord.Models;
 using WindowProfileCalculatorLibrary;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+
+using Microsoft.Win32;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace WinCalc
 {
@@ -14,6 +19,8 @@ namespace WinCalc
     {
         private readonly Obchyslennya calculator = new Obchyslennya();
         private readonly DataAccess dataAccess = new DataAccess();
+        private ObservableCollection<User> _users = new();
+        private ObservableCollection<Material> _materials = new();
 
         public MainWindow()
         {
@@ -27,6 +34,99 @@ namespace WinCalc
             cmbGlassPack.ItemsSource = new[] { "Однокамерний", "Двокамерний", "Триплекс" };
         }
 
+
+
+        // HELP: оновити таблицю матеріалів
+        private void RefreshMaterials()
+        {
+            dgMaterials.ItemsSource = null;
+            dgMaterials.ItemsSource = dataAccess.ReadMaterials();
+            dgMaterials.IsReadOnly = !WinCalc.Security.AppSession.IsInRole(WinCalc.Security.Roles.Admin);
+        }
+
+        // IMPORT CSV
+        private void BtnImportCsv_Click(object sender, RoutedEventArgs e)
+        {
+            if (!WinCalc.Security.AppSession.IsInRole(WinCalc.Security.Roles.Admin))
+            {
+                MessageBox.Show("Імпорт доступний лише адміністратору.");
+                return;
+            }
+
+            var ofd = new OpenFileDialog
+            {
+                Filter = "CSV files (*.csv;*.txt)|*.csv;*.txt|All files (*.*)|*.*",
+                Title = "Оберіть CSV з матеріалами"
+            };
+            if (ofd.ShowDialog() != true) return;
+
+            try
+            {
+                var rows = CsvMaterialImporter.Import(ofd.FileName);
+                if (rows.Count == 0)
+                {
+                    MessageBox.Show("Файл не містить даних.");
+                    return;
+                }
+
+                var (inserted, updated) = dataAccess.BulkUpsertMaterials(rows);
+                RefreshMaterials();
+                MessageBox.Show($"Імпорт завершено.\nДодано: {inserted}\nОновлено: {updated}", "Готово");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка імпорту: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // DELETE SELECTED
+        private void btnDeleteMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            if (!WinCalc.Security.AppSession.IsInRole(WinCalc.Security.Roles.Admin))
+            {
+                MessageBox.Show("Видалення доступне лише адміністратору.");
+                return;
+            }
+
+            var selected = dgMaterials.SelectedItems.Cast<WindowProfileCalculatorLibrary.Material>().ToList();
+            if (selected.Count == 0)
+            {
+                MessageBox.Show("Виберіть хоча б один матеріал.");
+                return;
+            }
+
+            if (MessageBox.Show($"Видалити {selected.Count} запис(ів)?", "Підтвердження",
+                                MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
+            foreach (var m in selected)
+            {
+                try { dataAccess.DeleteMaterial(m.Id); }
+                catch (Exception ex) { MessageBox.Show($"Не вдалося видалити ID={m.Id}: {ex.Message}"); }
+            }
+
+            RefreshMaterials();
+        }
+
+        // Збереження правок у гриді (для адміна)
+        private void DgMaterials_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (!WinCalc.Security.AppSession.IsInRole(WinCalc.Security.Roles.Admin)) return;
+            if (e.Row.Item is WindowProfileCalculatorLibrary.Material mat)
+            {
+                try
+                {
+                    dataAccess.UpdateMaterial(mat);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Помилка збереження матеріалу: {ex.Message}");
+                }
+            }
+        }
+
+
+
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             await new AuthService().EnsureAdminSeedAsync();
@@ -39,14 +139,19 @@ namespace WinCalc
             }
 
             // Матеріали
+            _materials = new ObservableCollection<Material>(dataAccess.ReadMaterials());
             dgMaterials.ItemsSource = dataAccess.ReadMaterials();
             dgMaterials.IsReadOnly = !AppSession.IsInRole(Roles.Admin);
 
-            // Користувачі
+
+
+            // Користувачі (тільки для admin)
             if (AppSession.IsInRole(Roles.Admin))
             {
-                var userStore = new SqliteUserStore();
-                dgUsers.ItemsSource = await userStore.GetAllAsync();
+                var userStore = new WinCalc.Storage.SqliteUserStore();
+                var list = await userStore.GetAllAsync();
+                _users = new ObservableCollection<User>(list);
+                dgUsers.ItemsSource = _users;
                 dgUsers.IsReadOnly = false;
             }
 
@@ -238,7 +343,7 @@ namespace WinCalc
             }
         }
 
-        // Кнопка "Змінити…" пароль у колонці Пароль
+        // Кнопка "Змінити…" пароль 
         private async void BtnChangePassword_Click(object sender, RoutedEventArgs e)
         {
             if (!AppSession.IsInRole(Roles.Admin)) return;
@@ -285,7 +390,7 @@ namespace WinCalc
             return (true, "");
         }
 
-        // ===== Приховування вкладок для ролей =====
+        // Приховування вкладок для ролей 
 
         private void ApplyRoleUi()
         {
@@ -301,5 +406,140 @@ namespace WinCalc
             for (int i = 0; i < n; i++)
                 SetVisibilityByTag(System.Windows.Media.VisualTreeHelper.GetChild(root, i), tag, visible);
         }
+
+
+        private async void BtnDeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (!AppSession.IsInRole(Roles.Admin)) return;
+
+            if (sender is Button btn && btn.DataContext is User user)
+            {
+                // якщо рядок новий і ще не збережений — просто приберемо з гріда
+                if (user.Id == 0)
+                {
+                    _users.Remove(user);
+                    return;
+                }
+
+                var confirm = MessageBox.Show(
+                    $"Видалити користувача \"{user.Username}\"?",
+                    "Підтвердження видалення",
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (confirm != MessageBoxResult.Yes) return;
+
+                try
+                {
+                    var store = new WinCalc.Storage.SqliteUserStore();
+                    await store.DeleteAsync(user.Id);   // БД
+                    _users.Remove(user);                // UI — миттєво
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Не вдалося видалити користувача: {ex.Message}",
+                        "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+
+        // Видалення вибраних рядків
+        private void btnDeleteSelectedMaterials_Click(object sender, RoutedEventArgs e)
+        {
+            if (!AppSession.IsInRole(Roles.Admin)) { MessageBox.Show("Лише для адміністратора"); return; }
+            var selected = dgMaterials.SelectedItems.Cast<Material>().ToList();
+            if (selected.Count == 0) return;
+
+            var ask = MessageBox.Show($"Видалити вибрані матеріали ({selected.Count})?",
+                                      "Підтвердження", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (ask != MessageBoxResult.Yes) return;
+
+            foreach (var m in selected)
+            {
+                try
+                {
+                    dataAccess.DeleteMaterial(m.Id);
+                    _materials.Remove(m);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Не вдалося видалити '{m.Name}': {ex.Message}");
+                }
+            }
+        }
+
+        // Швидке додавання порожнього рядка (адмін руками заповнить у гріді)
+        private void btnAddMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            if (!AppSession.IsInRole(Roles.Admin)) { MessageBox.Show("Лише для адміністратора"); return; }
+
+            var m = new Material
+            {
+                // дефолти
+                Category = "",
+                Name = "Новий матеріал",
+                Color = "",
+                Price = 0,
+                Unit = "шт",
+                Quantity = 0,               
+                QuantityType = "шт",           // або "м", "м²" 
+                Description = ""
+            };
+
+            // пишемо в БД, щоб отримати Id, і додаємо в колекцію
+            var created = dataAccess.CreateMaterial(m);
+            _materials.Add(created);
+            dgMaterials.SelectedItem = created;
+            dgMaterials.ScrollIntoView(created);
+        }
+
+        // Імпорт із CSV (категорія;назва;колір;ціна;од.;кількість;типк-ті;опис)
+        private void btnImportCsv_Click(object sender, RoutedEventArgs e)
+        {
+            if (!AppSession.IsInRole(Roles.Admin)) { MessageBox.Show("Лише для адміністратора"); return; }
+
+            var dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "CSV (*.csv)|*.csv|All files (*.*)|*.*",
+                Title = "Обрати CSV з матеріалами"
+            };
+            if (dlg.ShowDialog() != true) return;
+
+            try
+            {
+                var lines = System.IO.File.ReadAllLines(dlg.FileName, System.Text.Encoding.UTF8);
+                int added = 0;
+                foreach (var line in lines)
+                {
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+             
+                    var parts = line.Split(';');
+                    if (parts.Length < 8) continue;
+
+                    var m = new Material
+                    {
+                        Category = parts[0].Trim(),
+                        Name = parts[1].Trim(),
+                        Color = string.IsNullOrWhiteSpace(parts[2]) ? "" : parts[2].Trim(),
+                        Price = double.TryParse(parts[3].Trim().Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture, out var p) ? p : 0,
+                        Unit = parts[4].Trim(),
+                        Quantity = double.TryParse(parts[5].Trim().Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture, out var q) ? q : 0,
+                        QuantityType = parts[6].Trim(),
+                        Description = parts[7].Trim()
+                    };
+
+                    var created = dataAccess.CreateMaterial(m);
+                    _materials.Add(created);
+                    added++;
+                }
+                MessageBox.Show($"Імпортовано {added} матеріалів");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка імпорту: {ex.Message}");
+            }
+        }
+
+
     }
 }
