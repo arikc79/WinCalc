@@ -8,6 +8,11 @@ using WindowPaswoord.Models;
 using WindowProfileCalculatorLibrary;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+
+using Microsoft.Win32;
+using System.Linq;
+using System.Collections.Generic;
+
 namespace WinCalc
 {
     public partial class MainWindow : Window
@@ -29,6 +34,99 @@ namespace WinCalc
             cmbGlassPack.ItemsSource = new[] { "Однокамерний", "Двокамерний", "Триплекс" };
         }
 
+
+
+        // HELP: оновити таблицю матеріалів
+        private void RefreshMaterials()
+        {
+            dgMaterials.ItemsSource = null;
+            dgMaterials.ItemsSource = dataAccess.ReadMaterials();
+            dgMaterials.IsReadOnly = !WinCalc.Security.AppSession.IsInRole(WinCalc.Security.Roles.Admin);
+        }
+
+        // IMPORT CSV
+        private void BtnImportCsv_Click(object sender, RoutedEventArgs e)
+        {
+            if (!WinCalc.Security.AppSession.IsInRole(WinCalc.Security.Roles.Admin))
+            {
+                MessageBox.Show("Імпорт доступний лише адміністратору.");
+                return;
+            }
+
+            var ofd = new OpenFileDialog
+            {
+                Filter = "CSV files (*.csv;*.txt)|*.csv;*.txt|All files (*.*)|*.*",
+                Title = "Оберіть CSV з матеріалами"
+            };
+            if (ofd.ShowDialog() != true) return;
+
+            try
+            {
+                var rows = CsvMaterialImporter.Import(ofd.FileName);
+                if (rows.Count == 0)
+                {
+                    MessageBox.Show("Файл не містить даних.");
+                    return;
+                }
+
+                var (inserted, updated) = dataAccess.BulkUpsertMaterials(rows);
+                RefreshMaterials();
+                MessageBox.Show($"Імпорт завершено.\nДодано: {inserted}\nОновлено: {updated}", "Готово");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка імпорту: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // DELETE SELECTED
+        private void btnDeleteMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            if (!WinCalc.Security.AppSession.IsInRole(WinCalc.Security.Roles.Admin))
+            {
+                MessageBox.Show("Видалення доступне лише адміністратору.");
+                return;
+            }
+
+            var selected = dgMaterials.SelectedItems.Cast<WindowProfileCalculatorLibrary.Material>().ToList();
+            if (selected.Count == 0)
+            {
+                MessageBox.Show("Виберіть хоча б один матеріал.");
+                return;
+            }
+
+            if (MessageBox.Show($"Видалити {selected.Count} запис(ів)?", "Підтвердження",
+                                MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
+            foreach (var m in selected)
+            {
+                try { dataAccess.DeleteMaterial(m.Id); }
+                catch (Exception ex) { MessageBox.Show($"Не вдалося видалити ID={m.Id}: {ex.Message}"); }
+            }
+
+            RefreshMaterials();
+        }
+
+        // Збереження правок у гриді (для адміна)
+        private void DgMaterials_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (!WinCalc.Security.AppSession.IsInRole(WinCalc.Security.Roles.Admin)) return;
+            if (e.Row.Item is WindowProfileCalculatorLibrary.Material mat)
+            {
+                try
+                {
+                    dataAccess.UpdateMaterial(mat);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Помилка збереження матеріалу: {ex.Message}");
+                }
+            }
+        }
+
+
+
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             await new AuthService().EnsureAdminSeedAsync();
@@ -42,8 +140,9 @@ namespace WinCalc
 
             // Матеріали
             _materials = new ObservableCollection<Material>(dataAccess.ReadMaterials());
-            dgMaterials.ItemsSource = _materials;
+            dgMaterials.ItemsSource = dataAccess.ReadMaterials();
             dgMaterials.IsReadOnly = !AppSession.IsInRole(Roles.Admin);
+
 
 
             // Користувачі (тільки для admin)
