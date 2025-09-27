@@ -22,9 +22,69 @@ namespace WinCalc
         private ObservableCollection<User> _users = new();
         private ObservableCollection<Material> _materials = new();
 
+        // Фіксовані списки для комбобоксів у гріді матеріалів
+        public System.Collections.ObjectModel.ObservableCollection<string> MaterialCategories { get; }
+            = new System.Collections.ObjectModel.ObservableCollection<string>
+            {
+                 "профіль",
+                 "скло",
+                 "фурнітура",
+                 "підвіконня",
+                 "відлив",
+                 "ущільнювач",
+                 "аксесуари"
+            };
+
+        public System.Collections.ObjectModel.ObservableCollection<string> Units { get; }
+            = new System.Collections.ObjectModel.ObservableCollection<string>
+            {
+                "м.пог.",
+                "м²",
+                "шт"
+            };
+
+        public System.Collections.ObjectModel.ObservableCollection<string> Currencies { get; }
+            = new System.Collections.ObjectModel.ObservableCollection<string>
+            {
+                "грн",
+                "USD",
+                "EUR"
+            };
+
+        // Загальний список назв (початковий варіант; можна винести у CSV/БД)
+        public System.Collections.ObjectModel.ObservableCollection<string> MaterialNames { get; }
+            = new System.Collections.ObjectModel.ObservableCollection<string>
+            {
+        // профіль
+        "Basic-Design (4)",
+        "Euro 70 (5)",
+        "Delight (6)",
+        "Synego (7)",
+        // скло
+        "Однокамерний",
+        "Двокамерний",
+        "Триплекс",
+        // фурнітура
+        "Ручка стандартна",
+        "Петля комплект",
+        "Мікроліфт",
+        // підвіконня
+        "Підвіконник ПВХ 200 мм",
+        "Підвіконник ПВХ 300 мм",
+        // відлив
+        "Відлив 150 мм",
+        "Відлив 200 мм",
+        // ущільнювач/аксесуари
+        "Ущільнювач універсальний",
+        "Москітна сітка",
+            };
+
+
+
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
             this.Loaded += MainWindow_Loaded;
 
             // Ініціалізація ComboBox

@@ -3,23 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+        xmlns:local="clr-namespace:WinCalc"
+        mc:Ignorable="d"
         Title="WinCalc" Height="700" Width="1100"
         MinHeight="700" MinWidth="1100"
         MaxHeight="900" MaxWidth="1600">
 
-    <!-- CHANGED: стабільне джерело ItemsSource для ролей -->
-    <Window.Resources>
-        <x:Array x:Key="RolesList" Type="{x:Type sys:String}">
-            <sys:String>admin</sys:String>
-            <sys:String>manager</sys:String>
-        </x:Array>
-    </Window.Resources>
-
     <Grid>
         <TabControl Grid.Row="1" Grid.Column="1" Margin="10">
-
-            <!-- Вкладка: Розрахунок (без змін по суті) -->
+            <!-- Вкладка розрахунку -->
             <TabItem Header="Розрахунок">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -32,44 +24,62 @@
                         <ColumnDefinition Width="39*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Content="Розрахунок вікна" Grid.Column="1" FontSize="24" 
-                           Margin="216,10,0,0" Height="49" Width="208" Grid.RowSpan="2"/>
+                    <Label Content="Розрахунок вікна"
+                           Margin="216,10,0,0"
+                           Grid.Column="1"
+                           Height="49"
+                           Width="208"
+                           FontSize="24"
+                           Grid.RowSpan="2"/>
 
-                    <Label Content="Ширина:" Grid.Column="1" Margin="8,412,0,0" Width="73" Height="31" Grid.Row="1"/>
-                    <TextBox x:Name="txtWidth" Grid.Column="1" Margin="10,443,0,0" Text="Ширина мм." Grid.Row="1"/>
+                    <Label Content="Стандартні вікна"
+                           HorizontalAlignment="Center"
+                           Margin="0,10,0,0"
+                           VerticalAlignment="Top"
+                           FontSize="16"
+                           Height="31"
+                           Width="140"
+                           Grid.Row="1"/>
 
-                    <Label Content="Висота:" Grid.Column="1" Margin="271,412,0,0" Height="31" Width="80" Grid.Row="1"/>
-                    <TextBox x:Name="txtHeight" Grid.Column="1" Margin="271,443,0,0" Text="Висота мм." Grid.Row="1"/>
+                    <Label Grid.Column="1" Content="Ширина:" Margin="8,412,0,0" Width="73" Height="31" Grid.Row="1"/>
+                    <Label Grid.Column="1" Content="Висота:" Margin="271,412,0,0" Height="31" Width="80" Grid.Row="1"/>
 
-                    <Label Content="Комплектація вікна" Grid.Column="1" HorizontalAlignment="Center"
-                           Margin="448,1,0,0" Width="248" FontSize="26" Height="45" Grid.Row="1"/>
+                    <TextBox Grid.Column="1" Margin="10,443,0,0" Text="Ширина мм." Grid.Row="1" x:Name="txtWidth"/>
+                    <TextBox Grid.Column="1" Margin="271,443,0,0" Text="Висота мм." Grid.Row="1" x:Name="txtHeight"/>
 
-                    <Label Content="Обрана конструкція" Grid.Column="1" Margin="430,41,0,0" Width="160" Height="32" Grid.Row="1"/>
-                    <ComboBox x:Name="cmbWindowType" Grid.Column="1" Margin="430,73,0,0" Grid.Row="1"/>
+                    <Label Grid.Column="1" Content="Комплектація вікна"
+                           HorizontalAlignment="Center"
+                           Margin="448,1,0,0"
+                           Width="248"
+                           FontSize="26"
+                           Height="45"
+                           Grid.Row="1"/>
 
-                    <Label Content="Бренд" Grid.Column="1" Margin="430,102,0,0" Height="31" Width="243"/>
-                    <ComboBox x:Name="cmbBrand" Grid.Column="1" Margin="430,133,0,0" 
-                              SelectionChanged="cmbBrand_SelectionChanged" Grid.Row="1"/>
+                    <Label Grid.Column="1" Content="Обрана конструкція" HorizontalAlignment="Stretch" Margin="430,41,0,0" Width="160" Height="32" Grid.Row="1"/>
+                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="430,73,0,0" Grid.Row="1" x:Name="cmbWindowType"/>
 
-                    <Label Content="Профіль" Grid.Column="1" Margin="426,166,0,0" Height="31" Width="236"/>
-                    <ComboBox x:Name="cmbProfile" Grid.Column="1" Margin="430,202,0,0" Grid.Row="1"/>
+                    <Label Grid.Column="1" Content="Бренд - сортування по бренду" HorizontalAlignment="Stretch" Margin="430,102,0,0" Grid.Row="1" Height="31" Width="243"/>
+                    <ComboBox Grid.Column="1"  HorizontalAlignment="Stretch" Margin="430,133,0,0" Grid.Row="1" x:Name="cmbBrand" SelectionChanged="cmbBrand_SelectionChanged"/>
 
-                    <Label Content="Склопакет" Grid.Column="1" Margin="430,229,0,0" Height="28" Width="232"/>
-                    <ComboBox x:Name="cmbGlassPack" Grid.Column="1" Margin="430,262,0,0" Grid.Row="1"/>
+                    <Label Grid.Column="1" Content="Профіль - виберіть потрібний " HorizontalAlignment="Stretch" Margin="426,166,0,0" Grid.Row="1" Height="31" Width="236"/>
+                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="430,202,0,0" Grid.Row="1" x:Name="cmbProfile"/>
 
-                    <Button x:Name="btnCalculate" Content="Розрахувати вартість" Grid.Column="1" 
-                            Margin="465,372,39,0" Width="307" Height="35" Grid.Row="1"
-                            Click="btnCalculate_Click"/>
+                    <Label Grid.Column="1" Content="Склопакет - оберіть бажаний" HorizontalAlignment="Stretch" Margin="430,229,0,0" Grid.Row="1" Height="28" Width="232"/>
+                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="430,262,0,0" Grid.Row="1" x:Name="cmbGlassPack"/>
 
-                    <CheckBox x:Name="chkSill" Content="Підвіконник" Grid.Column="1" Margin="432,297,0,0" Grid.Row="1"/>
-                    <CheckBox x:Name="chkDrain" Content="Відлив" Grid.Column="1" Margin="709,323,277,0" Grid.Row="1"/>
+                    <Button Grid.Column="1" Content="Розрахувати вартість" HorizontalAlignment="Stretch" Margin="465,372,39,0" Width="307" Height="35" Grid.Row="1" x:Name="btnCalculate" Click="btnCalculate_Click"/>
+                    <CheckBox Grid.Column="1" Content="Підвіконник" HorizontalAlignment="Stretch" Margin="432,297,0,0" Grid.Row="1" x:Name="chkSill"/>
+                    <CheckBox Grid.Column="1" Content="Відлив"  HorizontalAlignment="Stretch" Margin="709,323,277,0" Grid.Row="1" x:Name="chkDrain"/>
 
-                    <Label x:Name="lblResult" Content="За вибраними параметрами: ---"
-                           Grid.Column="1" Margin="10,478,0,0" Grid.Row="1" Height="135" Width="740"/>
+                    <Label Grid.Column="1" Content="За вибраними вами параметрами: --- вартість без встановлення ---"
+                           Margin="10,478,0,0"
+                           Grid.Row="1"
+                           Height="135"
+                           Width="740"
+                           x:Name="lblResult"/>
 
-                    <!-- Список зображень -->
-                    <ListBox x:Name="lstImages" Grid.Row="1" Grid.Column="0" Margin="8,52,20,10"
-                             SelectionChanged="lstImages_SelectionChanged">
+                    <!-- Список ескізів конструкцій -->
+                    <ListBox Grid.Row="1" HorizontalAlignment="Stretch" Margin="8,52,20,10" x:Name="lstImages" SelectionChanged="lstImages_SelectionChanged">
                         <ListBoxItem>
                             <Image Height="104" Source="/WinCalc;component/Image/5.png" Stretch="Fill" Width="70" Margin="10" Tag="5"/>
                         </ListBoxItem>
@@ -87,122 +97,144 @@
                         </ListBoxItem>
                     </ListBox>
 
-                    <Button x:Name="btnTestCrud" Content="Test CRUD" Grid.Column="1"
-                            Margin="466,427,38,0" Width="307" Height="35" Grid.Row="1"
-                            Click="btnTestCrud_Click"/>
+                    <Button Grid.Column="1" Content="Test CRUD"  HorizontalAlignment="Stretch" Margin="466,427,38,0" Width="307" Height="35" Grid.Row="1" x:Name="btnTestCrud" Click="btnTestCrud_Click"/>
 
-                    <!-- Головне зображення -->
-                    <Border x:Name="borderWithImage" BorderBrush="Black" BorderThickness="1"
-                            Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left"
-                            Width="395" Height="358" Margin="10,10,0,0">
-                        <Image x:Name="imgSelected" Stretch="Uniform"/>
+                    <!-- Прев'ю вибраного ескізу -->
+                    <Border x:Name="borderWithImage" BorderBrush="Black" BorderThickness="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="395" Height="358" Margin="10,10,0,0" Grid.Column="1">
+                        <Image x:Name="imgSelected" Stretch="Uniform" Margin="-1,4,0,0" HorizontalAlignment="Left" Width="388" Height="350" VerticalAlignment="Top"/>
                     </Border>
                 </Grid>
             </TabItem>
 
             <!-- Вкладка: Матеріали -->
-            <TabItem Header="Матеріалі">
+            <TabItem Header="Матеріали">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <!-- Таблиця матеріалів -->
+                    <!-- DataGrid матеріалів з комбобоксами -->
                     <DataGrid x:Name="dgMaterials"
-              Grid.Row="0"
-              AutoGenerateColumns="False"
-              CanUserSortColumns="True"
-              Margin="10"
-              CellEditEnding="DgMaterials_CellEditEnding">
+                              Grid.Row="0"
+                              AutoGenerateColumns="False"
+                              CanUserSortColumns="True"
+                              Margin="10"
+                              CellEditEnding="dgMaterials_CellEditEnding">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Категорія" Binding="{Binding Category}" Width="120"/>
-                            <DataGridTextColumn Header="Назва" Binding="{Binding Name}" Width="180"/>
+
+                            <!-- Категорія: ComboBox -->
+                            <DataGridTemplateColumn Header="Категорія" Width="140">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Category}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox
+                                            ItemsSource="{Binding DataContext.MaterialCategories, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            SelectedItem="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            IsEditable="False"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Назва: ComboBox (із можливістю ручного вводу) -->
+                            <DataGridTemplateColumn Header="Назва" Width="200">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox
+                                            ItemsSource="{Binding DataContext.MaterialNames, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            SelectedItem="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            IsEditable="True"
+                                            IsTextSearchEnabled="True"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+
                             <DataGridTextColumn Header="Колір" Binding="{Binding Color}" Width="100"/>
                             <DataGridTextColumn Header="Ціна" Binding="{Binding Price}" Width="100"/>
-                            <DataGridTextColumn Header="Одиниця" Binding="{Binding Unit}" Width="80"/>
+
+                            <!-- Одиниця: ComboBox -->
+                            <DataGridTemplateColumn Header="Одиниця" Width="110">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Unit}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox
+                                            ItemsSource="{Binding DataContext.Units, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            SelectedItem="{Binding Unit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            IsEditable="False"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+
                             <DataGridTextColumn Header="Кількість" Binding="{Binding Quantity}" Width="110"/>
-                            <DataGridTextColumn Header="Тип к-сті" Binding="{Binding QuantityType}" Width="100"/>
+
                             <DataGridTextColumn Header="Артикул" Binding="{Binding Article}" Width="120"/>
-                            <DataGridTextColumn Header="Валюта" Binding="{Binding Currency}" Width="90"/>
+
+                            <!-- Валюта: ComboBox -->
+                            <DataGridTemplateColumn Header="Валюта" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Currency}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox
+                                            ItemsSource="{Binding DataContext.Currencies, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            SelectedItem="{Binding Currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            IsEditable="False"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+
                             <DataGridTextColumn Header="Опис" Binding="{Binding Description}" Width="200"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <!-- Панель дій -->
+                    <!-- Панель дій під таблицею -->
                     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10,0,10,10" HorizontalAlignment="Right">
-                        <!-- Імітація Spacing через Margin на кнопках -->
+                        <!-- Імітація Spacing через Margin -->
                         <StackPanel.Resources>
                             <Style TargetType="Button">
                                 <Setter Property="Margin" Value="0,0,8,0"/>
                             </Style>
                         </StackPanel.Resources>
 
-                        <Button x:Name="btnImportCsv" Content="Імпорт CSV" Width="130" Click="BtnImportCsv_Click"/>
+                        <Button x:Name="btnImportCsv" Content="Імпорт CSV" Width="130" Click="btnImportCsv_Click"/>
                         <Button x:Name="btnDeleteMaterial" Content="Видалити вибрані" Width="150" Click="btnDeleteMaterial_Click"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
 
-
-            <!-- Вкладка: Користувачі (AdminOnly) -->
+            <!-- Вкладка: Користувачі (доступна лише для Admin через Tag=AdminOnly) -->
             <TabItem Header="Користувачі" Tag="AdminOnly">
                 <Grid>
                     <DataGrid x:Name="dgUsers"
-              AutoGenerateColumns="False"
-              CanUserSortColumns="True"
-              Margin="10"
-              RowEditEnding="dgUsers_RowEditEnding">
+                              AutoGenerateColumns="False"
+                              CanUserSortColumns="True"
+                              Margin="10"
+                              RowEditEnding="dgUsers_RowEditEnding" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True"/>
                             <DataGridTextColumn Header="Логін" Binding="{Binding Username}" Width="150"/>
-
-                            <!-- Роль через ComboBox -->
-                            <DataGridComboBoxColumn Header="Роль"
-                                ItemsSource="{StaticResource RolesList}"
-                                SelectedItemBinding="{Binding Role, UpdateSourceTrigger=PropertyChanged}"
-                                Width="120"/>
-
-                            <!-- Маскований “Пароль” + кнопка зміни -->
-                            <DataGridTemplateColumn Header="Пароль" Width="180">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="••••••" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                                            <Button Content="Змінити…" Padding="6,2"
-                        Click="BtnChangePassword_Click"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-                            <!-- НОВЕ: кнопка Видалити -->
-                            <DataGridTemplateColumn Header="Дії" Width="110">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="Видалити" Padding="6,2"
-                      Click="BtnDeleteUser_Click"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="100"/>
                         </DataGrid.Columns>
-
-                        <!-- Підсвічування проблемних рядків -->
-                        <DataGrid.RowStyle>
-                            <Style TargetType="DataGridRow">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Username}" Value="">
-                                        <Setter Property="Background" Value="#FFFDE2E2"/>
-                                        <Setter Property="ToolTip" Value="Логін не може бути порожнім"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGrid.RowStyle>
                     </DataGrid>
                 </Grid>
             </TabItem>
-
 
         </TabControl>
     </Grid>

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WindowProfileCalculatorLibrary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39632ffebea90f2c7612becb70d720c381f61ad5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1679a2039747ce085bdf65888da63848c7e09ea3")]
 [assembly: System.Reflection.AssemblyProductAttribute("WindowProfileCalculatorLibrary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WindowProfileCalculatorLibrary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
