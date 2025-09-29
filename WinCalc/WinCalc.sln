@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowPaswoord", "..\Window
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportLIb", "..\ReportLIb\ReportLIb.csproj", "{0C7F9EEF-01E9-4CA7-BB0B-F6EF8C2A5B36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaterialsFeatureLib", "..\MaterialsFeatureLib\MaterialsFeatureLib.csproj", "{007BBBDA-21A5-4321-9B99-0E909B41EF48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0C7F9EEF-01E9-4CA7-BB0B-F6EF8C2A5B36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C7F9EEF-01E9-4CA7-BB0B-F6EF8C2A5B36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C7F9EEF-01E9-4CA7-BB0B-F6EF8C2A5B36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{007BBBDA-21A5-4321-9B99-0E909B41EF48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007BBBDA-21A5-4321-9B99-0E909B41EF48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007BBBDA-21A5-4321-9B99-0E909B41EF48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007BBBDA-21A5-4321-9B99-0E909B41EF48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -176,24 +176,6 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
-      "WinCalc/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v9.0",
-        "dependencies": {
-          "Microsoft.Data.Sqlite": "9.0.9",
-          "WindowPaswoord": "1.0.0",
-          "WindowProfileCalculatorLibrary": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/WinCalc.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/WinCalc.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WPF"
-        ]
-      },
       "WindowPaswoord/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -377,11 +359,6 @@
         "version.txt"
       ]
     },
-    "WinCalc/1.0.0": {
-      "type": "project",
-      "path": "../WinCalc/WinCalc.csproj",
-      "msbuildProject": "../WinCalc/WinCalc.csproj"
-    },
     "WindowPaswoord/1.0.0": {
       "type": "project",
       "path": "../WindowPaswoord/WindowPaswoord.csproj",
@@ -395,29 +372,28 @@
   },
   "projectFileDependencyGroups": {
     "net9.0-windows7.0": [
-      "WinCalc >= 1.0.0",
       "WindowPaswoord >= 1.0.0",
       "WindowProfileCalculatorLibrary >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\arikc\\.nuget\\packages\\": {},
+    "C:\\Users\\Глеб\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\arikc79\\WinCalc\\ReportLIb\\ReportLIb.csproj",
+      "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\git\\ReportLIb\\ReportLIb.csproj",
       "projectName": "ReportLIb",
-      "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\arikc79\\WinCalc\\ReportLIb\\ReportLIb.csproj",
-      "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-      "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\arikc79\\WinCalc\\ReportLIb\\obj\\",
+      "projectPath": "C:\\Users\\Глеб\\Desktop\\git\\ReportLIb\\ReportLIb.csproj",
+      "packagesPath": "C:\\Users\\Глеб\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Глеб\\Desktop\\git\\ReportLIb\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\arikc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Глеб\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -433,14 +409,11 @@
         "net9.0-windows7.0": {
           "targetAlias": "net9.0-windows",
           "projectReferences": {
-            "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\arikc79\\WinCalc\\WinCalc\\WinCalc.csproj": {
-              "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\arikc79\\WinCalc\\WinCalc\\WinCalc.csproj"
+            "C:\\Users\\Глеб\\Desktop\\git\\WindowPaswoord\\WindowPaswoord.csproj": {
+              "projectPath": "C:\\Users\\Глеб\\Desktop\\git\\WindowPaswoord\\WindowPaswoord.csproj"
             },
-            "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\arikc79\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
-              "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\arikc79\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj"
-            },
-            "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\arikc79\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
-              "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.4b\\arikc79\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj"
+            "C:\\Users\\Глеб\\Desktop\\git\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
+              "projectPath": "C:\\Users\\Глеб\\Desktop\\git\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj"
             }
           }
         }

@@ -49,3 +49,24 @@ D:\Step\Курсова-Розрахунку вартості м-п вікна\п
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\arikc79\WinCalc\ReportLIb\obj\Debug\net9.0-windows\refint\ReportLIb.dll
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\arikc79\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.pdb
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.4b\arikc79\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ref\ReportLIb.dll
+C:\Users\Глеб\Desktop\git\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.deps.json
+C:\Users\Глеб\Desktop\git\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.runtimeconfig.json
+C:\Users\Глеб\Desktop\git\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.exe
+C:\Users\Глеб\Desktop\git\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.deps.json
+C:\Users\Глеб\Desktop\git\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.dll
+C:\Users\Глеб\Desktop\git\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.pdb
+C:\Users\Глеб\Desktop\git\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.dll
+C:\Users\Глеб\Desktop\git\ReportLIb\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.dll
+C:\Users\Глеб\Desktop\git\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.pdb
+C:\Users\Глеб\Desktop\git\ReportLIb\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
+C:\Users\Глеб\Desktop\git\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.AssemblyReference.cache
+C:\Users\Глеб\Desktop\git\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Глеб\Desktop\git\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.AssemblyInfoInputs.cache
+C:\Users\Глеб\Desktop\git\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.AssemblyInfo.cs
+C:\Users\Глеб\Desktop\git\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.CoreCompileInputs.cache
+C:\Users\Глеб\Desktop\git\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.sourcelink.json
+C:\Users\Глеб\Desktop\git\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.Up2Date
+C:\Users\Глеб\Desktop\git\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.dll
+C:\Users\Глеб\Desktop\git\ReportLIb\obj\Debug\net9.0-windows\refint\ReportLIb.dll
+C:\Users\Глеб\Desktop\git\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.pdb
+C:\Users\Глеб\Desktop\git\ReportLIb\obj\Debug\net9.0-windows\ref\ReportLIb.dll

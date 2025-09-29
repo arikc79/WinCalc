@@ -8,10 +8,12 @@ using WindowPaswoord.Models;
 using WindowProfileCalculatorLibrary;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-
+using MaterialsFeatureLib;
 using Microsoft.Win32;
 using System.Linq;
 using System.Collections.Generic;
+using System.Windows.Input;
+
 
 namespace WinCalc
 {
@@ -105,7 +107,7 @@ namespace WinCalc
         }
 
         // IMPORT CSV
-        private void BtnImportCsv_Click(object sender, RoutedEventArgs e)
+        private void btnImportCsv_Click(object sender, RoutedEventArgs e)
         {
             if (!WinCalc.Security.AppSession.IsInRole(WinCalc.Security.Roles.Admin))
             {
@@ -167,25 +169,6 @@ namespace WinCalc
 
             RefreshMaterials();
         }
-
-        // Збереження правок у гриді (для адміна)
-        private void DgMaterials_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            if (!WinCalc.Security.AppSession.IsInRole(WinCalc.Security.Roles.Admin)) return;
-            if (e.Row.Item is WindowProfileCalculatorLibrary.Material mat)
-            {
-                try
-                {
-                    dataAccess.UpdateMaterial(mat);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Помилка збереження матеріалу: {ex.Message}");
-                }
-            }
-        }
-
-
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -552,51 +535,13 @@ namespace WinCalc
             dgMaterials.SelectedItem = created;
             dgMaterials.ScrollIntoView(created);
         }
-
-        // Імпорт із CSV (категорія;назва;колір;ціна;од.;кількість;типк-ті;опис)
-        private void btnImportCsv_Click(object sender, RoutedEventArgs e)
+        private void dgMaterials_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (!AppSession.IsInRole(Roles.Admin)) { MessageBox.Show("Лише для адміністратора"); return; }
-
-            var dlg = new Microsoft.Win32.OpenFileDialog
+            if (e.Key == Key.Delete)
             {
-                Filter = "CSV (*.csv)|*.csv|All files (*.*)|*.*",
-                Title = "Обрати CSV з матеріалами"
-            };
-            if (dlg.ShowDialog() != true) return;
-
-            try
-            {
-                var lines = System.IO.File.ReadAllLines(dlg.FileName, System.Text.Encoding.UTF8);
-                int added = 0;
-                foreach (var line in lines)
-                {
-                    if (string.IsNullOrWhiteSpace(line)) continue;
-             
-                    var parts = line.Split(';');
-                    if (parts.Length < 8) continue;
-
-                    var m = new Material
-                    {
-                        Category = parts[0].Trim(),
-                        Name = parts[1].Trim(),
-                        Color = string.IsNullOrWhiteSpace(parts[2]) ? "" : parts[2].Trim(),
-                        Price = double.TryParse(parts[3].Trim().Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture, out var p) ? p : 0,
-                        Unit = parts[4].Trim(),
-                        Quantity = double.TryParse(parts[5].Trim().Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture, out var q) ? q : 0,
-                        QuantityType = parts[6].Trim(),
-                        Description = parts[7].Trim()
-                    };
-
-                    var created = dataAccess.CreateMaterial(m);
-                    _materials.Add(created);
-                    added++;
-                }
-                MessageBox.Show($"Імпортовано {added} матеріалів");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Помилка імпорту: {ex.Message}");
+                // Жмём Delete — удаляем выделенные записи той же логикой, что по кнопке
+                btnDeleteMaterial_Click(sender, new RoutedEventArgs());
+                e.Handled = true;
             }
         }
 
