@@ -1,18 +1,19 @@
-﻿using System.Text.RegularExpressions;
+﻿using MaterialsFeatureLib;
+using Microsoft.Win32;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WinCalc.Security;
 using WinCalc.Services;
 using WinCalc.Storage;
 using WindowPaswoord.Models;
 using WindowProfileCalculatorLibrary;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using MaterialsFeatureLib;
-using Microsoft.Win32;
-using System.Linq;
-using System.Collections.Generic;
-using System.Windows.Input;
 
 
 namespace WinCalc
@@ -544,6 +545,39 @@ namespace WinCalc
                 e.Handled = true;
             }
         }
+
+        private void btnExportCsv_Click(object sender, RoutedEventArgs e)
+        {
+            var sfd = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = "CSV (*.csv)|*.csv",
+                FileName = $"materials_{DateTime.Now:yyyyMMdd_HHmm}.csv",
+                Title = "Зберегти список матеріалів"
+            };
+            if (sfd.ShowDialog() != true) return;
+
+            try
+            {
+                var rows = dataAccess.ReadMaterials(); // всё, что сейчас в БД
+                using var w = new StreamWriter(sfd.FileName, false, System.Text.Encoding.UTF8);
+
+                // шапка в формате, совместимом с импортом
+                w.WriteLine("Категорія;Назва;Колір;Ціна;Одиниця;Кількість;ТипК-ті;Опис");
+
+                foreach (var m in rows)
+                {
+                    string line = $"{m.Category};{m.Name};{m.Color};{m.Price};{m.Unit};{m.Quantity};{m.QuantityType};{m.Description}";
+                    w.WriteLine(line);
+                }
+
+                MessageBox.Show("Експорт завершено.", "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка експорту: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
 
 
     }

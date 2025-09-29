@@ -215,6 +215,7 @@
                         </StackPanel.Resources>
 
                         <Button x:Name="btnImportCsv" Content="Імпорт CSV" Width="130" Click="btnImportCsv_Click"/>
+                        <Button x:Name="btnExportCsv" Content="Експорт CSV" Width="130" Click="btnExportCsv_Click"/>
                         <Button x:Name="btnDeleteMaterial" Content="Видалити вибрані" Width="150" Tag="AdminOnly" Click="btnDeleteMaterial_Click"/>
                     </StackPanel>
                 </Grid>
