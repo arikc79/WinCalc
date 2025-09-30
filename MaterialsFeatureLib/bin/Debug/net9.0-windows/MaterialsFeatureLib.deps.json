@@ -6,14 +6,13 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v9.0": {
-      "WinCalc/1.0.0": {
+      "MaterialsFeatureLib/1.0.0": {
         "dependencies": {
-          "Microsoft.Data.Sqlite": "9.0.9",
           "WindowPaswoord": "1.0.0",
           "WindowProfileCalculatorLibrary": "1.0.0"
         },
         "runtime": {
-          "WinCalc.dll": {}
+          "MaterialsFeatureLib.dll": {}
         }
       },
       "Microsoft.Data.Sqlite/9.0.9": {
@@ -205,7 +204,7 @@
     }
   },
   "libraries": {
-    "WinCalc/1.0.0": {
+    "MaterialsFeatureLib/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

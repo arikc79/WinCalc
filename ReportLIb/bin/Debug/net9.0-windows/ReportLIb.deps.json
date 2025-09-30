@@ -8,7 +8,6 @@
     ".NETCoreApp,Version=v9.0": {
       "ReportLIb/1.0.0": {
         "dependencies": {
-          "WinCalc": "1.0.0",
           "WindowPaswoord": "1.0.0",
           "WindowProfileCalculatorLibrary": "1.0.0"
         },
@@ -178,19 +177,6 @@
         }
       },
       "System.Memory/4.5.3": {},
-      "WinCalc/1.0.0": {
-        "dependencies": {
-          "Microsoft.Data.Sqlite": "9.0.9",
-          "WindowPaswoord": "1.0.0",
-          "WindowProfileCalculatorLibrary": "1.0.0"
-        },
-        "runtime": {
-          "WinCalc.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
       "WindowPaswoord/1.0.0": {
         "dependencies": {
           "Microsoft.Data.Sqlite": "9.0.9"
@@ -271,11 +257,6 @@
       "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
       "path": "system.memory/4.5.3",
       "hashPath": "system.memory.4.5.3.nupkg.sha512"
-    },
-    "WinCalc/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     },
     "WindowPaswoord/1.0.0": {
       "type": "project",
