@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization; // ADD: інваріантна культура для CSV
-using System.IO;           // ADD: запис CSV
-using System.Text;         // ADD: кодування CSV
+﻿
+using System.Globalization;              // ADD: інваріантна культура для CSV
+using System.IO;                         // ADD: запис CSV
+using System.Text;                       // ADD: кодування CSV
 using Microsoft.Data.Sqlite;
 
 namespace WindowProfileCalculatorLibrary
@@ -14,7 +13,7 @@ namespace WindowProfileCalculatorLibrary
         private SqliteConnection CreateConnection()
             => new SqliteConnection($"Data Source={_dbPath}");
 
-        // ======================== USERS (без змін) ========================
+        // ======================== USERS ========================
 
         public void CreateUser(string login, string password, string role)
         {
@@ -237,10 +236,10 @@ namespace WindowProfileCalculatorLibrary
                 Color = color,
                 Price = price,
                 Unit = unit,
-                Quantity = 0,            // дефолт
-                QuantityType = quantityType, // тепер зберігаємо
-                Article = "",           // дефолт
-                Currency = "грн",        // дефолт
+                Quantity = 0,                   // дефолт
+                QuantityType = quantityType,    // тепер зберігаємо
+                Article = "",                   // дефолт
+                Currency = "грн",               // дефолт
                 Description = description
             };
             return CreateMaterial(m).Id;
@@ -298,10 +297,10 @@ namespace WindowProfileCalculatorLibrary
                 Color = color,
                 Price = price,
                 Unit = unit,
-                Quantity = 0,              // залишаємо як є (старий API)
-                QuantityType = quantityType,    // тепер зберігаємо
-                Article = "",              // не змінюємо
-                Currency = "грн",           // не змінюємо
+                Quantity = 0,                  
+                QuantityType = quantityType,   
+                Article = "",                  
+                Currency = "грн",              
                 Description = description
             };
             return UpdateMaterial(m);

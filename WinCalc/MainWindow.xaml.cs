@@ -11,9 +11,9 @@ using System.Collections.Generic;
 
 using WinCalc.Security;
 using WinCalc.Services;
-using WinCalc.Storage;              // SqliteUserStore
-using WindowPaswoord.Models;        // User
-using WindowProfileCalculatorLibrary;// DataAccess, Obchyslennya, Material
+using WinCalc.Storage;              
+using WindowPaswoord.Models;       
+using WindowProfileCalculatorLibrary;
 
 namespace WinCalc
 {
@@ -53,12 +53,14 @@ namespace WinCalc
         public ObservableCollection<string> Units { get; } = new() { "м.пог.", "м²", "шт" };
         public ObservableCollection<string> Currencies { get; } = new() { "грн", "USD", "EUR" };
 
+        // анти-реентрантний прапорець для збереження користувачів
+
+        private bool _isSavingUserRow;
+
         // ====== Для вкладки "Користувачі"
         public ObservableCollection<string> RolesList { get; } = new() { Roles.Admin, Roles.Manager };
         private ObservableCollection<User> _users = new();
 
-        // анти-реентрантний прапорець для збереження користувачів
-        private bool _isSavingUserRow;
 
         public MainWindow()
         {
@@ -215,7 +217,7 @@ namespace WinCalc
             if (e.Row?.Item is not Material m) return;
 
             // ВАЖЛИВО: не викликати тут CommitEdit, це спричиняє рекурсію!
-            // Замість цього відкласти збереження, коли грід вже завершить коміт.
+          
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 try
@@ -326,7 +328,7 @@ namespace WinCalc
         // ======== Коли грід уже перейшов у режим редагування — відкриваємо ComboBox ========
         private void dgMaterials_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
         {
-            // Працюємо тільки з шаблонними колонками (де в нас ComboBox)
+            // Працюємо тільки з шаблонними колонками
             if (e.Column is DataGridTemplateColumn)
             {
                 // ComboBox знаходиться всередині e.EditingElement

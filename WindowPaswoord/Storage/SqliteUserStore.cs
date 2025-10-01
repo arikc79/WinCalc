@@ -82,7 +82,7 @@ namespace WinCalc.Storage
         }
 
 
-        // Метод: повертає список усіх користувачів
+        // Повертає список усіх користувачів
         public async Task<List<User>> GetAllAsync()
         {
             var users = new List<User>();

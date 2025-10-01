@@ -6,7 +6,7 @@
         MinHeight="700" MinWidth="1100"
         MaxHeight="900" MaxWidth="1600">
 
-    <!-- Стабільне джерело для ComboBox Ролей (щоб не падало до ініціалізації DataContext) -->
+    <!-- Стабільне джерело для ComboBox Ролей -->
     <Window.Resources>
         <x:Array x:Key="RolesList" Type="{x:Type sys:String}">
             <sys:String>admin</sys:String>
@@ -109,7 +109,7 @@
                     <!-- Результат -->
                     <Label x:Name="lblResult"
                            Grid.Column="2"
-                           Content="За вибраними параметрами: --- (вартість без встановлення) ---"
+                           Content="Розрахуно за вибраними параметрами: --- (вартість без встановлення) ---"
                            FontSize="14"
                            Margin="0,476,0,0"
                            HorizontalAlignment="Center"/>
@@ -135,7 +135,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- DataGrid -->
+                   
                     <DataGrid x:Name="dgMaterials"
                               AutoGenerateColumns="False"
                               Margin="10"
@@ -178,7 +178,7 @@
                                 </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>
 
-                            <!-- Одиниця -->
+                            <!-- Одиниці -->
                             <DataGridTemplateColumn Header="Одиниця" Width="110">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
