@@ -1,15 +1,20 @@
-﻿using Microsoft.Data.Sqlite;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Globalization; // ADD: інваріантна культура для CSV
+using System.IO;           // ADD: запис CSV
+using System.Text;         // ADD: кодування CSV
+using Microsoft.Data.Sqlite;
 
 namespace WindowProfileCalculatorLibrary
 {
     public class DataAccess
     {
         private readonly string _dbPath = "window_calc.db";
-        private SqliteConnection CreateConnection() => new SqliteConnection($"Data Source={_dbPath}");
 
-        // ---------------- USERS (як було) ----------------
+        private SqliteConnection CreateConnection()
+            => new SqliteConnection($"Data Source={_dbPath}");
+
+        // ======================== USERS (без змін) ========================
 
         public void CreateUser(string login, string password, string role)
         {
@@ -42,7 +47,9 @@ namespace WindowProfileCalculatorLibrary
                 using var command = new SqliteCommand(query, connection);
                 using var reader = command.ExecuteReader();
                 while (reader.Read())
+                {
                     users.Add((reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                }
             }
             catch (Exception ex)
             {
@@ -89,43 +96,59 @@ namespace WindowProfileCalculatorLibrary
             }
         }
 
-        // ---------------- MATERIALS ----------------
+        // ======================== MATERIALS ========================
 
-        // CHANGE: автододавання нових колонок у таблицю (міграція на льоту)
-        private void EnsureColumns()
+        /// <summary>
+        /// Переконуємось, що в таблиці Materials є потрібні колонки.
+        /// Додаємо, якщо немає: Quantity (REAL, def=0), Currency (TEXT, def='грн'),
+        /// Article (TEXT), QuantityType (TEXT).
+        /// </summary>
+        private void EnsureMaterialColumns()
         {
             try
             {
                 using var connection = CreateConnection();
                 connection.Open();
 
-                using var cmdInfo = new SqliteCommand("PRAGMA table_info(Materials);", connection);
-                var cols = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-                using (var rd = cmdInfo.ExecuteReader())
+                var existing = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                using (var cmd = new SqliteCommand("PRAGMA table_info(Materials);", connection))
+                using (var rd = cmd.ExecuteReader())
                 {
-                    while (rd.Read()) cols.Add(rd.GetString(1));
+                    while (rd.Read())
+                    {
+                        // column name is at index 1
+                        existing.Add(rd.GetString(1));
+                    }
                 }
 
-                void AddColumnIfMissing(string name, string sqlType, string defaultSql = null)
+                void AddColumnIfMissing(string name, string ddl)
                 {
-                    if (cols.Contains(name)) return;
-                    var alter = $"ALTER TABLE Materials ADD COLUMN {name} {sqlType}" +
-                                (string.IsNullOrWhiteSpace(defaultSql) ? ";" : $" DEFAULT {defaultSql};");
-                    using var cmd = new SqliteCommand(alter, connection);
-                    cmd.ExecuteNonQuery();
+                    if (!existing.Contains(name))
+                    {
+                        using var alter = new SqliteCommand($"ALTER TABLE Materials ADD COLUMN {ddl};", connection);
+                        alter.ExecuteNonQuery();
+                        existing.Add(name);
+                    }
                 }
 
-                AddColumnIfMissing("Quantity", "REAL", "0");
-                AddColumnIfMissing("Article", "TEXT", "''");
-                AddColumnIfMissing("Currency", "TEXT", "''");
+                // ADD: нові колонки
+                AddColumnIfMissing("Quantity", "REAL DEFAULT 0");
+                AddColumnIfMissing("Currency", "TEXT DEFAULT 'грн'");
+                AddColumnIfMissing("Article", "TEXT");
+                AddColumnIfMissing("QuantityType", "TEXT");
             }
-            catch { /* silent */ }
+            catch
+            {
+                // тихо — не валимо запуск на старих/частково-ініціалізованих БД
+            }
         }
 
-        // CHANGE: читаємо з урахуванням нових полів
+        /// <summary>
+        /// Зчитує всі матеріали в повний список моделей.
+        /// </summary>
         public List<Material> ReadMaterials()
         {
-            EnsureColumns();
+            EnsureMaterialColumns();
 
             var list = new List<Material>();
             try
@@ -133,8 +156,7 @@ namespace WindowProfileCalculatorLibrary
                 using var connection = CreateConnection();
                 connection.Open();
                 const string query = @"
-                    SELECT Id, Category, Name, Color, Price, Unit,
-                           Quantity, QuantityType, Article, Currency, Description
+                    SELECT Id, Category, Name, Color, Price, Unit, Quantity, QuantityType, Article, Currency, Description
                     FROM Materials
                     ORDER BY Id;";
                 using var command = new SqliteCommand(query, connection);
@@ -152,8 +174,8 @@ namespace WindowProfileCalculatorLibrary
                         Quantity = reader.IsDBNull(6) ? 0 : reader.GetDouble(6),
                         QuantityType = reader.IsDBNull(7) ? "" : reader.GetString(7),
                         Article = reader.IsDBNull(8) ? "" : reader.GetString(8),
-                        Currency = reader.IsDBNull(9) ? "" : reader.GetString(9),
-                        Description = reader.IsDBNull(10) ? "" : reader.GetString(10)
+                        Currency = reader.IsDBNull(9) ? "грн" : reader.GetString(9),
+                        Description = reader.IsDBNull(10) ? "" : reader.GetString(10),
                     };
                     list.Add(m);
                 }
@@ -165,25 +187,33 @@ namespace WindowProfileCalculatorLibrary
             return list;
         }
 
-        // CHANGE: Create із новими полями
+        /// <summary>
+        /// Створює матеріал і повертає його з присвоєним Id.
+        /// </summary>
         public Material CreateMaterial(Material m)
         {
+            EnsureMaterialColumns();
+
             try
             {
-                EnsureColumns();
-
                 using var connection = CreateConnection();
                 connection.Open();
                 const string query = @"
-                    INSERT INTO Materials
-                        (Category, Name, Color, Price, Unit,
-                         Quantity, QuantityType, Article, Currency, Description)
-                    VALUES
-                        (@category, @name, @color, @price, @unit,
-                         @quantity, @quantityType, @article, @currency, @description);
+                    INSERT INTO Materials (Category, Name, Color, Price, Unit, Quantity, QuantityType, Article, Currency, Description)
+                    VALUES (@category, @name, @color, @price, @unit, @quantity, @quantityType, @article, @currency, @description);
                     SELECT last_insert_rowid();";
                 using var command = new SqliteCommand(query, connection);
-                BindMaterial(command, m);
+
+                command.Parameters.AddWithValue("@category", (object?)m.Category ?? DBNull.Value);
+                command.Parameters.AddWithValue("@name", (object?)m.Name ?? DBNull.Value);
+                command.Parameters.AddWithValue("@color", (object?)m.Color ?? DBNull.Value);
+                command.Parameters.AddWithValue("@price", m.Price);
+                command.Parameters.AddWithValue("@unit", (object?)m.Unit ?? DBNull.Value);
+                command.Parameters.AddWithValue("@quantity", m.Quantity);
+                command.Parameters.AddWithValue("@quantityType", (object?)m.QuantityType ?? DBNull.Value);
+                command.Parameters.AddWithValue("@article", (object?)m.Article ?? DBNull.Value);
+                command.Parameters.AddWithValue("@currency", (object?)m.Currency ?? "грн");
+                command.Parameters.AddWithValue("@description", (object?)m.Description ?? DBNull.Value);
 
                 var id = (long)command.ExecuteScalar();
                 m.Id = (int)id;
@@ -195,10 +225,11 @@ namespace WindowProfileCalculatorLibrary
             return m;
         }
 
-        // BACK-COMPAT: старий виклик на 7 аргументів (щоб не ламався існуючий код)
+        /// <summary>
+        /// Сумісний зі старим інтерфейсом метод (залишено для існуючих викликів).
+        /// </summary>
         public int CreateMaterial(string category, string name, string color, double price, string unit, string quantityType, string description)
         {
-            EnsureColumns();
             var m = new Material
             {
                 Category = category,
@@ -206,19 +237,22 @@ namespace WindowProfileCalculatorLibrary
                 Color = color,
                 Price = price,
                 Unit = unit,
-                Quantity = 0,
-                QuantityType = quantityType,
-                Article = "",
-                Currency = "",
+                Quantity = 0,            // дефолт
+                QuantityType = quantityType, // тепер зберігаємо
+                Article = "",           // дефолт
+                Currency = "грн",        // дефолт
                 Description = description
             };
             return CreateMaterial(m).Id;
         }
 
-        // CHANGE: Update із новими полями
+        /// <summary>
+        /// Оновлює матеріал (повертає true, якщо змінено >= 1 рядок).
+        /// </summary>
         public bool UpdateMaterial(Material m)
         {
-            EnsureColumns();
+            EnsureMaterialColumns();
+
             try
             {
                 using var connection = CreateConnection();
@@ -231,7 +265,17 @@ namespace WindowProfileCalculatorLibrary
                     WHERE Id=@id;";
                 using var command = new SqliteCommand(query, connection);
                 command.Parameters.AddWithValue("@id", m.Id);
-                BindMaterial(command, m);
+                command.Parameters.AddWithValue("@category", (object?)m.Category ?? DBNull.Value);
+                command.Parameters.AddWithValue("@name", (object?)m.Name ?? DBNull.Value);
+                command.Parameters.AddWithValue("@color", (object?)m.Color ?? DBNull.Value);
+                command.Parameters.AddWithValue("@price", m.Price);
+                command.Parameters.AddWithValue("@unit", (object?)m.Unit ?? DBNull.Value);
+                command.Parameters.AddWithValue("@quantity", m.Quantity);
+                command.Parameters.AddWithValue("@quantityType", (object?)m.QuantityType ?? DBNull.Value);
+                command.Parameters.AddWithValue("@article", (object?)m.Article ?? DBNull.Value);
+                command.Parameters.AddWithValue("@currency", (object?)m.Currency ?? "грн");
+                command.Parameters.AddWithValue("@description", (object?)m.Description ?? DBNull.Value);
+
                 return command.ExecuteNonQuery() > 0;
             }
             catch (Exception ex)
@@ -241,6 +285,9 @@ namespace WindowProfileCalculatorLibrary
             }
         }
 
+        /// <summary>
+        /// Сумісний зі старим інтерфейсом метод оновлення.
+        /// </summary>
         public bool UpdateMaterial(int id, string category, string name, string color, double price, string unit, string quantityType, string description)
         {
             var m = new Material
@@ -251,15 +298,18 @@ namespace WindowProfileCalculatorLibrary
                 Color = color,
                 Price = price,
                 Unit = unit,
-                Quantity = 0,
-                QuantityType = quantityType,
-                Article = "",
-                Currency = "",
+                Quantity = 0,              // залишаємо як є (старий API)
+                QuantityType = quantityType,    // тепер зберігаємо
+                Article = "",              // не змінюємо
+                Currency = "грн",           // не змінюємо
                 Description = description
             };
             return UpdateMaterial(m);
         }
 
+        /// <summary>
+        /// Видаляє матеріал за Id.
+        /// </summary>
         public void DeleteMaterial(int id)
         {
             try
@@ -277,88 +327,159 @@ namespace WindowProfileCalculatorLibrary
             }
         }
 
-        // NEW: пакетний upsert для CSV-імпорту
-        public (int inserted, int updated) BulkUpsertMaterials(IEnumerable<Material> items)
+        /// <summary>
+        /// Масовий upsert матеріалів.
+        /// Пріоритет ключа пошуку:
+        /// 1) Id (якщо > 0), 2) Article (якщо не порожній), 3) (Category, Name, Color, Unit).
+        /// </summary>
+        public void BulkUpsertMaterials(List<Material> items)
         {
-            EnsureColumns();
-            int ins = 0, upd = 0;
+            if (items == null || items.Count == 0) return;
+
+            EnsureMaterialColumns();
 
             using var connection = CreateConnection();
             connection.Open();
             using var tx = connection.BeginTransaction();
 
-            const string sqlFindByArticle = @"SELECT Id FROM Materials WHERE Article=@article LIMIT 1;";
-            const string sqlFindByNameCat = @"SELECT Id FROM Materials WHERE Name=@name AND Category=@category LIMIT 1;";
-
-            const string sqlInsert = @"
-                INSERT INTO Materials (Category, Name, Color, Price, Unit, Quantity, QuantityType, Article, Currency, Description)
-                VALUES (@category, @name, @color, @price, @unit, @quantity, @quantityType, @article, @currency, @description);";
-
-            const string sqlUpdate = @"
-                UPDATE Materials SET
-                    Category=@category, Name=@name, Color=@color, Price=@price,
-                    Unit=@unit, Quantity=@quantity, QuantityType=@quantityType,
-                    Article=@article, Currency=@currency, Description=@description
-                WHERE Id=@id;";
-
-            foreach (var m in items)
+            try
             {
-                int id = 0;
+                foreach (var m in items)
+                {
+                    int? existingId = null;
 
-                // 1) спроба знайти по артикулу
-                if (!string.IsNullOrWhiteSpace(m.Article))
-                {
-                    using var f1 = new SqliteCommand(sqlFindByArticle, connection, tx);
-                    f1.Parameters.AddWithValue("@article", m.Article);
-                    var obj = f1.ExecuteScalar();
-                    if (obj != null && obj != DBNull.Value) id = Convert.ToInt32(obj);
+                    // 1) за Id
+                    if (m.Id > 0)
+                    {
+                        using var findById = new SqliteCommand("SELECT Id FROM Materials WHERE Id=@id LIMIT 1;", connection, tx);
+                        findById.Parameters.AddWithValue("@id", m.Id);
+                        var res = findById.ExecuteScalar();
+                        if (res != null && res != DBNull.Value)
+                            existingId = Convert.ToInt32(res);
+                    }
+
+                    // 2) за Article
+                    if (existingId == null && !string.IsNullOrWhiteSpace(m.Article))
+                    {
+                        using var findByArticle = new SqliteCommand("SELECT Id FROM Materials WHERE Article=@a LIMIT 1;", connection, tx);
+                        findByArticle.Parameters.AddWithValue("@a", m.Article);
+                        var res = findByArticle.ExecuteScalar();
+                        if (res != null && res != DBNull.Value)
+                            existingId = Convert.ToInt32(res);
+                    }
+
+                    // 3) за натуральним ключем
+                    if (existingId == null)
+                    {
+                        const string qFind = @"
+                            SELECT Id FROM Materials
+                            WHERE Category = @category AND Name = @name
+                              AND ifnull(Color,'') = ifnull(@color,'')
+                              AND ifnull(Unit,'')  = ifnull(@unit,'')
+                            LIMIT 1;";
+                        using var find = new SqliteCommand(qFind, connection, tx);
+                        find.Parameters.AddWithValue("@category", (object?)m.Category ?? DBNull.Value);
+                        find.Parameters.AddWithValue("@name", (object?)m.Name ?? DBNull.Value);
+                        find.Parameters.AddWithValue("@color", (object?)m.Color ?? DBNull.Value);
+                        find.Parameters.AddWithValue("@unit", (object?)m.Unit ?? DBNull.Value);
+
+                        var res = find.ExecuteScalar();
+                        if (res != null && res != DBNull.Value)
+                            existingId = Convert.ToInt32(res);
+                    }
+
+                    if (existingId != null)
+                    {
+                        // UPDATE
+                        const string qUpd = @"
+                            UPDATE Materials
+                            SET Category=@category, Name=@name, Color=@color, Price=@price,
+                                Unit=@unit, Quantity=@quantity, QuantityType=@quantityType,
+                                Article=@article, Currency=@currency, Description=@description
+                            WHERE Id=@id;";
+                        using var upd = new SqliteCommand(qUpd, connection, tx);
+                        upd.Parameters.AddWithValue("@id", existingId.Value);
+                        upd.Parameters.AddWithValue("@category", (object?)m.Category ?? DBNull.Value);
+                        upd.Parameters.AddWithValue("@name", (object?)m.Name ?? DBNull.Value);
+                        upd.Parameters.AddWithValue("@color", (object?)m.Color ?? DBNull.Value);
+                        upd.Parameters.AddWithValue("@price", m.Price);
+                        upd.Parameters.AddWithValue("@unit", (object?)m.Unit ?? DBNull.Value);
+                        upd.Parameters.AddWithValue("@quantity", m.Quantity);
+                        upd.Parameters.AddWithValue("@quantityType", (object?)m.QuantityType ?? DBNull.Value);
+                        upd.Parameters.AddWithValue("@article", (object?)m.Article ?? DBNull.Value);
+                        upd.Parameters.AddWithValue("@currency", (object?)m.Currency ?? "грн");
+                        upd.Parameters.AddWithValue("@description", (object?)m.Description ?? DBNull.Value);
+                        upd.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        // INSERT
+                        const string qIns = @"
+                            INSERT INTO Materials (Category, Name, Color, Price, Unit, Quantity, QuantityType, Article, Currency, Description)
+                            VALUES (@category, @name, @color, @price, @unit, @quantity, @quantityType, @article, @currency, @description);";
+                        using var ins = new SqliteCommand(qIns, connection, tx);
+                        ins.Parameters.AddWithValue("@category", (object?)m.Category ?? DBNull.Value);
+                        ins.Parameters.AddWithValue("@name", (object?)m.Name ?? DBNull.Value);
+                        ins.Parameters.AddWithValue("@color", (object?)m.Color ?? DBNull.Value);
+                        ins.Parameters.AddWithValue("@price", m.Price);
+                        ins.Parameters.AddWithValue("@unit", (object?)m.Unit ?? DBNull.Value);
+                        ins.Parameters.AddWithValue("@quantity", m.Quantity);
+                        ins.Parameters.AddWithValue("@quantityType", (object?)m.QuantityType ?? DBNull.Value);
+                        ins.Parameters.AddWithValue("@article", (object?)m.Article ?? DBNull.Value);
+                        ins.Parameters.AddWithValue("@currency", (object?)m.Currency ?? "грн");
+                        ins.Parameters.AddWithValue("@description", (object?)m.Description ?? DBNull.Value);
+                        ins.ExecuteNonQuery();
+                    }
                 }
 
-                // 2) якщо не знайшли — шукаємо по (Name, Category)
-                if (id == 0 && !string.IsNullOrWhiteSpace(m.Name))
-                {
-                    using var f2 = new SqliteCommand(sqlFindByNameCat, connection, tx);
-                    f2.Parameters.AddWithValue("@name", m.Name);
-                    f2.Parameters.AddWithValue("@category", (object?)m.Category ?? DBNull.Value);
-                    var obj = f2.ExecuteScalar();
-                    if (obj != null && obj != DBNull.Value) id = Convert.ToInt32(obj);
-                }
-
-                if (id == 0)
-                {
-                    using var insCmd = new SqliteCommand(sqlInsert, connection, tx);
-                    BindMaterial(insCmd, m);
-                    insCmd.ExecuteNonQuery();
-                    ins++;
-                }
-                else
-                {
-                    using var updCmd = new SqliteCommand(sqlUpdate, connection, tx);
-                    updCmd.Parameters.AddWithValue("@id", id);
-                    BindMaterial(updCmd, m);
-                    updCmd.ExecuteNonQuery();
-                    upd++;
-                }
+                tx.Commit();
             }
-
-            tx.Commit();
-            return (ins, upd);
+            catch (Exception ex)
+            {
+                tx.Rollback();
+                Console.WriteLine($"BulkUpsertMaterials error: {ex.Message}");
+                throw;
+            }
         }
 
-        // HELPERS
-
-        private static void BindMaterial(SqliteCommand cmd, Material m)
+        /// <summary>
+        /// Експортує всі матеріали в CSV.
+        /// Формат: Id,Category,Name,Color,Price,Unit,Quantity,QuantityType,Article,Currency,Description
+        /// </summary>
+        public void ExportMaterialsToCsv(string path)
         {
-            cmd.Parameters.AddWithValue("@category", (object?)m.Category ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@name", (object?)m.Name ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@color", (object?)m.Color ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@price", m.Price);
-            cmd.Parameters.AddWithValue("@unit", (object?)m.Unit ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@quantity", m.Quantity);
-            cmd.Parameters.AddWithValue("@quantityType", (object?)m.QuantityType ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@article", (object?)m.Article ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@currency", (object?)m.Currency ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@description", (object?)m.Description ?? DBNull.Value);
+            if (string.IsNullOrWhiteSpace(path))
+                throw new ArgumentException("CSV path is empty.");
+
+            var list = ReadMaterials();
+
+            using var fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None);
+            using var sw = new StreamWriter(fs, new UTF8Encoding(encoderShouldEmitUTF8Identifier: true)); // UTF-8 BOM для Excel
+
+            // Заголовок
+            sw.WriteLine("Id,Category,Name,Color,Price,Unit,Quantity,QuantityType,Article,Currency,Description");
+
+            string Esc(string? s) => $"\"{(s ?? string.Empty).Replace("\"", "\"\"")}\"";
+
+            foreach (var m in list)
+            {
+                var price = m.Price.ToString(CultureInfo.InvariantCulture);
+                var quantity = m.Quantity.ToString(CultureInfo.InvariantCulture);
+
+                sw.WriteLine(string.Join(",",
+                    m.Id,
+                    Esc(m.Category),
+                    Esc(m.Name),
+                    Esc(m.Color),
+                    price,
+                    Esc(m.Unit),
+                    quantity,
+                    Esc(m.QuantityType),
+                    Esc(m.Article),
+                    Esc(m.Currency ?? "грн"),
+                    Esc(m.Description)
+                ));
+            }
         }
     }
 }

@@ -332,23 +332,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Глеб\\.nuget\\packages\\": {},
+    "C:\\Users\\arikc\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\git\\WindowPaswoord\\WindowPaswoord.csproj",
+      "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.5b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
       "projectName": "WindowPaswoord",
-      "projectPath": "C:\\Users\\Глеб\\Desktop\\git\\WindowPaswoord\\WindowPaswoord.csproj",
-      "packagesPath": "C:\\Users\\Глеб\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Глеб\\Desktop\\git\\WindowPaswoord\\obj\\",
+      "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.5b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
+      "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
+      "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.5b\\WinCalc\\WindowPaswoord\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Глеб\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\arikc\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

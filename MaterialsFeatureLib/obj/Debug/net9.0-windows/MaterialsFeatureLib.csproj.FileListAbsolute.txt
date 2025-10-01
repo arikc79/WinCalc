@@ -19,3 +19,24 @@ C:\Users\Глеб\Desktop\git\MaterialsFeatureLib\obj\Debug\net9.0-windows\Mater
 C:\Users\Глеб\Desktop\git\MaterialsFeatureLib\obj\Debug\net9.0-windows\refint\MaterialsFeatureLib.dll
 C:\Users\Глеб\Desktop\git\MaterialsFeatureLib\obj\Debug\net9.0-windows\MaterialsFeatureLib.pdb
 C:\Users\Глеб\Desktop\git\MaterialsFeatureLib\obj\Debug\net9.0-windows\ref\MaterialsFeatureLib.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\bin\Debug\net9.0-windows\WindowPaswoord.deps.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\bin\Debug\net9.0-windows\WindowPaswoord.runtimeconfig.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\bin\Debug\net9.0-windows\WindowPaswoord.exe
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\bin\Debug\net9.0-windows\MaterialsFeatureLib.deps.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\bin\Debug\net9.0-windows\MaterialsFeatureLib.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\bin\Debug\net9.0-windows\MaterialsFeatureLib.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\bin\Debug\net9.0-windows\WindowPaswoord.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\bin\Debug\net9.0-windows\WindowPaswoord.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\obj\Debug\net9.0-windows\MaterialsFeatureLib.csproj.AssemblyReference.cache
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\obj\Debug\net9.0-windows\MaterialsFeatureLib.GeneratedMSBuildEditorConfig.editorconfig
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\obj\Debug\net9.0-windows\MaterialsFeatureLib.AssemblyInfoInputs.cache
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\obj\Debug\net9.0-windows\MaterialsFeatureLib.AssemblyInfo.cs
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\obj\Debug\net9.0-windows\MaterialsFeatureLib.csproj.CoreCompileInputs.cache
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\obj\Debug\net9.0-windows\MaterialsFeatureLib.sourcelink.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\obj\Debug\net9.0-windows\Material.B23D7852.Up2Date
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\obj\Debug\net9.0-windows\MaterialsFeatureLib.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\obj\Debug\net9.0-windows\refint\MaterialsFeatureLib.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\obj\Debug\net9.0-windows\MaterialsFeatureLib.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\MaterialsFeatureLib\obj\Debug\net9.0-windows\ref\MaterialsFeatureLib.dll
