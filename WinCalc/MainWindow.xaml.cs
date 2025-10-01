@@ -22,6 +22,19 @@ namespace WinCalc
         private readonly Obchyslennya calculator = new();
         private readonly DataAccess dataAccess = new();
 
+        public bool LookupEditMode
+        {
+            get => _lookupEditMode;
+            set
+            {
+                _lookupEditMode = value;
+                // оновлюємо грід, щоб він перемалювався з новим IsEditable
+                dgMaterials.Items.Refresh();
+            }
+        }
+        private bool _lookupEditMode = false;
+
+
         // ====== Колекції для комбо у "Матеріали"
         public ObservableCollection<string> MaterialCategories { get; }
             = new() { "профіль", "скло", "фурнітура", "підвіконня", "відлив", "ущільнювач", "аксесуари" };
@@ -72,6 +85,15 @@ namespace WinCalc
             cmbBrand.ItemsSource = new[] { "Rehau", "Steko", "Veka", "Openteck" };
             cmbProfile.ItemsSource = new[] { "Basic-Design (4)", "Euro 70 (5)", "Delight (6)", "Synego (7)" };
             cmbGlassPack.ItemsSource = new[] { "Однокамерний", "Двокамерний", "Триплекс" };
+        }
+
+        private void btnToggleLookupEdit_Click(object sender, RoutedEventArgs e)
+        {
+            LookupEditMode = !LookupEditMode;
+            MessageBox.Show(LookupEditMode
+                ? "Увімкнено режим редагування довідників (можна вводити нові значення)."
+                : "Режим редагування вимкнено (можна тільки вибирати зі списків).",
+                "Режим довідників", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // ========== UI: РОЗРАХУНОК ==========
