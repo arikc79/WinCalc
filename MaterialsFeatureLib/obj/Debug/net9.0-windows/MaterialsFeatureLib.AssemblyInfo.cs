@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MaterialsFeatureLib")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81cea280120fa5b96d05a2b0f4b6dc691bf5db09")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75d6ae6ca9798da07fb092518ea6d90c6d2fc09b")]
 [assembly: System.Reflection.AssemblyProductAttribute("MaterialsFeatureLib")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MaterialsFeatureLib")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

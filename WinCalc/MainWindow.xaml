@@ -144,8 +144,10 @@
                   Margin="10"
                   Grid.Row="0"
                   CellEditEnding="dgMaterials_CellEditEnding"
+                              
                   PreviewKeyDown="dgMaterials_PreviewKeyDown">
 
+                      
                         <DataGrid.Columns>
                             <!-- ✅ Категорія: editable ComboBox -->
                             <DataGridTemplateColumn Header="Категорія" Width="140">

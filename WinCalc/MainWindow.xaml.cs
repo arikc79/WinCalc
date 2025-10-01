@@ -1,11 +1,14 @@
 ﻿using System;
-using System.Linq;
+using System.Windows.Media;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Linq;
+using System.Collections.Generic;
+
 using WinCalc.Security;
 using WinCalc.Services;
 using WinCalc.Storage;              // SqliteUserStore
@@ -26,17 +29,11 @@ namespace WinCalc
         public ObservableCollection<string> MaterialNames { get; }
             = new()
             {
-                // профіль
                 "Basic-Design (4)", "Euro 70 (5)", "Delight (6)", "Synego (7)",
-                // скло
                 "Однокамерний", "Двокамерний", "Триплекс",
-                // фурнітура
                 "Ручка стандартна", "Петля комплект", "Мікроліфт",
-                // підвіконня
                 "Підвіконник ПВХ 200 мм", "Підвіконник ПВХ 300 мм",
-                // відлив
                 "Відлив 150 мм", "Відлив 200 мм",
-                // ущільнювач/аксесуари
                 "Ущільнювач універсальний", "Москітна сітка",
             };
 
@@ -54,12 +51,10 @@ namespace WinCalc
         {
             InitializeComponent();
 
-            // щоби XAML бачив колекції
             DataContext = this;
-
             Loaded += MainWindow_Loaded;
 
-            // ПРИВ’ЯЗКА головної картинки (твій існуючий код)
+            // Прив'язка головної картинки
             imgSelected = FindName("imgSelected") as Image;
             if (imgSelected == null)
             {
@@ -72,7 +67,7 @@ namespace WinCalc
             }
             imgSelected!.Visibility = Visibility.Visible;
 
-            // Ініціалізація ComboBox (твій існуючий набір)
+            // Ініціалізація ComboBox
             cmbWindowType.ItemsSource = new[] { "1. Одностулкове", "2. Ділене навпіл", "3. Ділене на 3", "4. 4 секції", "5. 5 секцій" };
             cmbBrand.ItemsSource = new[] { "Rehau", "Steko", "Veka", "Openteck" };
             cmbProfile.ItemsSource = new[] { "Basic-Design (4)", "Euro 70 (5)", "Delight (6)", "Synego (7)" };
@@ -149,10 +144,8 @@ namespace WinCalc
                     else if (profile.Contains("Synego") || profile.Contains("Softline 82 MD")) pricePerMeter = 1096;
                 }
 
-                // чекбокси існують у XAML — просто читаємо їхні значення (на майбутнє)
                 bool includeSill = chkSill.IsChecked == true;
                 bool includeDrain = chkDrain.IsChecked == true;
-                // тут можна додати вартість опцій…
 
                 double cost = length * pricePerMeter;
                 lblResult.Content = $"За вибраними параметрами: {cost:F2} грн (Довжина: {length:F3} м)";
@@ -166,7 +159,6 @@ namespace WinCalc
         // ========== ЖИТТЄВИЙ ЦИКЛ ==========
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // початкове насіння адміна, якщо БД порожня
             await new AuthService().EnsureAdminSeedAsync();
 
             if (!AppSession.IsAuthenticated)
@@ -176,14 +168,11 @@ namespace WinCalc
                 if (!ok) { Close(); return; }
             }
 
-            // Матеріали
             RefreshMaterials();
             dgMaterials.IsReadOnly = !AppSession.IsInRole(Roles.Admin);
 
-            // Синхронізуемо довідники
             SyncMaterialLookupsFromDb();
 
-            // Користувачі
             await LoadUsersAsync();
 
             ApplyRoleUi();
@@ -196,20 +185,28 @@ namespace WinCalc
             dgMaterials.ItemsSource = dataAccess.ReadMaterials();
         }
 
+       
         private void dgMaterials_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (!AppSession.IsInRole(Roles.Admin)) return;
+            if (e.EditAction != DataGridEditAction.Commit) return;
             if (e.Row?.Item is not Material m) return;
 
-            try
+            // ВАЖЛИВО: не викликати тут CommitEdit, це спричиняє рекурсію!
+            // Замість цього відкласти збереження, коли грід вже завершить коміт.
+            Dispatcher.BeginInvoke(new Action(() =>
             {
-                dataAccess.UpdateMaterial(m); // працюємо по об’єкту
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Помилка збереження матеріалу: {ex.Message}");
-            }
+                try
+                {
+                    dataAccess.UpdateMaterial(m);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Помилка збереження матеріалу: {ex.Message}");
+                }
+            }), DispatcherPriority.Background);
         }
+
 
         private void dgMaterials_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -219,6 +216,7 @@ namespace WinCalc
                 btnDeleteMaterial_Click(sender, new RoutedEventArgs());
             }
         }
+
         private void btnDeleteMaterial_Click(object sender, RoutedEventArgs e)
         {
             if (!AppSession.IsInRole(Roles.Admin)) return;
@@ -237,11 +235,9 @@ namespace WinCalc
             RefreshMaterials();
         }
 
-        // Викликаємо після завантаження матеріалів
         private void SyncMaterialLookupsFromDb()
         {
-            // беремо поточне джерело (щоб не робити ще один SELECT, можна з гріда)
-            var mats = dgMaterials.ItemsSource as System.Collections.Generic.IEnumerable<Material>;
+            var mats = dgMaterials.ItemsSource as IEnumerable<Material>;
             if (mats == null) mats = dataAccess.ReadMaterials();
 
             MergeInto(MaterialCategories, mats.Select(m => m.Category));
@@ -249,7 +245,7 @@ namespace WinCalc
             MergeInto(Units, mats.Select(m => m.Unit));
         }
 
-        private static void MergeInto(ObservableCollection<string> target, System.Collections.Generic.IEnumerable<string> values)
+        private static void MergeInto(ObservableCollection<string> target, IEnumerable<string> values)
         {
             foreach (var v in values.Where(s => !string.IsNullOrWhiteSpace(s))
                                     .Select(s => s.Trim())
@@ -260,7 +256,6 @@ namespace WinCalc
             }
         }
 
-        // ========== Import/Export ==========
         private void btnImportCsv_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -306,6 +301,24 @@ namespace WinCalc
             }
         }
 
+        // ======== Коли грід уже перейшов у режим редагування — відкриваємо ComboBox ========
+        private void dgMaterials_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
+        {
+            // Працюємо тільки з шаблонними колонками (де в нас ComboBox)
+            if (e.Column is DataGridTemplateColumn)
+            {
+                // ComboBox знаходиться всередині e.EditingElement
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    var combo = FindVisualChild<ComboBox>(e.EditingElement);
+                    if (combo != null)
+                    {
+                        combo.Focus();
+                        combo.IsDropDownOpen = true;
+                    }
+                }), DispatcherPriority.Background);
+            }
+        }
 
         // ========== КОРИСТУВАЧІ ==========
         private async Task LoadUsersAsync()
@@ -317,32 +330,23 @@ namespace WinCalc
             dgUsers.IsReadOnly = !AppSession.IsInRole(Roles.Admin);
         }
 
-        
         private void dgUsers_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             if (!AppSession.IsInRole(Roles.Admin)) return;
             if (e.EditAction != DataGridEditAction.Commit) return;
             if (e.Row?.Item is not User user) return;
 
-            // Плануємо збереження на Dispatcher, щоби вийти з обробника події
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 if (_isSavingUserRow) return;
                 _isSavingUserRow = true;
-                try
-                {
-                    await SaveUserAsync(user);
-                }
-                finally
-                {
-                    _isSavingUserRow = false;
-                }
+                try { await SaveUserAsync(user); }
+                finally { _isSavingUserRow = false; }
             }), DispatcherPriority.Background);
         }
 
         private async Task SaveUserAsync(User user)
         {
-            // Валідація
             if (string.IsNullOrWhiteSpace(user.Username))
             {
                 MessageBox.Show("Логін не може бути порожнім.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -360,10 +364,9 @@ namespace WinCalc
 
                 if (user.Id == 0)
                 {
-                    // новий користувач → дефолтний пароль
                     user.PasswordHash = PasswordHasher.Hash("12345");
                     var created = await store.CreateAsync(user);
-                    user.Id = created.Id; // відобразити ідентифікатор у гріді
+                    user.Id = created.Id;
                 }
                 else
                 {
@@ -396,9 +399,7 @@ namespace WinCalc
                 var store = new SqliteUserStore();
                 foreach (var u in selected)
                 {
-                    // не даємо адмінам видаляти самих себе випадково
                     if (AppSession.CurrentUser?.Id == u.Id) continue;
-
                     await store.DeleteAsync(u.Id);
                     _users.Remove(u);
                 }
@@ -443,7 +444,20 @@ namespace WinCalc
             }
         }
 
-        // ========== Хелпери видимості ==========
+        // ===== Helpers =====
+        private static T? FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            var count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T typed) return typed;
+                var result = FindVisualChild<T>(child);
+                if (result != null) return result;
+            }
+            return null;
+        }
+
         private void ApplyRoleUi()
         {
             SetVisibilityByTag(this, "AdminOnly", AppSession.IsInRole(Roles.Admin));
@@ -454,9 +468,9 @@ namespace WinCalc
             if (root is FrameworkElement fe && fe.Tag?.ToString() == tag)
                 fe.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
 
-            int n = System.Windows.Media.VisualTreeHelper.GetChildrenCount(root);
+            int n = VisualTreeHelper.GetChildrenCount(root);
             for (int i = 0; i < n; i++)
-                SetVisibilityByTag(System.Windows.Media.VisualTreeHelper.GetChild(root, i), tag, visible);
+                SetVisibilityByTag(VisualTreeHelper.GetChild(root, i), tag, visible);
         }
     }
 }
