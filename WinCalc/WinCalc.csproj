@@ -24,7 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AuditLog\AuditLog.csproj" />
+    <!--
     <ProjectReference Include="..\MaterialsFeatureLib\MaterialsFeatureLib.csproj" />
+    -->
     <ProjectReference Include="..\WindowPaswoord\WindowPaswoord.csproj" />
     <ProjectReference Include="..\WindowProfileCalculatorLibrary\WindowProfileCalculatorLibrary.csproj" />
   </ItemGroup>

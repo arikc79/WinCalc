@@ -1,0 +1,12 @@
+C:\Users\Глеб\Desktop\git\AuditLog\bin\Debug\net9.0\AuditLog.deps.json
+C:\Users\Глеб\Desktop\git\AuditLog\bin\Debug\net9.0\AuditLog.dll
+C:\Users\Глеб\Desktop\git\AuditLog\bin\Debug\net9.0\AuditLog.pdb
+C:\Users\Глеб\Desktop\git\AuditLog\obj\Debug\net9.0\AuditLog.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Глеб\Desktop\git\AuditLog\obj\Debug\net9.0\AuditLog.AssemblyInfoInputs.cache
+C:\Users\Глеб\Desktop\git\AuditLog\obj\Debug\net9.0\AuditLog.AssemblyInfo.cs
+C:\Users\Глеб\Desktop\git\AuditLog\obj\Debug\net9.0\AuditLog.csproj.CoreCompileInputs.cache
+C:\Users\Глеб\Desktop\git\AuditLog\obj\Debug\net9.0\AuditLog.sourcelink.json
+C:\Users\Глеб\Desktop\git\AuditLog\obj\Debug\net9.0\AuditLog.dll
+C:\Users\Глеб\Desktop\git\AuditLog\obj\Debug\net9.0\refint\AuditLog.dll
+C:\Users\Глеб\Desktop\git\AuditLog\obj\Debug\net9.0\AuditLog.pdb
+C:\Users\Глеб\Desktop\git\AuditLog\obj\Debug\net9.0\ref\AuditLog.dll
