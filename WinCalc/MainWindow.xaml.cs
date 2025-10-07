@@ -340,6 +340,19 @@ namespace WinCalc
             }
         }
 
+        // Кнопка "Довідка (F1)"
+        private void btnHelp_Click(object sender, RoutedEventArgs e) => OpenHelp();
+
+        private void OpenHelp()
+        {
+            var w = new HelpWindow
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            w.ShowDialog();
+        }
+
         // ======== Коли грід уже перейшов у режим редагування — відкриваємо ComboBox ========
         private void dgMaterials_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
         {
