@@ -190,6 +190,8 @@ namespace WinCalc
                 var login = new LoginWindow();
                 var ok = login.ShowDialog() == true;
                 if (!ok) { Close(); return; }
+
+                AppAudit.LoginOk(AppSession.CurrentUser?.Username ?? "unknown");
             }
 
             RefreshMaterials();
@@ -254,9 +256,21 @@ namespace WinCalc
             if (MessageBox.Show($"Видалити {selected.Count} матеріал(и)?", "Підтвердження",
                     MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
                 return;
+            foreach (var m in selected)
+            {
+                try
+                {
+                    dataAccess.DeleteMaterial(m.Id);  
+                    AppAudit.MaterialDelete(AppSession.CurrentUser?.Username ?? "anonymous", m.Id, m.Name ?? "");
 
-            foreach (var m in selected) dataAccess.DeleteMaterial(m.Id);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Не вдалося видалити '{m.Name}': {ex.Message}");
+                }
+            }
             RefreshMaterials();
+
         }
 
         private void SyncMaterialLookupsFromDb()
@@ -294,6 +308,7 @@ namespace WinCalc
 
                 var items = CsvMaterialImporter.Import(dlg.FileName);
                 dataAccess.BulkUpsertMaterials(items);
+                AppAudit.MaterialsImport(AppSession.CurrentUser?.Username ?? "anonymous", items.Count, 0);
                 RefreshMaterials();
                 MessageBox.Show($"Імпортовано {items.Count} позицій.", "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -323,6 +338,19 @@ namespace WinCalc
             {
                 MessageBox.Show($"Помилка експорту: {ex.Message}");
             }
+        }
+
+        // Кнопка "Довідка (F1)"
+        private void btnHelp_Click(object sender, RoutedEventArgs e) => OpenHelp();
+
+        private void OpenHelp()
+        {
+            var w = new HelpWindow
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            w.ShowDialog();
         }
 
         // ======== Коли грід уже перейшов у режим редагування — відкриваємо ComboBox ========

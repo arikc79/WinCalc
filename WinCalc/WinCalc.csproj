@@ -9,6 +9,8 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
+	
+	
   <ItemGroup>
     <None Remove="Image\1.png" />
     <None Remove="Image\2.png" />
@@ -24,7 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AuditLog\AuditLog.csproj" />
+    <!--
     <ProjectReference Include="..\MaterialsFeatureLib\MaterialsFeatureLib.csproj" />
+    -->
     <ProjectReference Include="..\WindowPaswoord\WindowPaswoord.csproj" />
     <ProjectReference Include="..\WindowProfileCalculatorLibrary\WindowProfileCalculatorLibrary.csproj" />
   </ItemGroup>

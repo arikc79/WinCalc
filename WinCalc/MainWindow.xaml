@@ -208,6 +208,12 @@
                         <Button Content="Експорт CSV"  Click="btnExportCsv_Click"  Margin="5,0"/>
                         <Button Content="Видалити вибрані" Click="btnDeleteMaterial_Click" Margin="5,0"/>
                         <Button Content="Редагувати довідники…" Click="btnToggleLookupEdit_Click" Margin="5,0"/>
+                        <!-- Довідка -->
+                        <Button x:Name="btnHelp"
+                           Content="Довідка (F1)"
+                           Width="120"
+                           Margin="5,0"
+                           Click="btnHelp_Click"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

@@ -316,12 +316,8 @@ C:\Users\Глеб\Desktop\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\w
 C:\Users\Глеб\Desktop\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\Глеб\Desktop\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\win-x86\native\e_sqlite3.dll
 C:\Users\Глеб\Desktop\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.csproj.AssemblyReference.cache
-C:\Users\Глеб\Desktop\git\WindowPaswoord\obj\Debug\net9.0-windows\MainWindow.g.cs
 C:\Users\Глеб\Desktop\git\WindowPaswoord\obj\Debug\net9.0-windows\App.g.cs
 C:\Users\Глеб\Desktop\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord_MarkupCompile.cache
-C:\Users\Глеб\Desktop\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord_MarkupCompile.lref
-C:\Users\Глеб\Desktop\git\WindowPaswoord\obj\Debug\net9.0-windows\MainWindow.baml
-C:\Users\Глеб\Desktop\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.g.resources
 C:\Users\Глеб\Desktop\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Глеб\Desktop\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.AssemblyInfoInputs.cache
 C:\Users\Глеб\Desktop\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.AssemblyInfo.cs
@@ -381,3 +377,47 @@ D:\Step\Курсова-Розрахунку вартості м-п вікна\п
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.pdb
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.genruntimeconfig.cache
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\ref\WindowPaswoord.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\WindowPaswoord.exe
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\WindowPaswoord.deps.json
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\WindowPaswoord.runtimeconfig.json
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\WindowPaswoord.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\WindowPaswoord.pdb
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\Microsoft.Data.Sqlite.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\SQLitePCLRaw.batteries_v2.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\SQLitePCLRaw.core.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\SQLitePCLRaw.provider.e_sqlite3.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\browser-wasm\nativeassets\net9.0\e_sqlite3.a
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-arm\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-arm64\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-armel\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-mips64\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-musl-arm\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-musl-arm64\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-musl-s390x\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-musl-x64\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-ppc64le\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-s390x\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-x64\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\linux-x86\native\libe_sqlite3.so
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\maccatalyst-arm64\native\libe_sqlite3.dylib
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\maccatalyst-x64\native\libe_sqlite3.dylib
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\osx-arm64\native\libe_sqlite3.dylib
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\osx-x64\native\libe_sqlite3.dylib
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\win-arm\native\e_sqlite3.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\win-arm64\native\e_sqlite3.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\win-x64\native\e_sqlite3.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\bin\Debug\net9.0-windows\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.csproj.AssemblyReference.cache
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\App.g.cs
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord_MarkupCompile.cache
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.AssemblyInfoInputs.cache
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.AssemblyInfo.cs
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.csproj.CoreCompileInputs.cache
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.sourcelink.json
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPa.0648F459.Up2Date
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\refint\WindowPaswoord.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.pdb
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.genruntimeconfig.cache
+C:\Users\arikc\Downloads\git (1)\git\WindowPaswoord\obj\Debug\net9.0-windows\ref\WindowPaswoord.dll

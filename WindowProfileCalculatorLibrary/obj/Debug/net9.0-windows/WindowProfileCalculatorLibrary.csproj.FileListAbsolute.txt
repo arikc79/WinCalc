@@ -143,3 +143,22 @@ D:\Step\Курсова-Розрахунку вартості м-п вікна\п
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\refint\WindowProfileCalculatorLibrary.dll
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.5b\WinCalc\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\ref\WindowProfileCalculatorLibrary.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.pdb
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.csproj.AssemblyReference.cache
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.AssemblyInfoInputs.cache
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.AssemblyInfo.cs
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.csproj.CoreCompileInputs.cache
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.sourcelink.json
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowPr.2DD3A9E6.Up2Date
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\refint\WindowProfileCalculatorLibrary.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.deps.json
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.runtimeconfig.json
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.exe
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.deps.json
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.dll
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
+C:\Users\arikc\Downloads\git (1)\git\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\ref\WindowProfileCalculatorLibrary.dll
