@@ -22,3 +22,15 @@ C:\Users\arikc\Downloads\git (1)\git\AuditLog\obj\Debug\net9.0\AuditLog.dll
 C:\Users\arikc\Downloads\git (1)\git\AuditLog\obj\Debug\net9.0\refint\AuditLog.dll
 C:\Users\arikc\Downloads\git (1)\git\AuditLog\obj\Debug\net9.0\AuditLog.pdb
 C:\Users\arikc\Downloads\git (1)\git\AuditLog\obj\Debug\net9.0\ref\AuditLog.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\bin\Debug\net9.0\AuditLog.deps.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\bin\Debug\net9.0\AuditLog.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\bin\Debug\net9.0\AuditLog.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\obj\Debug\net9.0\AuditLog.GeneratedMSBuildEditorConfig.editorconfig
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\obj\Debug\net9.0\AuditLog.AssemblyInfoInputs.cache
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\obj\Debug\net9.0\AuditLog.AssemblyInfo.cs
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\obj\Debug\net9.0\AuditLog.csproj.CoreCompileInputs.cache
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\obj\Debug\net9.0\AuditLog.sourcelink.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\obj\Debug\net9.0\AuditLog.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\obj\Debug\net9.0\refint\AuditLog.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\obj\Debug\net9.0\AuditLog.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.6b\AuditLog\obj\Debug\net9.0\ref\AuditLog.dll
