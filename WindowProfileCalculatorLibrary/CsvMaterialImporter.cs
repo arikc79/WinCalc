@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using Microsoft.VisualBasic.FileIO;
-using WindowProfileCalculatorLibrary;
 
-namespace WinCalc
+
+namespace WindowProfileCalculatorLibrary
 {
     /// <summary>
     /// Імпортер CSV з гнучким мапінгом заголовків (укр/англ/регістр/пробіли/коми/крапки з комою/таб).

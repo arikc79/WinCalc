@@ -1,19 +1,17 @@
-﻿using System;
-using System.Windows.Media;
-using System.Threading.Tasks;
+﻿using System.Windows.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Threading;
-using System.Linq;
-using System.Collections.Generic;
-
 using WinCalc.Security;
 using WinCalc.Services;
 using WinCalc.Storage;              
 using WindowPaswoord.Models;       
 using WindowProfileCalculatorLibrary;
+using AuditLog ;                      
+
+
 
 namespace WinCalc
 {
