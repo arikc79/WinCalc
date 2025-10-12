@@ -1,257 +1,138 @@
 ﻿<Window x:Class="WinCalc.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="WinCalc" Height="700" Width="1100"
-        MinHeight="700" MinWidth="1100"
-        MaxHeight="900" MaxWidth="1600">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WinCalc"
+        mc:Ignorable="d"
+        Title="WinCalc — Розрахунок вартості вікна"
+        Height="720" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="#FAFAFA">
 
-    <!-- Стабільне джерело для ComboBox Ролей -->
-    <Window.Resources>
-        <x:Array x:Key="RolesList" Type="{x:Type sys:String}">
-            <sys:String>admin</sys:String>
-            <sys:String>manager</sys:String>
-        </x:Array>
-    </Window.Resources>
+    <Grid Margin="15">
 
-    <Grid>
-        <TabControl Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <!-- ======================= Вкладка: Розрахунок ======================= -->
-            <TabItem Header="Розрахунок">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="82"/>
-                        <ColumnDefinition Width="138"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+        <!-- ====================== HEADER ====================== -->
+        <TextBlock Text="Розрахунок вартості віконна"
+                   FontSize="22" FontWeight="Bold" Foreground="#333"
+                   Margin="0,0,0,10"/>
 
-                    <!-- Ліва панель: список зображень -->
-                    <ListBox x:Name="lstImages"
-                             Grid.Column="0"
-                             Margin="0,0,10,0"
-                             SelectionChanged="lstImages_SelectionChanged"
-                             Grid.ColumnSpan="2">
-                        <ListBoxItem>
-                            <Image Source="/WinCalc;component/Image/5.png" Height="100" Tag="5"/>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            <Image Source="/WinCalc;component/Image/4.png" Height="100" Tag="4"/>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            <Image Source="/WinCalc;component/Image/3.png" Height="100" Tag="3"/>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            <Image Source="/WinCalc;component/Image/2.png" Height="100" Tag="2"/>
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            <Image Source="/WinCalc;component/Image/7.png" Height="100" Tag="1"/>
-                        </ListBoxItem>
-                    </ListBox>
-
-                    <!-- Права половина: панель параметрів -->
-                    <StackPanel Grid.Column="2" Margin="410,10,10,160">
-                        <TextBlock Text="Розрахунок вікна"
-                                   FontSize="24"
-                                   FontWeight="Bold"
-                                   HorizontalAlignment="Center"
-                                   Margin="0,0,0,10"/>
-
-                        <!-- Ширина / Висота -->
-                        <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Center"
-                                    Margin="0,5">
-                            <Label Content="Ширина:" VerticalAlignment="Center"/>
-                            <TextBox x:Name="txtWidth" Width="120" Margin="5,0"/>
-                            <Label Content="Висота:" VerticalAlignment="Center" Margin="20,0,0,0"/>
-                            <TextBox x:Name="txtHeight" Width="120" Margin="5,0"/>
-                        </StackPanel>
-
-                        <!-- Параметри -->
-                        <StackPanel Margin="0,10"
-                                    HorizontalAlignment="Center"
-                                    Width="380">
-                            <Label Content="Обрана конструкція"/>
-                            <ComboBox x:Name="cmbWindowType" Width="380"/>
-
-                            <Label Content="Бренд" Margin="0,5,0,0"/>
-                            <ComboBox x:Name="cmbBrand" Width="380" SelectionChanged="cmbBrand_SelectionChanged"/>
-
-                            <Label Content="Профіль" Margin="0,5,0,0"/>
-                            <ComboBox x:Name="cmbProfile" Width="380"/>
-
-                            <Label Content="Склопакет" Margin="0,5,0,0"/>
-                            <ComboBox x:Name="cmbGlassPack" Width="380"/>
-                        </StackPanel>
-
-                        <!-- Чекбокси -->
-                        <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Center"
-                                    Margin="0,10,0,0">
-                            <CheckBox x:Name="chkSill"  Content="Підвіконник" Margin="10,0"/>
-                            <CheckBox x:Name="chkDrain" Content="Відлив"      Margin="10,0"/>
-                        </StackPanel>
-                    </StackPanel>
-
-                    <!-- Головне зображення -->
-                    <Border x:Name="borderWithImage"
-                            Grid.Column="2"
-                            BorderBrush="Black"
-                            BorderThickness="1"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Width="390"
-                            Height="390"
-                            Margin="10,10,0,0">
-                        <Image x:Name="imgSelected" Stretch="Uniform"/>
-                    </Border>
-
-                    <!-- Результат -->
-                    <Label x:Name="lblResult"
-                           Grid.Column="2"
-                           Content="Розрахуно за вибраними параметрами: --- (вартість без встановлення) ---"
-                           FontSize="14"
-                           Margin="0,476,0,0"
-                           HorizontalAlignment="Center"/>
-
-                    <!-- Кнопка розрахунку -->
+        <!-- ====================== INPUTS SECTION ====================== -->
+        <Border Grid.Row="1" Padding="10" BorderBrush="#DDD" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10">
+            <!-- FIX: Remove unsupported Spacing property and use Margin on child elements instead -->
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Ширина (мм):" Width="120" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                    <TextBox x:Name="txtWidth" Width="100" Height="25" Margin="0,0,0,0"/>
+                    <TextBlock Text="Висота (мм):" Width="100" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox x:Name="txtHeight" Width="100" Height="25" Margin="0,0,0,0"/>
                     <Button x:Name="btnCalculate"
-                            Grid.Column="2"
-                            Content="Розрахувати вартість"
-                            Height="36"
-                            HorizontalAlignment="Right"
-                            Width="360"
-                            Margin="0,0,10,15"
-                            VerticalAlignment="Bottom"
-                            Click="btnCalculate_Click"/>
-                </Grid>
-            </TabItem>
+                            Content="Розрахувати"
+                            Click="btnCalculate_Click"
+                            Width="150" Height="30" Margin="30,0,0,0"/>
+                </StackPanel>
 
-            <!-- ======================= Вкладка: Матеріали ======================= -->
-            <TabItem Header="Матеріали">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                    <TextBlock Text="Тип вікна:" Width="120" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                    <ComboBox x:Name="cmbWindowType" Width="180" Margin="0,0,0,0"/>
 
-                   
-                    <DataGrid x:Name="dgMaterials"
-                              AutoGenerateColumns="False"
-                              Margin="10"
-                              Grid.Row="0"
-                              CellEditEnding="dgMaterials_CellEditEnding"
-                              PreparingCellForEdit="dgMaterials_PreparingCellForEdit"
-                              PreviewKeyDown="dgMaterials_PreviewKeyDown">
-                        <DataGrid.Columns>
-                            <!-- Категорія -->
-                            <DataGridTemplateColumn Header="Категорія" Width="140">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Category}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <ComboBox
-                                            ItemsSource="{Binding DataContext.MaterialCategories, RelativeSource={RelativeSource AncestorType=Window}}"
-                                            Text="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            IsEditable="{Binding DataContext.LookupEditMode, RelativeSource={RelativeSource AncestorType=Window}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                            </DataGridTemplateColumn>
+                    <TextBlock Text="Бренд профілю:" Width="120" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <ComboBox x:Name="cmbBrand" Width="180" Margin="0,0,0,0"/>
 
-                            <!-- Назва -->
-                            <DataGridTemplateColumn Header="Назва" Width="180">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <ComboBox
-                                            ItemsSource="{Binding DataContext.MaterialNames, RelativeSource={RelativeSource AncestorType=Window}}"
-                                            Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            IsEditable="{Binding DataContext.LookupEditMode, RelativeSource={RelativeSource AncestorType=Window}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                            </DataGridTemplateColumn>
+                    <TextBlock Text="Товщина профілю:" Width="140" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <ComboBox x:Name="cmbProfileThickness" Width="120" Margin="0,0,0,0"/>
+                </StackPanel>
 
-                            <!-- Одиниці -->
-                            <DataGridTemplateColumn Header="Одиниця" Width="110">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Unit}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <ComboBox
-                                            ItemsSource="{Binding DataContext.Units, RelativeSource={RelativeSource AncestorType=Window}}"
-                                            Text="{Binding Unit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            IsEditable="{Binding DataContext.LookupEditMode, RelativeSource={RelativeSource AncestorType=Window}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                            </DataGridTemplateColumn>
+                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                    <TextBlock Text="Склопакет:" Width="120" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                    <ComboBox x:Name="cmbGlassPack" Width="150" Margin="0,0,0,0"/>
+                    <CheckBox x:Name="chkMosquito" Content="Москітна сітка" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                </StackPanel>
 
-                            <DataGridTextColumn Header="Ціна" Binding="{Binding Price}" Width="110"/>
-                            <DataGridTextColumn Header="Кількість" Binding="{Binding Quantity}" Width="110"/>
-                            <DataGridTextColumn Header="Валюта" Binding="{Binding Currency}" Width="90"/>
-                            <DataGridTextColumn Header="Опис" Binding="{Binding Description}" Width="260"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                    <GroupBox Header="Ручка" Padding="5" Width="180" Margin="0,0,15,0">
+                        <StackPanel>
+                            <RadioButton x:Name="rbHandleStandard" Content="Стандартна" IsChecked="True"/>
+                            <RadioButton x:Name="rbHandlePremium" Content="Преміум"/>
+                        </StackPanel>
+                    </GroupBox>
 
-                    <!-- Кнопки -->
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                        <Button Content="Імпорт CSV"   Click="btnImportCsv_Click"   Margin="5,0"/>
-                        <Button Content="Експорт CSV"  Click="btnExportCsv_Click"  Margin="5,0"/>
-                        <Button Content="Видалити вибрані" Click="btnDeleteMaterial_Click" Margin="5,0"/>
-                        <Button Content="Редагувати довідники…" Click="btnToggleLookupEdit_Click" Margin="5,0"/>
-                        <!-- Довідка -->
-                        <Button x:Name="btnHelp"
-                           Content="Довідка (F1)"
-                           Width="120"
-                           Margin="5,0"
-                           Click="btnHelp_Click"/>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
+                    <GroupBox Header="Підвіконня" Padding="5" Width="180" Margin="0,0,15,0">
+                        <StackPanel>
+                            <RadioButton x:Name="rbSill200" Content="200 мм" IsChecked="True"/>
+                            <RadioButton x:Name="rbSill300" Content="300 мм"/>
+                        </StackPanel>
+                    </GroupBox>
 
-            <!-- ======================= Вкладка: Користувачі ======================= -->
-            <TabItem Header="Користувачі" Tag="AdminOnly">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                    <GroupBox Header="Відлив" Padding="5" Width="180">
+                        <StackPanel>
+                            <RadioButton x:Name="rbDrain150" Content="150 мм" IsChecked="True"/>
+                            <RadioButton x:Name="rbDrain200" Content="200 мм"/>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
 
-                    <DataGrid x:Name="dgUsers"
-                              Grid.Row="0"
-                              AutoGenerateColumns="False"
-                              CanUserSortColumns="True"
-                              Margin="10"
-                              RowEditEnding="dgUsers_RowEditEnding">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Логін" Binding="{Binding Username, UpdateSourceTrigger=PropertyChanged}" Width="160"/>
-                            <DataGridComboBoxColumn Header="Роль"
-                                                    ItemsSource="{StaticResource RolesList}"
-                                                    SelectedItemBinding="{Binding Role, UpdateSourceTrigger=PropertyChanged}"
-                                                    Width="120"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+            </StackPanel>
+        </Border>
 
-                    <StackPanel Grid.Row="1"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Right"
-                                Margin="10">
-                        <Button Content="Змінити пароль" Click="btnChangePassword_Click" Margin="5,0"/>
-                        <Button Content="Видалити вибраних" Click="btnDeleteUser_Click" Margin="5,0"/>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
+        <!-- ====================== MATERIALS DATAGRID ====================== -->
+        <GroupBox Header="Матеріали" Grid.Row="2" Margin="0,0,0,10" Padding="8">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,0,0,8" HorizontalAlignment="Right">
 
-        </TabControl>
+
+                    <Button x:Name="btnManageUsers"
+                            Content="👤 Користувачі"
+                            Click="btnManageUsers_Click"
+                            Width="130" Height="28"                      />
+
+
+                    <Button x:Name="btnImportCsv"
+                            Content="Імпорт CSV"
+                            Click="btnImportCsv_Click"
+                            Width="120" Height="28" Margin="0,0,10,0"/>
+                    <Button x:Name="btnExportCsv"
+                            Content="Експорт CSV"
+                            Click="btnExportCsv_Click"
+                            Width="120" Height="28" Margin="0,0,10,0"/>
+                    <Button x:Name="btnDeleteMaterial"
+                            Content="Видалити матеріал"
+                            Click="btnDeleteMaterial_Click"
+                            Width="150" Height="28"/>
+                </StackPanel>
+
+                <DataGrid x:Name="dgMaterials"
+                          AutoGenerateColumns="True"
+                          CanUserAddRows="False"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          GridLinesVisibility="All"
+                          HeadersVisibility="Column"
+                          AlternatingRowBackground="#FFEFEF"
+                          Height="350"/>
+            </DockPanel>
+        </GroupBox>
+
+        <!-- ====================== RESULT SECTION ====================== -->
+        <Border Grid.Row="3" Padding="10" BorderBrush="#DDD" BorderThickness="1" CornerRadius="5">
+            <StackPanel>
+                <TextBlock Text="Результат розрахунку:" FontWeight="Bold" FontSize="16" Margin="0,0,0,5"/>
+                <Border BorderBrush="#DDD" BorderThickness="1" Background="#FFF" Height="100" Padding="0">
+                    <TextBlock x:Name="lblResult"
+                               Text="Введіть параметри та натисніть 'Розрахувати'"
+                               TextWrapping="Wrap"
+                               FontSize="14"
+                               Foreground="#444"
+                               Padding="10"/>
+                </Border>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

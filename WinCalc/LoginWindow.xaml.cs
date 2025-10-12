@@ -1,43 +1,82 @@
-﻿using System.Windows;
+﻿
+using System;
+using System.Windows;
 using WinCalc.Security;
 using WinCalc.Services;
+using WinCalc.Storage;
+using WindowPaswoord.Models;
 
 namespace WinCalc
 {
     public partial class LoginWindow : Window
     {
-        private readonly AuthService _auth = new();
+        private readonly AuthService _authService = new();
 
         public LoginWindow()
         {
             InitializeComponent();
         }
 
-        private async void Login_Click(object sender, RoutedEventArgs e)
+        // 🔹 Вхід у систему
+        private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            var login = TbLogin.Text?.Trim();
-            var pass = TbPass.Password;
-
-            var (ok, user, err) = await _auth.LoginAsync(login!, pass);
-            if (!ok)
+            try
             {
-                LblStatus.Text = err;
-                return;
-            }
+                var username = txtUsername.Text;
+                var password = txtPassword.Password;
 
-            AppSession.SignIn(user!);
-            DialogResult = true; 
-            Close();
+                var result = await _authService.LoginAsync(username, password);
+                if (result.ok)
+                {
+                    // Якщо метод не повертає user — створюємо вручну
+                    var user = result.user ?? new User
+                    {
+                        Username = username,
+                        Role = Roles.Admin
+                    };
+
+                    AppSession.SetCurrentUser(user);
+
+                    AppAudit.LoginOk(username);
+                    DialogResult = true;
+                    Close();
+                }
+
+                else
+                {
+                    LblStatus.Text = result.error ?? "Невірний логін або пароль.";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка авторизації: {ex.Message}",
+                                "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
+        // 🔹 створення менеджера (для першого запуску)
         private async void CreateManager_Click(object sender, RoutedEventArgs e)
         {
-            var login = TbLogin.Text?.Trim();
-            var pass = TbPass.Password;
+            try
+            {
+                var (ok, err) = await _authService.RegisterAsync("manager", "manager123", Roles.Manager);
 
-            var (ok, err) = await _auth.RegisterAsync(login!, pass, Roles.Manager);
-            LblStatus.Text = ok ? "Створено користувача-менеджера" : err;
+                if (ok)
+                {
+                    MessageBox.Show("✅ Менеджера створено: логін 'manager', пароль 'manager123'",
+                                    "Створення користувача", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show(err ?? "Не вдалося створити менеджера.",
+                                    "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка створення менеджера: {ex.Message}",
+                                "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
-
