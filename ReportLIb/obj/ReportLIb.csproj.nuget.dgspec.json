@@ -1,17 +1,83 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\ReportLIb\\ReportLIb.csproj": {}
+    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\ReportLIb\\ReportLIb.csproj": {}
   },
   "projects": {
-    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\ReportLIb\\ReportLIb.csproj": {
+    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\AuditLog\\AuditLog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\ReportLIb\\ReportLIb.csproj",
-        "projectName": "ReportLIb",
-        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\ReportLIb\\ReportLIb.csproj",
+        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\AuditLog\\AuditLog.csproj",
+        "projectName": "AuditLog",
+        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\AuditLog\\AuditLog.csproj",
         "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\ReportLIb\\obj\\",
+        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\AuditLog\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\arikc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\ReportLIb\\ReportLIb.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\ReportLIb\\ReportLIb.csproj",
+        "projectName": "ReportLIb",
+        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\ReportLIb\\ReportLIb.csproj",
+        "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
+        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\ReportLIb\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,11 +99,11 @@
           "net9.0-windows7.0": {
             "targetAlias": "net9.0-windows",
             "projectReferences": {
-              "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowPaswoord\\WindowPaswoord.csproj": {
-                "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowPaswoord\\WindowPaswoord.csproj"
+              "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
+                "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj"
               },
-              "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
-                "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj"
+              "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
+                "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj"
               }
             }
           }
@@ -80,14 +146,14 @@
         }
       }
     },
-    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowPaswoord\\WindowPaswoord.csproj": {
+    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowPaswoord\\WindowPaswoord.csproj",
+        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
         "projectName": "WindowPaswoord",
-        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowPaswoord\\WindowPaswoord.csproj",
+        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
         "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowPaswoord\\obj\\",
+        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowPaswoord\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -155,14 +221,14 @@
         }
       }
     },
-    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
+    "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+        "projectUniqueName": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
         "projectName": "WindowProfileCalculatorLibrary",
-        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+        "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
         "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowProfileCalculatorLibrary\\obj\\",
+        "outputPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowProfileCalculatorLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -184,8 +250,11 @@
           "net9.0-windows7.0": {
             "targetAlias": "net9.0-windows",
             "projectReferences": {
-              "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowPaswoord\\WindowPaswoord.csproj": {
-                "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.6b\\WindowPaswoord\\WindowPaswoord.csproj"
+              "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\AuditLog\\AuditLog.csproj": {
+                "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\AuditLog\\AuditLog.csproj"
+              },
+              "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
+                "projectPath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\arikc79\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj"
               }
             }
           }
