@@ -1,13 +1,22 @@
+п»їusing System;
 using Microsoft.Data.Sqlite;
+using System.Linq;
 
 namespace WindowProfileCalculatorLibrary
 {
+    /// <summary>
+    /// Р“РѕР»РѕРІРЅРёР№ РєР»Р°СЃ Р»РѕРіС–РєРё РѕР±С‡РёСЃР»РµРЅСЊ С– С–РЅС–С†С–Р°Р»С–Р·Р°С†С–С— Р‘Р”.
+    /// </summary>
     public class Obchyslennya
     {
         private readonly string _dbPath = "window_calc.db";
+        private readonly DataAccess _dataAccess = new();
 
+        // =====================================================================
+        // Р†РќР†Р¦Р†РђР›Р†Р—РђР¦Р†РЇ Р‘РђР—Р Р”РђРќРРҐ
+        // =====================================================================
         /// <summary>
-        /// Створює таблиці Materials і Users у базі даних, якщо вони ще не існують.
+        /// РЎС‚РІРѕСЂСЋС” С‚Р°Р±Р»РёС†С– Materials С– Users Сѓ Р±Р°Р·С– РґР°РЅРёС…, СЏРєС‰Рѕ РІРѕРЅРё С‰Рµ РЅРµ С–СЃРЅСѓСЋС‚СЊ.
         /// </summary>
         public void CreateTables()
         {
@@ -18,13 +27,7 @@ namespace WindowProfileCalculatorLibrary
                     connection.Open();
                     Console.WriteLine("Connection opened in CreateTables.");
 
-                    if (connection.State != System.Data.ConnectionState.Open)
-                    {
-                        Console.WriteLine("Failed to open connection in CreateTables.");
-                        return;
-                    }
-
-                    // Створення таблиці Users
+                    // ---- РўР°Р±Р»РёС†СЏ РєРѕСЂРёСЃС‚СѓРІР°С‡С–РІ ----
                     string createUsersTable = @"
                         CREATE TABLE IF NOT EXISTS Users (
                             Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,20 +35,10 @@ namespace WindowProfileCalculatorLibrary
                             Password TEXT NOT NULL,
                             Role TEXT NOT NULL
                         )";
-                    try
-                    {
-                        using (var command = new SqliteCommand(createUsersTable, connection))
-                        {
-                            int rowsAffected = command.ExecuteNonQuery();
-                            Console.WriteLine($"Users table created/checked. Rows affected: {rowsAffected}");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error creating Users table: {ex.Message}");
-                    }
+                    using (var command = new SqliteCommand(createUsersTable, connection))
+                        command.ExecuteNonQuery();
 
-                    // Створення таблиці Materials
+                    // ---- РўР°Р±Р»РёС†СЏ РјР°С‚РµСЂС–Р°Р»С–РІ ----
                     string createMaterialsTable = @"
                         CREATE TABLE IF NOT EXISTS Materials (
                             Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,31 +50,8 @@ namespace WindowProfileCalculatorLibrary
                             QuantityType TEXT NOT NULL,
                             Description TEXT
                         )";
-                    try
-                    {
-                        using (var command = new SqliteCommand(createMaterialsTable, connection))
-                        {
-                            int rowsAffected = command.ExecuteNonQuery();
-                            Console.WriteLine($"Materials table created/checked. Rows affected: {rowsAffected}");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error creating Materials table: {ex.Message}");
-                    }
-
-                    // Перевірка наявності таблиць
-                    using (var command = new SqliteCommand("SELECT name FROM sqlite_master WHERE type='table';", connection))
-                    {
-                        using (var reader = command.ExecuteReader())
-                        {
-                            Console.WriteLine("Tables in database:");
-                            while (reader.Read())
-                            {
-                                Console.WriteLine($"- {reader["name"]}");
-                            }
-                        }
-                    }
+                    using (var command = new SqliteCommand(createMaterialsTable, connection))
+                        command.ExecuteNonQuery();
 
                     connection.Close();
                     Console.WriteLine("CreateTables completed successfully.");
@@ -89,127 +59,136 @@ namespace WindowProfileCalculatorLibrary
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"General error in CreateTables: {ex.Message}");
-                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+                Console.WriteLine($"Error in CreateTables: {ex.Message}");
             }
         }
+
+        // =====================================================================
+        // Р РћР—Р РђРҐРЈРќРћРљ Р’РђР РўРћРЎРўР† Р’Р†РљРќРђ
+        // =====================================================================
         /// <summary>
-        /// Обчислює загальну довжину профілю для простого одностулкового вікна.
+        /// РћР±С‡РёСЃР»СЋС” Р·Р°РіР°Р»СЊРЅСѓ РІР°СЂС‚С–СЃС‚СЊ РІС–РєРЅР° Р· СѓСЂР°С…СѓРІР°РЅРЅСЏРј СѓСЃС–С… РјР°С‚РµСЂС–Р°Р»С–РІ.
         /// </summary>
-        /// <param name="width">Ширина вікна (в метрах)</param>
-        /// <param name="height">Висота вікна (в метрах)</param>
-        /// <param name="frameWidth">Ширина рами (в метрах)</param>
-        /// <param name="overlap">Перехлест стулки (в метрах)</param>
-        /// <param name="weldingAllowance">Допуск на зварювання (в метрах на кінець)</param>
-        /// <returns>Загальна довжина профілю (в метрах)</returns>
+        public decimal CalculateWindowPrice(WindowConfig config)
+        {
+            try
+            {
+                decimal area = (config.Width * config.Height) / 1_000_000m;  // РјВІ
+                decimal perimeter = ((config.Width + config.Height) * 2) / 1000m; // Рј
+
+                decimal total = 0m;
+
+                // ---------- 1. РџСЂРѕС„С–Р»СЊ ----------
+                var profile = _dataAccess.GetMaterialByCategoryAndBrand("РџСЂРѕС„С–Р»СЊ", config.Brand);
+                if (profile != null)
+                    total += perimeter * (decimal)profile.Price;
+
+                // ---------- 2. РЎРєР»РѕРїР°РєРµС‚ ----------
+                var glass = _dataAccess.GetMaterialByCategory("РЎРєР»РѕРїР°РєРµС‚", config.GlassType);
+                if (glass != null)
+                    total += area * (decimal)glass.Price;
+
+                // ---------- 3. Р СѓС‡РєР° ----------
+                var handle = _dataAccess.GetMaterialByCategory("Р СѓС‡РєР°", config.HandleType);
+                if (handle != null)
+                    total += (decimal)handle.Price;
+
+                // ---------- 4. РџС–РґРІС–РєРѕРЅРЅСЏ ----------
+                var sill = _dataAccess.GetMaterialByCategory("РџС–РґРІС–РєРѕРЅРЅСЏ", config.SillType);
+                if (sill != null)
+                    total += (config.Width / 1000m) * (decimal)sill.Price;
+
+                // ---------- 5. Р’С–РґР»РёРІ ----------
+                var drain = _dataAccess.GetMaterialByCategory("Р’С–РґР»РёРІ", config.DrainType);
+                if (drain != null)
+                    total += (config.Width / 1000m) * (decimal)drain.Price;
+
+                // ---------- 6. РњРѕСЃРєС–С‚РЅР° СЃС–С‚РєР° ----------
+                if (config.HasMosquito)
+                {
+                    var mosquito = _dataAccess.GetMaterialByCategory("РњРѕСЃРєС–С‚РЅР° СЃС–С‚РєР°", "РЎС‚Р°РЅРґР°СЂС‚");
+                    if (mosquito != null)
+                        total += area * (decimal)mosquito.Price;
+                }
+
+                // ---------- 7. РњРѕРЅС‚Р°Р¶ / Р·Р°РїР°СЃ ----------
+                total *= 1.1m;
+
+                return Math.Round(total, 2);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"РџРѕРјРёР»РєР° Сѓ CalculateWindowPrice: {ex.Message}");
+                return 0m;
+            }
+        }
+
+        // =====================================================================
+        // РћР‘Р§РРЎР›Р•РќРќРЇ Р”РћР’Р–РРќ РџР РћР¤Р†Р›Р® (Р·Р°Р»РёС€Р°С”РјРѕ СЏРє Р±СѓР»Рѕ)
+        // =====================================================================
         public double CalculateProfileLengthType1(double width, double height, double frameWidth, double overlap, double weldingAllowance)
         {
             if (width <= 0 || height <= 0 || frameWidth <= 0 || overlap <= 0 || weldingAllowance <= 0)
-                throw new ArgumentException("Усі параметри повинні бути додатними.");
+                throw new ArgumentException("РЈСЃС– РїР°СЂР°РјРµС‚СЂРё РїРѕРІРёРЅРЅС– Р±СѓС‚Рё РґРѕРґР°С‚РЅРёРјРё.");
 
             double framePerimeter = 2 * (width + height) + weldingAllowance * 8;
             double sashWidth = width - 2 * frameWidth + 2 * overlap;
             double sashHeight = height - 2 * frameWidth + 2 * overlap;
             double sashPerimeter = 2 * (sashWidth + sashHeight) + weldingAllowance * 8;
-
             return framePerimeter + sashPerimeter;
         }
 
-        /// <summary>
-        /// Обчислює загальну довжину профілю для вікна, діленого навпіл (2 секції, 1 відкриаюча).
-        /// </summary>
-        /// <param name="width">Ширина вікна (в метрах)</param>
-        /// <param name="height">Висота вікна (в метрах)</param>
-        /// <param name="frameWidth">Ширина рами (в метрах)</param>
-        /// <param name="midFrameWidth">Ширина імпоста (в метрах)</param>
-        /// <param name="overlap">Перехлест стулки (в метрах)</param>
-        /// <param name="weldingAllowance">Допуск на зварювання (в метрах на кінець)</param>
-        /// <returns>Загальна довжина профілю (в метрах)</returns>
         public double CalculateProfileLengthType2(double width, double height, double frameWidth, double midFrameWidth, double overlap, double weldingAllowance)
         {
             if (width <= 0 || height <= 0 || frameWidth <= 0 || midFrameWidth <= 0 || overlap <= 0 || weldingAllowance <= 0)
-                throw new ArgumentException("Усі параметри повинні бути додатними.");
+                throw new ArgumentException("РЈСЃС– РїР°СЂР°РјРµС‚СЂРё РїРѕРІРёРЅРЅС– Р±СѓС‚Рё РґРѕРґР°С‚РЅРёРјРё.");
 
             double framePerimeter = 2 * (width + height) + weldingAllowance * 8;
             double mullionLength = (height - 2 * frameWidth + 2 * midFrameWidth) + weldingAllowance * 4;
             double sashWidth = width / 2 - frameWidth - midFrameWidth / 2 + 2 * overlap;
             double sashHeight = height - 2 * frameWidth + 2 * overlap;
             double sashPerimeter = 2 * (sashWidth + sashHeight) + weldingAllowance * 8;
-
             return framePerimeter + mullionLength + sashPerimeter;
         }
 
-        /// <summary>
-        /// Обчислює загальну довжину профілю для вікна, діленого на 3 частини (3 секції, 1 відкриаюча).
-        /// </summary>
-        /// <param name="width">Ширина вікна (в метрах)</param>
-        /// <param name="height">Висота вікна (в метрах)</param>
-        /// <param name="frameWidth">Ширина рами (в метрах)</param>
-        /// <param name="midFrameWidth">Ширина імпоста (в метрах)</param>
-        /// <param name="overlap">Перехлест стулки (в метрах)</param>
-        /// <param name="weldingAllowance">Допуск на зварювання (в метрах на кінець)</param>
-        /// <returns>Загальна довжина профілю (в метрах)</returns>
         public double CalculateProfileLengthType3(double width, double height, double frameWidth, double midFrameWidth, double overlap, double weldingAllowance)
         {
             if (width <= 0 || height <= 0 || frameWidth <= 0 || midFrameWidth <= 0 || overlap <= 0 || weldingAllowance <= 0)
-                throw new ArgumentException("Усі параметри повинні бути додатними.");
+                throw new ArgumentException("РЈСЃС– РїР°СЂР°РјРµС‚СЂРё РїРѕРІРёРЅРЅС– Р±СѓС‚Рё РґРѕРґР°С‚РЅРёРјРё.");
 
             double framePerimeter = 2 * (width + height) + weldingAllowance * 8;
             double mullionLength = 2 * ((height - 2 * frameWidth + 2 * midFrameWidth) + weldingAllowance * 4);
             double sashWidth = width / 3 - frameWidth - midFrameWidth / 2 + 2 * overlap;
             double sashHeight = height - 2 * frameWidth + 2 * overlap;
             double sashPerimeter = 2 * (sashWidth + sashHeight) + weldingAllowance * 8;
-
             return framePerimeter + mullionLength + sashPerimeter;
         }
 
-        /// <summary>
-        /// Обчислює загальну довжину профілю для вікна з 4 секціями (4 секції, 2 відкриваються).
-        /// </summary>
-        /// <param name="width">Ширина вікна (в метрах)</param>
-        /// <param name="height">Висота вікна (в метрах)</param>
-        /// <param name="frameWidth">Ширина рами (в метрах)</param>
-        /// <param name="midFrameWidth">Ширина імпоста (в метрах)</param>
-        /// <param name="overlap">Перехлест стулки (в метрах)</param>
-        /// <param name="weldingAllowance">Допуск на зварювання (в метрах на кінець)</param>
-        /// <returns>Загальна довжина профілю (в метрах)</returns>
         public double CalculateProfileLengthType4(double width, double height, double frameWidth, double midFrameWidth, double overlap, double weldingAllowance)
         {
             if (width <= 0 || height <= 0 || frameWidth <= 0 || midFrameWidth <= 0 || overlap <= 0 || weldingAllowance <= 0)
-                throw new ArgumentException("Усі параметри повинні бути додатними.");
+                throw new ArgumentException("РЈСЃС– РїР°СЂР°РјРµС‚СЂРё РїРѕРІРёРЅРЅС– Р±СѓС‚Рё РґРѕРґР°С‚РЅРёРјРё.");
 
             double framePerimeter = 2 * (width + height) + weldingAllowance * 8;
             double mullionLength = 3 * ((height - 2 * frameWidth + 2 * midFrameWidth) + weldingAllowance * 4);
             double sashWidth = width / 4 - frameWidth - midFrameWidth / 2 + 2 * overlap;
             double sashHeight = height - 2 * frameWidth + 2 * overlap;
             double sashPerimeter = 2 * (sashWidth + sashHeight) + weldingAllowance * 8;
-            double totalSashLength = 2 * sashPerimeter; // 2 відкриваючих стулки
-
+            double totalSashLength = 2 * sashPerimeter;
             return framePerimeter + mullionLength + totalSashLength;
         }
 
-        /// <summary>
-        /// Обчислює загальну довжину профілю для вікна з 5 секціями (5 секцій, 2 відкриваються).
-        /// </summary>
-        /// <param name="width">Ширина вікна (в метрах)</param>
-        /// <param name="height">Висота вікна (в метрах)</param>
-        /// <param name="frameWidth">Ширина рами (в метрах)</param>
-        /// <param name="midFrameWidth">Ширина імпоста (в метрах)</param>
-        /// <param name="overlap">Перехлест стулки (в метрах)</param>
-        /// <param name="weldingAllowance">Допуск на зварювання (в метрах на кінець)</param>
-        /// <returns>Загальна довжина профілю (в метрах)</returns>
         public double CalculateProfileLengthType5(double width, double height, double frameWidth, double midFrameWidth, double overlap, double weldingAllowance)
         {
             if (width <= 0 || height <= 0 || frameWidth <= 0 || midFrameWidth <= 0 || overlap <= 0 || weldingAllowance <= 0)
-                throw new ArgumentException("Усі параметри повинні бути додатними.");
+                throw new ArgumentException("РЈСЃС– РїР°СЂР°РјРµС‚СЂРё РїРѕРІРёРЅРЅС– Р±СѓС‚Рё РґРѕРґР°С‚РЅРёРјРё.");
 
             double framePerimeter = 2 * (width + height) + weldingAllowance * 8;
             double mullionLength = 4 * ((height - 2 * frameWidth + 2 * midFrameWidth) + weldingAllowance * 4);
             double sashWidth = width / 5 - frameWidth - midFrameWidth / 2 + 2 * overlap;
             double sashHeight = height - 2 * frameWidth + 2 * overlap;
             double sashPerimeter = 2 * (sashWidth + sashHeight) + weldingAllowance * 8;
-            double totalSashLength = 2 * sashPerimeter; // 2 відкриваючих стулки
-
+            double totalSashLength = 2 * sashPerimeter;
             return framePerimeter + mullionLength + totalSashLength;
         }
     }

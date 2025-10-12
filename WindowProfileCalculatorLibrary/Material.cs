@@ -1,23 +1,17 @@
 ﻿namespace WindowProfileCalculatorLibrary
 {
-    // додано Quantity, Article, Currency (для складу та ідентифікації)
+    /// <summary>
+    /// Модель одного матеріалу з бази даних.
+    /// </summary>
     public class Material
     {
         public int Id { get; set; }
-
-        public string Category { get; set; }      // "профіль", "скло", "фурнітура" тощо
-        public string Name { get; set; }          // Наприклад, "Єврокоробка 5-камерний профіль"
-        public string Color { get; set; }         // Колір, якщо застосовно
-
-        public double Price { get; set; }         // Ціна за одиницю
-        public string Unit { get; set; }          // "м.пог.", "м²", "шт"
-
-        public double Quantity { get; set; }      // Кількість на складі (в одиницях Unit)
-        public string QuantityType { get; set; }  // "довжина", "площа", "шт"
-
-        public string Article { get; set; }       // Артикул (ключ для upsert)
-        public string Currency { get; set; }      // Валюта (грн, EUR, ...)
-
-        public string Description { get; set; }   // Опис
+        public string Category { get; set; } = string.Empty;   // Напр.: "Профіль", "Ручка", "Підвіконня"
+        public string Name { get; set; } = string.Empty;       // Напр.: "Steko S500", "Преміум", "200 мм"
+        public string? Color { get; set; }
+        public double Price { get; set; }                      // Ціна
+        public string Unit { get; set; } = string.Empty;       // Напр.: "м.п.", "м²", "шт."
+        public string QuantityType { get; set; } = string.Empty; // Для обчислень ("byLength", "byArea", "byPiece")
+        public string? Description { get; set; }
     }
 }

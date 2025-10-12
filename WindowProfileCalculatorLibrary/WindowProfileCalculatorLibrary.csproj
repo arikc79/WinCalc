@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AuditLog\AuditLog.csproj" />
     <ProjectReference Include="..\WindowPaswoord\WindowPaswoord.csproj" />
   </ItemGroup>
 
