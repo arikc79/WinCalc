@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuditLog\AuditLog.csproj" />
+    <ProjectReference Include="..\ReportLIb\ReportLIb.csproj" />
     <!--
     <ProjectReference Include="..\MaterialsFeatureLib\MaterialsFeatureLib.csproj" />
     -->

@@ -5,62 +5,66 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Керування користувачами"
-        Height="500" Width="800"
+        Height="460" Width="700"
         WindowStartupLocation="CenterScreen"
-        Background="#FAFAFA">
+        ResizeMode="CanResize">
 
-    <Grid Margin="15">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- HEADER -->
-        <TextBlock Text="Панель керування користувачами"
-                   FontSize="20" FontWeight="Bold"
-                   Foreground="#333"
-                   Margin="0,0,0,10"/>
+        <!-- 🔹 Панель керування -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Button x:Name="btnAddUser" Content="➕ Додати користувача" Width="160" Margin="0,0,10,0" Click="btnAddUser_Click"/>
+            <Button x:Name="btnChangePassword" Content="🔑 Змінити пароль" Width="150" Margin="0,0,10,0" Click="btnChangePassword_Click"/>
+            <Button x:Name="btnDeleteUser" Content="🗑️ Видалити користувача" Width="160" Margin="0,0,10,0" Click="btnDeleteUser_Click"/>
+            <Button x:Name="btnRefresh" Content="🔄 Оновити" Width="120" Click="btnRefresh_Click"/>
+        </StackPanel>
 
-        <!-- DATAGRID USERS -->
+        <!-- 🔹 Таблиця користувачів -->
         <DataGrid x:Name="dgUsers"
                   Grid.Row="1"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
-                  IsReadOnly="True"
-                  SelectionMode="Single"
-                  AlternatingRowBackground="#F7F7F7"
-                  GridLinesVisibility="Horizontal"
+                  IsReadOnly="False"
+                  RowEditEnding="dgUsers_RowEditEnding"
                   Margin="0,0,0,10"
-                  HeadersVisibility="Column"
-                  FontSize="14">
+                  AlternationCount="2"
+                  AlternatingRowBackground="#FFEFEFEF">
+
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="Auto" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Логін" Binding="{Binding Username}" Width="2*"/>
-                <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="*"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" Width="60"/>
+                <DataGridTextColumn Header="Логін" Binding="{Binding Username}" Width="*"/>
+
+                <!-- 🔹 Колонка ролей -->
+                <DataGridComboBoxColumn Header="Роль"
+                                        Width="150"
+                                        SelectedItemBinding="{Binding Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource"
+                                    Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=RolesList}"/>
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource"
+                                    Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=RolesList}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+
+                <!-- ❌ Видалено стовпець “Пароль (хеш)” -->
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- ACTION BUTTONS -->
-        <StackPanel Grid.Row="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right">
-            <Button x:Name="btnAddUser"
-                    Content="➕ Додати користувача"
-                    Click="btnAddUser_Click"
-                    Width="170" Height="30" Margin="0,0,10,0"/>
-            <Button x:Name="btnChangePassword"
-                    Content="🔑 Змінити пароль"
-                    Click="btnChangePassword_Click"
-                    Width="150" Height="30" Margin="0,0,10,0"/>
-            <Button x:Name="btnDeleteUser"
-                    Content="🗑️ Видалити користувача"
-                    Click="btnDeleteUser_Click"
-                    Width="150" Height="30" Margin="0,0,10,0"/>
-            <Button x:Name="btnRefresh"
-                    Content="🔄 Оновити"
-                    Click="btnRefresh_Click"
-                    Width="120" Height="30"/>
-        </StackPanel>
+        <!-- 🔹 Кнопка закриття -->
+        <Button Grid.Row="2" Content="Закрити" Width="100" HorizontalAlignment="Right"
+                Click="Close_Click"/>
     </Grid>
 </Window>

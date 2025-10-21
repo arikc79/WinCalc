@@ -1,5 +1,5 @@
-﻿// WinCalc/UserManagementWindow.xaml.cs
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using WinCalc.Security;
@@ -14,9 +14,12 @@ namespace WinCalc
         private readonly SqliteUserStore _store = new();
         private readonly AuthService _auth = new();
 
+        public List<string> RolesList { get; } = new() { Roles.Admin, Roles.Manager };
+
         public UserManagementWindow()
         {
             InitializeComponent();
+            DataContext = this;
             LoadUsersAsync();
         }
 
@@ -28,7 +31,8 @@ namespace WinCalc
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Помилка завантаження користувачів: {ex.Message}");
+                MessageBox.Show($"Помилка завантаження користувачів: {ex.Message}",
+                                "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -43,32 +47,20 @@ namespace WinCalc
             var (ok, err) = await _auth.RegisterAsync(login, pass, Roles.Manager);
             if (ok)
             {
-                MessageBox.Show($"✅ Користувача '{login}' створено.");
-                AppAudit.LoginOk(AppSession.CurrentUser?.Username ?? "?");
+                MessageBox.Show($"✅ Користувача '{login}' створено (роль: менеджер).",
+                                "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
                 LoadUsersAsync();
             }
             else
-                MessageBox.Show($"Помилка: {err}");
+                MessageBox.Show($"Помилка: {err}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
-
-        private void btnManageUsers_Click(object sender, RoutedEventArgs e)
-        {
-            if (!AppSession.IsInRole(Roles.Admin))
-            {
-                MessageBox.Show("Доступ дозволений лише адміністратору.");
-                return;
-            }
-
-            new UserManagementWindow().ShowDialog();
-        }
-
 
         private async void btnChangePassword_Click(object sender, RoutedEventArgs e)
         {
             if (dgUsers.SelectedItem is not User user)
             {
-                MessageBox.Show("Оберіть користувача для зміни пароля.");
+                MessageBox.Show("Оберіть користувача для зміни пароля.",
+                                "Увага", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -76,8 +68,9 @@ namespace WinCalc
             if (dlg.ShowDialog() == true)
             {
                 await _store.UpdatePasswordAsync(user.Id, dlg.NewPassword);
-                AppAudit.MaterialsImport(AppSession.CurrentUser?.Username ?? "?", 0, 0);
-                MessageBox.Show($"✅ Пароль для {user.Username} оновлено.");
+                AppAudit.RoleChanged(AppSession.CurrentUser?.Username ?? "?", user.Username, "PasswordChanged");
+                MessageBox.Show($"✅ Пароль для користувача {user.Username} оновлено.",
+                                "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -85,7 +78,8 @@ namespace WinCalc
         {
             if (dgUsers.SelectedItem is not User user)
             {
-                MessageBox.Show("Оберіть користувача для видалення.");
+                MessageBox.Show("Оберіть користувача для видалення.",
+                                "Увага", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -94,11 +88,36 @@ namespace WinCalc
             {
                 await _store.DeleteAsync(user.Id);
                 AppAudit.MaterialDelete(AppSession.CurrentUser?.Username ?? "?", user.Id, user.Username);
-                MessageBox.Show("🗑️ Користувача видалено.");
+                MessageBox.Show("🗑️ Користувача видалено.",
+                                "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
                 LoadUsersAsync();
             }
         }
 
+        private async void dgUsers_RowEditEnding(object sender, System.Windows.Controls.DataGridRowEditEndingEventArgs e)
+        {
+            if (e.Row.Item is not User user) return;
+
+            try
+            {
+                await _store.UpdateAsync(user);
+
+                // 🔹 аудит зміни ролі
+                string currentAdmin = AppSession.CurrentUser?.Username ?? "unknown";
+                AppAudit.RoleChanged(currentAdmin, user.Username, user.Role);
+
+                MessageBox.Show($"✅ Роль користувача '{user.Username}' змінено на '{user.Role}'.",
+                                "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка при збереженні ролі: {ex.Message}",
+                                "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void btnRefresh_Click(object sender, RoutedEventArgs e) => LoadUsersAsync();
+
+        private void Close_Click(object sender, RoutedEventArgs e) => Close();
     }
 }
