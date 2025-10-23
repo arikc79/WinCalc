@@ -13,7 +13,7 @@ namespace WindowProfileCalculatorLibrary
         // Заголовок CSV, який записується при експорті
         private static readonly string[] CsvHeader =
         {
-            "Category", "Name", "Color", "Price", "Unit", "QuantityType", "Description"
+            "Category", "Name", "Color", "Price", "Unit",  "Description"
         };
 
         // =====================================================================
@@ -68,7 +68,6 @@ namespace WindowProfileCalculatorLibrary
                         Color = parts[2],
                         Price = (double)priceValue,
                         Unit = parts[4],
-                        QuantityType = parts[5],
                         Description = parts[6]
                     };
 
@@ -110,8 +109,7 @@ namespace WindowProfileCalculatorLibrary
                     EscapeCsv(m.Name),
                     EscapeCsv(m.Color ?? ""),
                     priceStr,
-                    EscapeCsv(m.Unit),
-                    EscapeCsv(m.QuantityType),
+                    EscapeCsv(m.Unit),                                 
                     EscapeCsv(m.Description ?? "")
                 });
 

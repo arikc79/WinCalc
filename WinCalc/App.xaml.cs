@@ -3,30 +3,42 @@ using System.IO;
 using System.Windows;
 using Microsoft.Data.Sqlite;
 using WinCalc.Security;
+using WinCalc.Services;
 using WindowProfileCalculatorLibrary;
 
 namespace WinCalc
 {
     public partial class App : Application
     {
-        private void Application_Startup(object sender, StartupEventArgs e)
+        private readonly AuthService _authService = new();
+
+        protected override async void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
+
             try
             {
-                // 🔹 важливо — вимикаємо автозакриття програми після LoginWindow
+                // 1️⃣ Ініціалізація бази
+                InitializeDatabase();
+
+                // 2️⃣ Гарантовано створюємо адміна (з хешем)
+                await _authService.EnsureAdminSeedAsync();
+
+
+                File.AppendAllText("app_log.txt", $"Init DB at {DateTime.Now}\n");
+                InitializeDatabase();
+                File.AppendAllText("app_log.txt", $"DB initialized\n");
+
+                // 3️⃣ Запускаємо LoginWindow
                 this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
                 var loginWindow = new LoginWindow();
                 bool? result = loginWindow.ShowDialog();
 
-                // перевірка стану користувача
                 if (result == true && AppSession.CurrentUser != null)
                 {
-                    // відкриваємо головне вікно
                     var main = new MainWindow();
                     main.Show();
-
-                    // після відкриття — відновлюємо нормальний режим
                     this.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 }
                 else
@@ -36,40 +48,27 @@ namespace WinCalc
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Помилка запуску: {ex.Message}",
-                                "Критична помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"❌ Помилка запуску: {ex.Message}",
+                    "Критична помилка", MessageBoxButton.OK, MessageBoxImage.Error);
                 Shutdown();
-            }
-        }
-
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            string logPath = "app_log.txt";
-            File.AppendAllText(logPath, $"OnStartup started at {DateTime.Now}{Environment.NewLine}");
-            base.OnStartup(e);
-
-            try
-            {
-                File.AppendAllText(logPath, "Initializing database..." + Environment.NewLine);
-                InitializeDatabase();
-                File.AppendAllText(logPath, "Database initialization completed." + Environment.NewLine);
-            }
-            catch (Exception ex)
-            {
-                File.AppendAllText(logPath, $"OnStartup error: {ex.Message}{Environment.NewLine}");
-                MessageBox.Show($"Error during startup: {ex.Message}");
             }
         }
 
         private void InitializeDatabase()
         {
-            string dbPath = "window_calc.db";
-            using (var connection = new SqliteConnection($"Data Source={dbPath}"))
+            string dbPath = Path.Combine(AppContext.BaseDirectory, "window_calc.db");
+
+            using var connection = new SqliteConnection($"Data Source={dbPath}");
+            connection.Open();
+
+            try
             {
-                connection.Open();
-                new Obchyslennya().CreateTables();
-                new DataInitializer().InsertInitialData(dbPath);
-                connection.Close();
+              //  Obchyslennya.CreateTables();
+                DataInitializer.InsertInitialData(); // створює таблиці + базові дані
+            }
+            catch (Exception dbEx)
+            {
+                MessageBox.Show($"⚠️ DB init error: {dbEx.Message}");
             }
         }
     }

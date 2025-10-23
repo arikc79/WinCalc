@@ -46,3 +46,15 @@ D:\Step\Курсова-Розрахунку вартості м-п вікна\п
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\arikc79\WinCalc\AuditLog\obj\Debug\net9.0\refint\AuditLog.dll
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\arikc79\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.pdb
 D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\arikc79\WinCalc\AuditLog\obj\Debug\net9.0\ref\AuditLog.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\bin\Debug\net9.0\AuditLog.deps.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\bin\Debug\net9.0\AuditLog.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\bin\Debug\net9.0\AuditLog.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.GeneratedMSBuildEditorConfig.editorconfig
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.AssemblyInfoInputs.cache
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.AssemblyInfo.cs
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.csproj.CoreCompileInputs.cache
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.sourcelink.json
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\refint\AuditLog.dll
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.pdb
+D:\Step\Курсова-Розрахунку вартості м-п вікна\пробна ver 0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\ref\AuditLog.dll

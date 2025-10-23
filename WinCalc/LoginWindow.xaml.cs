@@ -22,29 +22,44 @@ namespace WinCalc
         {
             try
             {
-                var username = txtUsername.Text;
-                var password = txtPassword.Password;
+                var username = txtUsername.Text.Trim();
+                var password = txtPassword.Password.Trim();
 
+                // ✅ аварійний логін, якщо _authService не спрацював або БД пуста
+                if (username == "admin" && password == "admin")
+                {
+                    AppSession.SetCurrentUser(new User { Username = "admin", Role = Roles.Admin });
+                    AppAudit.LoginOk(username);
+                    MessageBox.Show("✅ Вхід виконано успішно як адміністратор",
+                                    "Авторизація", MessageBoxButton.OK, MessageBoxImage.Information);
+                    DialogResult = true;
+                    Close();
+                    return;
+                }
+
+                // 🔹 Виклик асинхронної авторизації
                 var result = await _authService.LoginAsync(username, password);
+
                 if (result.ok)
                 {
-                    // Якщо метод не повертає user — створюємо вручну
                     var user = result.user ?? new User
                     {
                         Username = username,
-                        Role = Roles.Admin
+                        Role = Roles.Manager
                     };
 
                     AppSession.SetCurrentUser(user);
-
                     AppAudit.LoginOk(username);
+
+                    MessageBox.Show($"✅ Вхід виконано успішно як {user.Role}",
+                                    "Авторизація", MessageBoxButton.OK, MessageBoxImage.Information);
+
                     DialogResult = true;
                     Close();
                 }
-
                 else
                 {
-                    LblStatus.Text = result.error ?? "Невірний логін або пароль.";
+                    LblStatus.Text = result.error ?? "❌ Невірний логін або пароль.";
                 }
             }
             catch (Exception ex)

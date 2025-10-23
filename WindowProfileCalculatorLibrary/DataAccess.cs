@@ -40,8 +40,7 @@ namespace WindowProfileCalculatorLibrary
                         Color = reader.IsDBNull(3) ? null : reader.GetString(3),
                         Price = reader.GetDouble(4),
                         Unit = reader.GetString(5),
-                        QuantityType = reader.GetString(6),
-                        Description = reader.IsDBNull(7) ? null : reader.GetString(7)
+                        Description = reader.IsDBNull(6) ? null : reader.GetString(6)
                     });
                 }
             }
@@ -106,7 +105,6 @@ namespace WindowProfileCalculatorLibrary
                     Color = reader.IsDBNull(3) ? null : reader.GetString(3),
                     Price = reader.GetDouble(4),
                     Unit = reader.GetString(5),
-                    QuantityType = reader.GetString(6),
                     Description = reader.IsDBNull(7) ? null : reader.GetString(7)
                 };
             }
@@ -137,7 +135,6 @@ namespace WindowProfileCalculatorLibrary
                     Color = reader.IsDBNull(3) ? null : reader.GetString(3),
                     Price = reader.GetDouble(4),
                     Unit = reader.GetString(5),
-                    QuantityType = reader.GetString(6),
                     Description = reader.IsDBNull(7) ? null : reader.GetString(7)
                 };
             }
@@ -170,7 +167,7 @@ namespace WindowProfileCalculatorLibrary
 
             foreach (var m in materials)
             {
-                writer.WriteLine($"{m.Id},{m.Category},{m.Name},{m.Color},{m.Price},{m.Unit},{m.QuantityType},{m.Description}");
+                writer.WriteLine($"{m.Id},{m.Category},{m.Name},{m.Color},{m.Price},{m.Unit},{m.Description}");
             }
         }
 
@@ -183,5 +180,67 @@ namespace WindowProfileCalculatorLibrary
             cmd.ExecuteNonQuery();
         }
 
+        // =====================================================================
+        // ДОДАВАННЯ / ОНОВЛЕННЯ МАТЕРІАЛІВ
+        // =====================================================================
+
+        public bool UpdateMaterial(Material m)
+        {
+            try
+            {
+                using var con = new SqliteConnection($"Data Source={_dbPath}");
+                con.Open();
+
+                var cmd = new SqliteCommand(@"
+            UPDATE Materials
+            SET Category=@c, Name=@n, Color=@col, Price=@p, Unit=@u, Description=@d
+            WHERE Id=@id;", con);
+
+                cmd.Parameters.AddWithValue("@c", m.Category);
+                cmd.Parameters.AddWithValue("@n", m.Name);
+                cmd.Parameters.AddWithValue("@col", (object?)m.Color ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@p", m.Price);
+                cmd.Parameters.AddWithValue("@u", m.Unit);
+                cmd.Parameters.AddWithValue("@d", (object?)m.Description ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@id", m.Id);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ UpdateMaterial error: " + ex.Message);
+                return false;
+            }
+        }
+
+        public bool AddMaterial(Material m)
+        {
+            try
+            {
+                using var con = new SqliteConnection($"Data Source={_dbPath}");
+                con.Open();
+
+                var cmd = new SqliteCommand(@"
+            INSERT INTO Materials (Category, Name, Color, Price, Unit, Description)
+            VALUES (@c, @n, @col, @p, @u, @d);", con);
+
+                cmd.Parameters.AddWithValue("@c", m.Category);
+                cmd.Parameters.AddWithValue("@n", m.Name);
+                cmd.Parameters.AddWithValue("@col", (object?)m.Color ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@p", m.Price);
+                cmd.Parameters.AddWithValue("@u", m.Unit);
+                cmd.Parameters.AddWithValue("@d", (object?)m.Description ?? DBNull.Value);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ AddMaterial error: " + ex.Message);
+                return false;
+            }
+        }
+
     }
+
+
 }

@@ -1,16 +1,16 @@
 ﻿using System.IO;
 using Microsoft.Data.Sqlite;
 using WindowPaswoord.Models;
-using WinCalc.Security; 
-
-
+using WinCalc.Security;
 
 namespace WinCalc.Storage
 {
     public class SqliteUserStore
     {
-        private static string ConnString =>
-            $"Data Source={Path.Combine(System.AppContext.BaseDirectory, "window_calc.db")};Cache=Shared";
+        // ✅ Тепер БД шукається у поточній робочій директорії (біля .exe)
+        private static string DbPath => Path.Combine(Directory.GetCurrentDirectory(), "window_calc.db");
+
+        private static string ConnString => $"Data Source={DbPath};Cache=Shared";
 
         private static SqliteConnection Create() => new SqliteConnection(ConnString);
 
@@ -81,33 +81,30 @@ namespace WinCalc.Storage
             return res == 1;
         }
 
-
-        // Повертає список усіх користувачів
         public async Task<List<User>> GetAllAsync()
         {
             var users = new List<User>();
-
             using var con = Create();
             await con.OpenAsync();
 
-            // Вибираємо всі записи з таблиці Users
             const string sql = @"SELECT Id, Login, Password, Role FROM Users";
             using var cmd = new SqliteCommand(sql, con);
-
             using var rd = await cmd.ExecuteReaderAsync();
+
             while (await rd.ReadAsync())
             {
                 users.Add(new User
                 {
-                    Id = rd.GetInt32(0),              // Id
-                    Username = rd.GetString(1),       // Login
-                    PasswordHash = rd.GetString(2),   // Password (хеш)
-                    Role = rd.GetString(3)            // Role
+                    Id = rd.GetInt32(0),
+                    Username = rd.GetString(1),
+                    PasswordHash = rd.GetString(2),
+                    Role = rd.GetString(3)
                 });
             }
 
             return users;
         }
+
         public async Task UpdatePasswordAsync(int userId, string newPlainPassword)
         {
             if (string.IsNullOrWhiteSpace(newPlainPassword))
@@ -116,12 +113,11 @@ namespace WinCalc.Storage
             var hash = PasswordHasher.Hash(newPlainPassword);
 
             using var con = Create();
-
             await con.OpenAsync();
 
             const string sql = @"UPDATE Users
-                         SET Password = @pass
-                         WHERE Id = @id;";
+                                 SET Password = @pass
+                                 WHERE Id = @id;";
             using var cmd = new SqliteCommand(sql, con);
             cmd.Parameters.AddWithValue("@pass", hash);
             cmd.Parameters.AddWithValue("@id", userId);
@@ -129,7 +125,6 @@ namespace WinCalc.Storage
             await cmd.ExecuteNonQueryAsync();
         }
 
-        //Видалення користувача за його Id
         public async Task DeleteAsync(int id)
         {
             using var con = Create();
@@ -140,7 +135,5 @@ namespace WinCalc.Storage
             cmd.Parameters.AddWithValue("@id", id);
             await cmd.ExecuteNonQueryAsync();
         }
-
-
     }
 }

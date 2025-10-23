@@ -9,7 +9,7 @@ namespace WindowProfileCalculatorLibrary
     /// </summary>
     public class Obchyslennya
     {
-        private readonly string _dbPath = "window_calc.db";
+        private static readonly string _dbPath = "window_calc.db";
         private readonly DataAccess _dataAccess = new();
 
         // =====================================================================
@@ -18,7 +18,7 @@ namespace WindowProfileCalculatorLibrary
         /// <summary>
         /// Створює таблиці Materials і Users у базі даних, якщо вони ще не існують.
         /// </summary>
-        public void CreateTables()
+        public static void CreateTables()
         {
             try
             {

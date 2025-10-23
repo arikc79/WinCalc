@@ -170,6 +170,33 @@ namespace WinCalc
 
         // ============================ РЕДАГУВАННЯ МАТЕРІАЛІВ ============================
 
+
+        private void btnMaterials_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // 🔐 Тільки для адміністратора
+                if (!AppSession.IsInRole(Roles.Admin))
+
+                {
+                    MessageBox.Show("Доступ дозволено лише адміністратору!", "Обмеження",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var win = new MaterialsWindow();
+                win.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка відкриття: {ex.Message}", "Помилка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
+
         private void btnDeleteMaterial_Click(object sender, RoutedEventArgs e)
         {
             try

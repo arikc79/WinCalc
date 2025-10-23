@@ -11,7 +11,7 @@
         public string? Color { get; set; }
         public double Price { get; set; }                      // Ціна
         public string Unit { get; set; } = string.Empty;       // Напр.: "м.п.", "м²", "шт."
-        public string QuantityType { get; set; } = string.Empty; // Для обчислень ("byLength", "byArea", "byPiece")
+      
         public string? Description { get; set; }
     }
 }
