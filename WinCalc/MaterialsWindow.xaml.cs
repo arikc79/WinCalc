@@ -79,5 +79,14 @@ namespace WinCalc
         {
             Close();
         }
+
+        // 📁 Імпорт з CSV
+        private void btnImportCsv_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Функція імпорту CSV поки не реалізована.",
+                      "Імпорт CSV", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        
+
     }
 }

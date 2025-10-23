@@ -38,7 +38,10 @@
                             Click="btnCalculate_Click"
                             Width="150" Height="30" Margin="30,0,0,0"/>
                 </StackPanel>
-
+                
+                
+                
+                
                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                     <TextBlock Text="Тип вікна:" Width="120" VerticalAlignment="Center" Margin="0,0,0,0"/>
                     <ComboBox x:Name="cmbWindowType" Width="180" Margin="0,0,0,0" SelectionChanged="cmbWindowType_SelectionChanged"/>
@@ -48,6 +51,12 @@
 
                     <TextBlock Text="Товщина профілю:" Width="140" VerticalAlignment="Center" Margin="10,0,0,0"/>
                     <ComboBox x:Name="cmbProfileThickness" Width="120" Margin="0,0,0,0"/>
+
+                    <TextBlock Text="Кількість створок:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+                    <ComboBox x:Name="cmbSashCount" Width="60" SelectedIndex="0">
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                    </ComboBox>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
@@ -99,10 +108,7 @@
                     Click="btnManageUsers_Click"
                     Width="130" Height="28" Margin="0,0,10,0"/>
 
-                    <Button x:Name="btnImportCsv"
-                    Content="Імпорт CSV"
-                    Click="btnImportCsv_Click"
-                    Width="120" Height="28" Margin="0,0,10,0"/>
+                  
 
                     <Button x:Name="btnExportCsv"
                     Content="Експорт CSV"

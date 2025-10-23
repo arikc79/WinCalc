@@ -44,8 +44,13 @@
 
         <!-- 🔹 Панель керування -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            
             <Button x:Name="btnSave" Content="💾 Зберегти зміни" Width="160" Height="35" Margin="5" Click="btnSave_Click"/>
+
+            <Button x:Name="btnImportCsv"  Content="Імпорт CSV"  Click="btnImportCsv_Click" Width="160" Height="35"  Margin="5"/>
+                        
             <Button x:Name="AddMateria" Content="➕ Додати матеріал" Width="160" Height="35" Margin="5" Click="btnAdd_Click"/>
+            
             <Button x:Name="btnClose" Content="Закрити" Width="120" Height="35" Margin="5" Click="btnClose_Click"/>
         </StackPanel>
     </Grid>

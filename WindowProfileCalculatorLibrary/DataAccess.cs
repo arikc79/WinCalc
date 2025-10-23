@@ -105,7 +105,7 @@ namespace WindowProfileCalculatorLibrary
                     Color = reader.IsDBNull(3) ? null : reader.GetString(3),
                     Price = reader.GetDouble(4),
                     Unit = reader.GetString(5),
-                    Description = reader.IsDBNull(7) ? null : reader.GetString(7)
+                    Description = reader.IsDBNull(6) ? null : reader.GetString(6)
                 };
             }
             return null;
@@ -135,7 +135,7 @@ namespace WindowProfileCalculatorLibrary
                     Color = reader.IsDBNull(3) ? null : reader.GetString(3),
                     Price = reader.GetDouble(4),
                     Unit = reader.GetString(5),
-                    Description = reader.IsDBNull(7) ? null : reader.GetString(7)
+                    Description = reader.IsDBNull(6) ? null : reader.GetString(6)
                 };
             }
             return null;
