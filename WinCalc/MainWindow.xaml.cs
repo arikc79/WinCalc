@@ -210,8 +210,12 @@ namespace WinCalc
                 return;
             }
 
-            var win = new ChangePasswordWindow(AppSession.CurrentUser?.Username ?? "admin");
+            var win = new UserManagementWindow();
             win.ShowDialog();
+
+
+
+
         }
 
         private void btnImportCsv_Click(object sender, RoutedEventArgs e)
