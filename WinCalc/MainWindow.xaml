@@ -41,7 +41,7 @@
 
                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                     <TextBlock Text="Тип вікна:" Width="120" VerticalAlignment="Center" Margin="0,0,0,0"/>
-                    <ComboBox x:Name="cmbWindowType" Width="180" Margin="0,0,0,0"/>
+                    <ComboBox x:Name="cmbWindowType" Width="180" Margin="0,0,0,0" SelectionChanged="cmbWindowType_SelectionChanged"/>
 
                     <TextBlock Text="Бренд профілю:" Width="120" VerticalAlignment="Center" Margin="10,0,0,0"/>
                     <ComboBox x:Name="cmbBrand" Width="180" Margin="0,0,0,0"/>
@@ -82,53 +82,46 @@
             </StackPanel>
         </Border>
 
-        <!-- ====================== MATERIALS DATAGRID ====================== -->
-        <GroupBox Header="Матеріали" Grid.Row="2" Margin="0,0,0,10" Padding="8">
+      
+        <!-- ====================== WINDOW PREVIEW ====================== -->
+        <GroupBox Header="Попередній перегляд" Grid.Row="2" Margin="0,0,0,10" Padding="8">
             <DockPanel>
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,0,0,8" HorizontalAlignment="Right">
-
-
                     <Button x:Name="btnMaterials"
-                        Content="Каталог матеріалів"
-                        Width="150"
-                        Height="30"
-                        Margin="0,0,10,0"
-                        Click="btnMaterials_Click"/>
-
+                    Content="Каталог матеріалів"
+                    Width="150"
+                    Height="30"
+                    Margin="0,0,10,0"
+                    Click="btnMaterials_Click"/>
 
                     <Button x:Name="btnManageUsers"
-                            Content=" Користувачі"
-                            Click="btnManageUsers_Click"
-                            Width="130" Height="28"  Margin="0,0,10,0"   />
-
+                    Content="Користувачі"
+                    Click="btnManageUsers_Click"
+                    Width="130" Height="28" Margin="0,0,10,0"/>
 
                     <Button x:Name="btnImportCsv"
-                            Content="Імпорт CSV"
-                            Click="btnImportCsv_Click"
-                            Width="120" Height="28" Margin="0,0,10,0"/>
-                    
-                    
+                    Content="Імпорт CSV"
+                    Click="btnImportCsv_Click"
+                    Width="120" Height="28" Margin="0,0,10,0"/>
+
                     <Button x:Name="btnExportCsv"
-                            Content="Експорт CSV"
-                            Click="btnExportCsv_Click"
-                            Width="120" Height="28" Margin="0,0,10,0"/>
-                    <Button x:Name="btnDeleteMaterial"
-                            Content="Видалити матеріал"
-                            Click="btnDeleteMaterial_Click"
-                            Width="150" Height="28"/>
+                    Content="Експорт CSV"
+                    Click="btnExportCsv_Click"
+                    Width="120" Height="28" Margin="0,0,10,0"/>
                 </StackPanel>
 
-                <DataGrid x:Name="dgMaterials"
-                          AutoGenerateColumns="True"
-                          CanUserAddRows="False"
-                          IsReadOnly="True"
-                          SelectionMode="Single"
-                          GridLinesVisibility="All"
-                          HeadersVisibility="Column"
-                          AlternatingRowBackground="#FFEFEF"
-                          Height="350"/>
+                <!-- 🖼️ Зображення попереднього перегляду -->
+                <Border BorderBrush="#CCC" BorderThickness="1" CornerRadius="5" Padding="10" Background="White">
+                    <Image x:Name="imgPreview"
+                   Stretch="Uniform"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Height="187"
+                   Source="/WinCalc;component/Image/1.png"/>
+                </Border>
             </DockPanel>
         </GroupBox>
+
 
         <!-- ====================== RESULT SECTION ====================== -->
         <Border Grid.Row="3" Padding="10" BorderBrush="#DDD" BorderThickness="1" CornerRadius="5">
