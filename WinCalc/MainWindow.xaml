@@ -6,9 +6,11 @@
         xmlns:local="clr-namespace:WinCalc"
         mc:Ignorable="d"
         Title="WinCalc — Розрахунок вартості вікна"
-        Height="720" Width="1100"
-        WindowStartupLocation="CenterScreen"
-        Background="#FAFAFA">
+         WindowStartupLocation="CenterScreen"
+        Background="#FAFAFA"
+       
+        ResizeMode="NoResize"
+        WindowState="Maximized">
 
     <Grid Margin="15">
 

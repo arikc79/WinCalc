@@ -206,6 +206,10 @@
             "Microsoft.Data.Sqlite.Core": {
               "target": "Package",
               "version": "[9.0.9, )"
+            },
+            "PDFsharp": {
+              "target": "Package",
+              "version": "[6.2.2, )"
             }
           },
           "imports": [

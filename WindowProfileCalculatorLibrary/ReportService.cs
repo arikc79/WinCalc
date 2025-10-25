@@ -42,6 +42,15 @@ namespace WinCalc
 
             File.AppendAllText(FilePath, line + Environment.NewLine, Encoding.UTF8);
         }
+
+
+
+
+        public static string GetPdfReportPath(string fileName = "materials_report.pdf")
+        {
+            Directory.CreateDirectory(DirectoryPath);
+            return Path.Combine(DirectoryPath, fileName);
+        }
     }
 
     public class ReportRow
