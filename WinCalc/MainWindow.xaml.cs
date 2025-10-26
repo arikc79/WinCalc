@@ -13,6 +13,7 @@ namespace WinCalc
     public partial class MainWindow : Window
     {
         private readonly DataAccess _dataAccess = new DataAccess();
+        private readonly Obchyslennya _calculator = new Obchyslennya();
 
         // 🗂️ Мапінг назв вікон → файлів у /Image/
         private readonly Dictionary<string, string> _windowImageMap = new()
@@ -126,6 +127,48 @@ namespace WinCalc
             catch { /* нічого не робимо */ }
         }
 
+        private WindowConfig? BuildWindowConfig(out string? errorMessage)
+        {
+            errorMessage = null;
+
+            if (!decimal.TryParse(txtWidth.Text, out decimal width) ||
+                !decimal.TryParse(txtHeight.Text, out decimal height))
+            {
+                errorMessage = "Будь ласка, введіть коректні розміри.";
+                return null;
+            }
+
+            string windowType = cmbWindowType.SelectedItem?.ToString() ?? "Одностулкове вікно";
+            string brand = string.IsNullOrWhiteSpace(cmbBrand.Text) ? "" : cmbBrand.Text;
+            string glassType = string.IsNullOrWhiteSpace(cmbGlassPack.Text) ? "" : cmbGlassPack.Text;
+
+            int sashCount = 1;
+            if (cmbSashCount.SelectedItem is ComboBoxItem item &&
+                int.TryParse(item.Content?.ToString(), out int parsedSash))
+            {
+                sashCount = parsedSash;
+            }
+
+            bool sill300 = rbSill300.IsChecked == true;
+            bool drain200 = rbDrain200.IsChecked == true;
+            bool handlePremium = rbHandlePremium.IsChecked == true;
+            bool hasMosquito = chkMosquito.IsChecked == true;
+
+            return new WindowConfig
+            {
+                Width = width,
+                Height = height,
+                WindowType = windowType,
+                SashCount = sashCount,
+                Brand = brand,
+                GlassType = glassType,
+                HandleType = handlePremium ? "Преміум" : "Стандарт",
+                SillType = sill300 ? "Білий 300мм" : "Білий 200мм",
+                DrainType = drain200 ? "Білий 200мм" : "Білий 150мм",
+                HasMosquito = hasMosquito
+            };
+        }
+
         // ===============================================================
         //  КНОПКА РОЗРАХУНКУ
         // ===============================================================
@@ -133,114 +176,44 @@ namespace WinCalc
         {
             try
             {
-                if (!double.TryParse(txtWidth.Text, out double width) ||
-                    !double.TryParse(txtHeight.Text, out double height))
+                var config = BuildWindowConfig(out string? errorMessage);
+                if (config == null)
                 {
-                    MessageBox.Show("Будь ласка, введіть коректні розміри.", "Помилка",
+                    MessageBox.Show(errorMessage ?? "Будь ласка, введіть коректні дані.", "Помилка",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                string windowType = cmbWindowType.SelectedItem?.ToString() ?? "Одностулкове вікно";
-                string brand = cmbBrand.SelectedItem?.ToString() ?? "";
-                string glassType = cmbGlassPack.SelectedItem?.ToString() ?? "";
-                bool sill300 = rbSill300.IsChecked == true;
-                bool drain200 = rbDrain200.IsChecked == true;
-                bool handlePremium = rbHandlePremium.IsChecked == true;
-                bool hasMosquito = chkMosquito.IsChecked == true;
+                decimal total = _calculator.CalculateWindowPrice(config);
 
-                int sashCount = int.Parse(((ComboBoxItem)cmbSashCount.SelectedItem).Content.ToString()!);
-
-                // ==============================================================
-                // 1️⃣ Визначення кількості імпостів по типу вікна
-                // ==============================================================
-                int impostCount = windowType switch
-                {
-                    string s when s.Contains("Одностулкове") => 0,
-                    string s when s.Contains("Двостулкове") => 1,
-                    string s when s.Contains("Трипільне") => 2,
-                    string s when s.Contains("Балконний") => 3,
-                    _ => 4
-                };
-
-                const double frameWidth = 60; // мм
-                double framePerimeter = 2 * (width + height - 2 * frameWidth);
-                double sashPerimeter = 2 * ((width / (impostCount + 1)) + height - 2 * frameWidth);
-                double impostLength = impostCount * (height - 2 * frameWidth);
-                double glassArea = (width / 1000.0) * (height / 1000.0);
-
-                // ==============================================================
-                // 2️⃣ Завантаження матеріалів
-                // ==============================================================
-                var profile = _dataAccess.GetMaterialByCategoryAndBrand("Профіль", brand);
-                var glass = _dataAccess.GetMaterialByCategory("Склопакет", glassType);
-                var arm = _dataAccess.GetMaterialByCategory("Армування", "Стандарт");
-                var seal = _dataAccess.GetMaterialByCategory("Ущільнювач скла", "Стандарт");
-                var handle = _dataAccess.GetMaterialByCategory("Ручка", handlePremium ? "Преміум" : "Стандарт");
-                var hinge = _dataAccess.GetMaterialByCategory("Петлі комплект", "Стандарт");
-                var sill = _dataAccess.GetMaterialByCategory("Підвіконня", sill300 ? "Білий 300мм" : "Білий 200мм");
-                var drain = _dataAccess.GetMaterialByCategory("Відлив", drain200 ? "Білий 200мм" : "Білий 150мм");
-
-                profile ??= new Material { Price = 0 };
-                glass ??= new Material { Price = 0 };
-                arm ??= new Material { Price = 0 };
-                seal ??= new Material { Price = 0 };
-                handle ??= new Material { Price = 0 };
-                hinge ??= new Material { Price = 0 };
-                sill ??= new Material { Price = 0 };
-                drain ??= new Material { Price = 0 };
-
-
-                // ==============================================================
-                // 3️⃣ Коефіцієнт скла (множник)
-                // ==============================================================
-                int glassMultiplier = glassType.Contains("2") ? 3 :
-                                      glassType.Contains("Енергозберігаючий") ? 4 : 2;
-
-                // ==============================================================
-                // 4️⃣ Розрахунок вартості
-                // ==============================================================
-                double total =
-                    (framePerimeter / 1000.0) * profile.Price +
-                    (sashPerimeter / 1000.0) * profile.Price * sashCount +
-                    (impostLength / 1000.0) * profile.Price +
-                    ((framePerimeter + sashPerimeter * sashCount + impostLength) / 1000.0) * (arm.Price + seal.Price) +
-                    (glassArea * glassMultiplier * glass.Price) +
-                    (sashCount * (handle.Price + hinge.Price)) +
-                    ((width / 1000.0) * (sill.Price + drain.Price));
-
-                // 🔹 Москітна сітка (якщо є)
+                var handle = _dataAccess.GetMaterialByCategory("Ручка", config.HandleType) ?? new Material { Price = 0 };
+                var sill = _dataAccess.GetMaterialByCategory("Підвіконня", config.SillType) ?? new Material { Price = 0 };
+                var drain = _dataAccess.GetMaterialByCategory("Відлив", config.DrainType) ?? new Material { Price = 0 };
                 var mosquito = _dataAccess.GetMaterialByCategory("Москітна сітка", "Стандарт");
-                if (hasMosquito && mosquito != null)
-                {
-                    total += glassArea * mosquito.Price;
-                }
 
+                int glassMultiplier = Obchyslennya.ResolveGlassMultiplier(config.GlassType);
+                decimal glassArea = (config.Width / 1000m) * (config.Height / 1000m);
+                decimal mosquitoCost = (config.HasMosquito && mosquito != null)
+                    ? glassArea * (decimal)mosquito.Price
+                    : 0m;
 
-                // ==============================================================
-                // 5️⃣ Форматований звіт
-                // ==============================================================
                 var sb = new System.Text.StringBuilder();
-
-                // 🔹 Основна інформація — все в одному рядку
                 sb.AppendLine(
-                    $"Тип вікна: {windowType}, " +
-                    $"Бренд профілю: {brand}, " +
-                    $"Склопакет: {glassType} ({glassMultiplier}-шар.), "
-                );
+                    $"Тип вікна: {config.WindowType}, " +
+                    $"Бренд профілю: {config.Brand}, " +
+                    $"Склопакет: {config.GlassType} ({glassMultiplier}-шар.)");
+                sb.AppendLine();
 
-                           sb.AppendLine();
-
-                // 🔹 Комплектуючі
-                
-                sb.Append("Ручки: ").Append($"{sashCount} × {handle.Price:F2} грн, ");                 
+                sb.Append("Ручки: ").Append($"{config.SashCount} × {handle.Price:F2} грн, ");
                 sb.Append("Підвіконня: ").Append($"{sill.Price:F2} грн/м, ");
                 sb.Append("Відлив: ").Append($"{drain.Price:F2} грн/м");
-                if (hasMosquito && mosquito != null)
-                    sb.Append($", Москітна сітка: {glassArea * mosquito.Price:F2} грн");                                                                                             
-               
-                sb.AppendLine($"ЗАГАЛЬНА ВАРТІСТЬ: {total:F2} грн");
+                if (config.HasMosquito && mosquito != null)
+                {
+                    sb.Append($", Москітна сітка: {mosquitoCost:F2} грн");
+                }
+                sb.AppendLine();
 
+                sb.AppendLine($"ЗАГАЛЬНА ВАРТІСТЬ: {total:F2} грн");
 
                 lblResult.Text = sb.ToString();
             }
@@ -295,54 +268,37 @@ namespace WinCalc
         {
             try
             {
-                if (!decimal.TryParse(txtWidth.Text, out decimal width) ||
-                    !decimal.TryParse(txtHeight.Text, out decimal height))
+                var config = BuildWindowConfig(out string? errorMessage);
+                if (config == null)
                 {
-                    MessageBox.Show("Будь ласка, введіть розміри перед експортом!", "Увага",
+                    MessageBox.Show(errorMessage ?? "Будь ласка, введіть розміри перед експортом!", "Увага",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                bool sill300 = rbSill300.IsChecked == true;
-                bool drain200 = rbDrain200.IsChecked == true;
-                bool handlePremium = rbHandlePremium.IsChecked == true;
-                bool hasMosquito = chkMosquito.IsChecked == true;
-
-                var config = new WindowConfig
-                {
-                    Width = width,
-                    Height = height,
-                    Brand = cmbBrand.Text,
-                    GlassType = cmbGlassPack.Text,
-                    HandleType = handlePremium ? "Преміум" : "Стандартна",
-                    SillType = sill300 ? "300 мм" : "200 мм",
-                    DrainType = drain200 ? "200 мм" : "150 мм",
-                    HasMosquito = hasMosquito
-                };
-
-                // 🔹 Розрахунок
-                var calc = new Obchyslennya();
-                decimal totalUAH = calc.CalculateWindowPrice(config);
+                decimal totalUAH = _calculator.CalculateWindowPrice(config);
                 decimal eurRate = 41.5m;
                 decimal totalEUR = Math.Round(totalUAH / eurRate, 2);
 
-                // 🔹 Дані для звіту
+                string sillDisplay = config.SillType.Contains("300") ? "300 мм" : "200 мм";
+                string drainDisplay = config.DrainType.Contains("200") ? "200 мм" : "150 мм";
+
                 var data = new ProjectReportData
                 {
                     ProjectName = "Розрахунок вартості вікна",
                     User = AppSession.CurrentUser?.Username ?? "admin",
-                    Profile = cmbBrand.Text,
-                    GlassPack = cmbGlassPack.Text,
+                    Profile = config.Brand,
+                    GlassPack = config.GlassType,
                     Color = "Білий",
-                    HasMosquito = hasMosquito,
-                    Sill = sill300 ? "300 мм" : "200 мм",
-                    Drain = drain200 ? "200 мм" : "150 мм",
+                    HasMosquito = config.HasMosquito,
+                    Sill = sillDisplay,
+                    Drain = drainDisplay,
                     TotalPriceUAH = (double)totalUAH,
                     TotalPriceEUR = (double)totalEUR
                 };
 
-                string path = ReportService.ExportPdfReport(data);
-                MessageBox.Show($"✅ Звіт створено:\n{path}", "Експорт PDF",
+                string pathToFile = ReportService.ExportPdfReport(data);
+                MessageBox.Show($"✅ Звіт створено:\n{pathToFile}", "Експорт PDF",
                     MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)

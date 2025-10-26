@@ -73,46 +73,72 @@ namespace WindowProfileCalculatorLibrary
         {
             try
             {
-                decimal area = (config.Width * config.Height) / 1_000_000m;  // м²
-                decimal perimeter = ((config.Width + config.Height) * 2) / 1000m; // м
+                decimal width = config.Width;
+                decimal height = config.Height;
+                const decimal frameWidth = 60m;
+
+                int impostCount = ResolveImpostCount(config.WindowType);
+                decimal sectionCount = impostCount + 1;
+                decimal framePerimeter = 2m * (width + height - 2m * frameWidth);
+                decimal sashPerimeterSingle = 2m * ((width / sectionCount) + height - 2m * frameWidth);
+                decimal sashPerimeterTotal = sashPerimeterSingle * config.SashCount;
+                decimal impostLength = impostCount * (height - 2m * frameWidth);
+                decimal glassArea = (width / 1000m) * (height / 1000m);
+                int glassMultiplier = ResolveGlassMultiplier(config.GlassType);
 
                 decimal total = 0m;
 
-                // ---------- 1. Профіль ----------
                 var profile = _dataAccess.GetMaterialByCategoryAndBrand("Профіль", config.Brand);
-                if (profile != null)
-                    total += perimeter * (decimal)profile.Price;
+                decimal profilePrice = (decimal)(profile?.Price ?? 0);
+                if (profilePrice > 0)
+                {
+                    total += (framePerimeter / 1000m) * profilePrice;
+                    total += (sashPerimeterTotal / 1000m) * profilePrice;
+                    total += (impostLength / 1000m) * profilePrice;
+                }
 
-                // ---------- 2. Склопакет ----------
+                var arm = _dataAccess.GetMaterialByCategory("Армування", "Стандарт");
+                var seal = _dataAccess.GetMaterialByCategory("Ущільнювач скла", "Стандарт");
+                decimal armPrice = (decimal)(arm?.Price ?? 0);
+                decimal sealPrice = (decimal)(seal?.Price ?? 0);
+                if (armPrice > 0 || sealPrice > 0)
+                {
+                    total += ((framePerimeter + sashPerimeterTotal + impostLength) / 1000m) * (armPrice + sealPrice);
+                }
+
                 var glass = _dataAccess.GetMaterialByCategory("Склопакет", config.GlassType);
-                if (glass != null)
-                    total += area * (decimal)glass.Price;
+                decimal glassPrice = (decimal)(glass?.Price ?? 0);
+                if (glassPrice > 0)
+                {
+                    total += glassArea * glassMultiplier * glassPrice;
+                }
 
-                // ---------- 3. Ручка ----------
                 var handle = _dataAccess.GetMaterialByCategory("Ручка", config.HandleType);
-                if (handle != null)
-                    total += (decimal)handle.Price;
+                var hinge = _dataAccess.GetMaterialByCategory("Петлі комплект", "Стандарт");
+                decimal handlePrice = (decimal)(handle?.Price ?? 0);
+                decimal hingePrice = (decimal)(hinge?.Price ?? 0);
+                if (handlePrice > 0 || hingePrice > 0)
+                {
+                    total += config.SashCount * (handlePrice + hingePrice);
+                }
 
-                // ---------- 4. Підвіконня ----------
                 var sill = _dataAccess.GetMaterialByCategory("Підвіконня", config.SillType);
-                if (sill != null)
-                    total += (config.Width / 1000m) * (decimal)sill.Price;
-
-                // ---------- 5. Відлив ----------
                 var drain = _dataAccess.GetMaterialByCategory("Відлив", config.DrainType);
-                if (drain != null)
-                    total += (config.Width / 1000m) * (decimal)drain.Price;
+                decimal sillPrice = (decimal)(sill?.Price ?? 0);
+                decimal drainPrice = (decimal)(drain?.Price ?? 0);
+                if (sillPrice > 0 || drainPrice > 0)
+                {
+                    total += (width / 1000m) * (sillPrice + drainPrice);
+                }
 
-                // ---------- 6. Москітна сітка ----------
                 if (config.HasMosquito)
                 {
                     var mosquito = _dataAccess.GetMaterialByCategory("Москітна сітка", "Стандарт");
                     if (mosquito != null)
-                        total += area * (decimal)mosquito.Price;
+                    {
+                        total += glassArea * (decimal)mosquito.Price;
+                    }
                 }
-
-                // ---------- 7. Монтаж / запас ----------
-                total *= 1.1m;
 
                 return Math.Round(total, 2);
             }
@@ -121,6 +147,40 @@ namespace WindowProfileCalculatorLibrary
                 Console.WriteLine($"Помилка у CalculateWindowPrice: {ex.Message}");
                 return 0m;
             }
+        }
+
+        public static int ResolveGlassMultiplier(string glassType)
+        {
+            if (string.IsNullOrWhiteSpace(glassType))
+                return 2;
+
+            if (glassType.Contains("2", StringComparison.OrdinalIgnoreCase))
+                return 3;
+
+            if (glassType.Contains("енергозбер", StringComparison.OrdinalIgnoreCase))
+                return 4;
+
+            return 2;
+        }
+
+        private static int ResolveImpostCount(string windowType)
+        {
+            if (string.IsNullOrWhiteSpace(windowType))
+                return 0;
+
+            if (windowType.Contains("Одностулков", StringComparison.OrdinalIgnoreCase))
+                return 0;
+
+            if (windowType.Contains("Двостулков", StringComparison.OrdinalIgnoreCase))
+                return 1;
+
+            if (windowType.Contains("Трипіль", StringComparison.OrdinalIgnoreCase))
+                return 2;
+
+            if (windowType.Contains("Балкон", StringComparison.OrdinalIgnoreCase))
+                return 3;
+
+            return 4;
         }
 
         // =====================================================================
