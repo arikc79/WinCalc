@@ -239,8 +239,7 @@ namespace WinCalc
             var win = new MaterialsWindow();
             win.ShowDialog();
         }
-
-        // 👥 Керування користувачами
+                     
         private void btnManageUsers_Click(object sender, RoutedEventArgs e)
         {
             if (!AppSession.IsInRole(Roles.Admin))
@@ -259,9 +258,7 @@ namespace WinCalc
 
         // ===============================================================
 
-
         // 📤 Експорт у PDF
-
 
 
         private void btnExportPdf_Click(object sender, RoutedEventArgs e)
