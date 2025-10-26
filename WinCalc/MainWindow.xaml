@@ -31,40 +31,86 @@
             <!-- FIX: Remove unsupported Spacing property and use Margin on child elements instead -->
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Text="Ширина (мм):" Width="120" VerticalAlignment="Center" Margin="0,0,0,0"/>
-                    <TextBox x:Name="txtWidth" Width="100" Height="25" Margin="0,0,0,0"/>
-                    <TextBlock Text="Висота (мм):" Width="100" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                    <TextBox x:Name="txtHeight" Width="100" Height="25" Margin="0,0,0,0"/>
+                    <TextBlock Text="Ширина (мм):" 
+                               Width="84" 
+                               VerticalAlignment="Center" 
+                               Margin="0,0,5,0"/>
+                    
+                    <TextBox x:Name="txtWidth"
+                             Width="100" 
+                             Height="25" 
+                             Margin="0,10,0,0"/>
+                    
+                    <TextBlock Text="Висота (мм):"
+                               Width="84" 
+                               VerticalAlignment="Center" 
+                               Margin="10,0,5,0"/>
+                    
+                    <TextBox x:Name="txtHeight" 
+                             Width="100" 
+                             Height="25" 
+                             Margin="0,10,0,0"/>
+                    
                     <Button x:Name="btnCalculate"
                             Content="Розрахувати"
                             Click="btnCalculate_Click"
-                            Width="150" Height="30" Margin="30,0,0,0"/>
+                            Width="174" 
+                            Height="45" 
+                            Margin="10,0,30,0"/>
+
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,0,0,0" HorizontalAlignment="Right">
+                         <Button x:Name="btnMaterials"
+                                 Content="Каталог матеріалів"
+                                 Width="150"
+                                 Height="28"
+                                 Margin="5,8,5,0"
+                                 Click="btnMaterials_Click"/>
+                            
+                         <Button x:Name="btnManageUsers"
+                                 Content="Користувачі"
+                                 Click="btnManageUsers_Click"
+                                 Width="130" Height="28" 
+                                Margin="5,8,5,0"/>
+                            
+                            
+                         <Button x:Name="btnExportCsv"
+                                 Content="Експорт CSV"
+                                 Click="btnExportPdf_Click"
+                                 Width="120" Height="28" 
+                                 Margin="5,8,5,0"/>
+                    </StackPanel>
                 </StackPanel>
                 
                 
                 
                 
                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                    <TextBlock Text="Тип вікна:" Width="120" VerticalAlignment="Center" Margin="0,0,0,0"/>
-                    <ComboBox x:Name="cmbWindowType" Width="180" Margin="0,0,0,0" SelectionChanged="cmbWindowType_SelectionChanged"/>
+                    <TextBlock Text="Тип вікна:" Width="114" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                    <ComboBox x:Name="cmbWindowType" Width="180" Margin="5,0,2,0" SelectionChanged="cmbWindowType_SelectionChanged"/>
 
-                    <TextBlock Text="Бренд профілю:" Width="120" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                    <ComboBox x:Name="cmbBrand" Width="180" Margin="0,0,0,0"/>
+                    <TextBlock Text="Бренд профілю:" Width="120" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <ComboBox x:Name="cmbBrand" Width="180" Margin="2,0,2,0"/>
 
-                    <TextBlock Text="Товщина профілю:" Width="140" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                    <ComboBox x:Name="cmbProfileThickness" Width="120" Margin="0,0,0,0"/>
+                    <TextBlock Text="Товщина профілю:" Width="140" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <ComboBox x:Name="cmbProfileThickness" Width="141" Margin="2,0,2,0"/>
 
-                    <TextBlock Text="Кількість створок:" VerticalAlignment="Center" Margin="10,0,5,0"/>
-                    <ComboBox x:Name="cmbSashCount" Width="60" SelectedIndex="0">
+                    <TextBlock Text="Кількість створок:" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                    <ComboBox x:Name="cmbSashCount" Width="60" SelectedIndex="0" Margin="0,0,2,0">
                         <ComboBoxItem Content="1"/>
                         <ComboBoxItem Content="2"/>
                     </ComboBox>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                    <TextBlock Text="Склопакет:" Width="120" VerticalAlignment="Center" Margin="0,0,0,0"/>
-                    <ComboBox x:Name="cmbGlassPack" Width="150" Margin="0,0,0,0"/>
-                    <CheckBox x:Name="chkMosquito" Content="Москітна сітка" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                    <TextBlock Text="Склопакет:" 
+                               Width="114"
+                               VerticalAlignment="Center" 
+                               Margin="0,0,7,0"/>
+                    <ComboBox x:Name="cmbGlassPack" Width="180" Margin="0,0,0,0"/>
+                    <CheckBox x:Name="chkMosquito" 
+                              Content="Москітна сітка"
+                              VerticalAlignment="Center"
+                              Margin="10,0,0,0" Width="105"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
@@ -97,26 +143,7 @@
         <!-- ====================== WINDOW PREVIEW ====================== -->
         <GroupBox Header="Попередній перегляд" Grid.Row="2" Margin="0,0,0,10" Padding="8">
             <DockPanel Margin="0,0,556,0">
-                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,0,0,8" HorizontalAlignment="Right">
-                    <Button x:Name="btnMaterials"
-                    Content="Каталог матеріалів"
-                    Width="150"
-                    Height="30"
-                    Margin="0,0,10,0"
-                    Click="btnMaterials_Click"/>
-
-                    <Button x:Name="btnManageUsers"
-                    Content="Користувачі"
-                    Click="btnManageUsers_Click"
-                    Width="130" Height="28" Margin="0,0,10,0"/>
-
-                  
-
-                    <Button x:Name="btnExportCsv"
-                    Content="Експорт CSV"
-                    Click="btnExportPdf_Click"
-                    Width="120" Height="28" Margin="0,0,10,0"/>
-                </StackPanel>
+               
 
                 <!-- 🖼️ Зображення попереднього перегляду -->
                 <Border BorderBrush="#CCC" BorderThickness="1" CornerRadius="5" Padding="10" Background="White" Width="223">
