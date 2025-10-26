@@ -1,192 +1,156 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using PdfSharp.Drawing;
+﻿using PdfSharp.Drawing;
+using PdfSharp.Fonts;
 using PdfSharp.Pdf;
+using System.IO;
 
 namespace WindowProfileCalculatorLibrary
 {
     public static class PdfMaterialExporter
     {
-        public static void Export(string filePath, List<Material> materials, string? logoPath = null)
+       
+        public static void ExportProjectReport(string filePath, ProjectReportData data, string? logoPath = null)
         {
-            if (materials == null || materials.Count == 0)
-                throw new ArgumentException("❌ Немає матеріалів для експорту.");
+            // === Реєстрація шрифту ===
+            GlobalFontSettings.FontResolver = SegoeFontResolver.Instance;
 
-            var document = new PdfDocument
-            {
-                Info = { Title = "Каталог матеріалів" }
-            };
-
-            var page = document.AddPage();
+            var doc = new PdfDocument { Info = { Title = data.ProjectName } };
+            var page = doc.AddPage();
             var gfx = XGraphics.FromPdfPage(page);
 
             // === Шрифти ===
-            var titleFont = new XFont("Segoe UI", 16, XFontStyleEx.Bold);
-            var headerFont = new XFont("Segoe UI", 10, XFontStyleEx.Bold);
-            var textFont = new XFont("Segoe UI", 9, XFontStyleEx.Regular);
-            var italicFont = new XFont("Segoe UI", 8, XFontStyleEx.Italic);
+            var titleFont = new XFont("Segoe UI", 18, XFontStyleEx.Bold);
+            var labelFont = new XFont("Segoe UI", 11, XFontStyleEx.Bold);
+            var textFont = new XFont("Segoe UI", 11, XFontStyleEx.Regular);
+            var footerFont = new XFont("Segoe UI", 9, XFontStyleEx.Italic);
 
-            double margin = 40;
+            double margin = 60;
             double y = margin;
 
             // === Логотип ===
+            bool logoFound = false;
+            double logoWidth = 0;
+            double logoHeight = 0;
+
             if (!string.IsNullOrEmpty(logoPath) && File.Exists(logoPath))
             {
-                var logo = XImage.FromFile(logoPath);
-                gfx.DrawImage(logo, margin, y, 80, 40);
+                try
+                {
+                    string tempLogo = Path.Combine(Path.GetTempPath(), "win_calc_logo.jpg");
+                    File.Copy(logoPath, tempLogo, true);
+
+                    using (var logo = XImage.FromFile(tempLogo))
+                    {
+                        double maxWidth = 200;
+                        double maxHeight = 200;
+                        double ratio = Math.Min(maxWidth / logo.PixelWidth, maxHeight / logo.PixelHeight);
+                        logoWidth = logo.PixelWidth * ratio;
+                        logoHeight = logo.PixelHeight * ratio;
+
+                        gfx.DrawImage(logo, margin, y, logoWidth, logoHeight);
+                        logoFound = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    gfx.DrawString($"⚠️ Помилка логотипу: {ex.Message}", textFont, XBrushes.Red,
+                        new XRect(margin, y, page.Width - margin * 2, 20), XStringFormats.TopLeft);
+                }
             }
+
+            if (!logoFound)
+            {
+                gfx.DrawString($"⚠️ Логотип не знайдено: {logoPath}", textFont, XBrushes.Red,
+                    new XRect(margin, y, page.Width - margin * 2, 20), XStringFormats.TopLeft);
+            }
+
+            // === Координати тексту праворуч від логотипа ===
+            double textStartX = margin + logoWidth + 30;
+            double textY = y + 10;
 
             // === Заголовок ===
-            gfx.DrawString("Каталог матеріалів", titleFont, XBrushes.DarkBlue,
-                new XRect(0, y, page.Width, 60), XStringFormats.TopCenter);
-            y += 60;
+            gfx.DrawString(data.ProjectName, titleFont, XBrushes.DarkBlue,
+                new XRect(textStartX, textY, page.Width - textStartX - margin, 40), XStringFormats.TopLeft);
+            textY += 40;
 
-            // === Параметри таблиці ===
-            string[] headers = { "Категорія", "Назва", "Колір", "Ціна (грн)", "Одиниця", "Опис" };
-            double[] colWidths = { 80, 120, 70, 60, 70, 150 };
-            double tableStartX = margin;
+            // === Дата ===
+            gfx.DrawString($"Дата створення: {data.CreatedAt:dd.MM.yyyy  HH:mm}", textFont, XBrushes.Gray,
+                new XRect(textStartX, textY, page.Width - textStartX - margin, 20), XStringFormats.TopLeft);
+            textY += 22;
 
-            DrawTableHeader(gfx, headers, colWidths, tableStartX, ref y, headerFont, null);
+            // === Лічильник розрахунків ===
+            string reportsDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "WinCalcReports");
+            Directory.CreateDirectory(reportsDir);
+            string counterFile = Path.Combine(reportsDir, "counter.txt");
 
-            bool alternate = false;
-            foreach (var m in materials)
+            int reportNumber = 1;
+            try
             {
-                if (y > page.Height - 80)
+                if (File.Exists(counterFile))
                 {
-                    // нова сторінка
-                    page = document.AddPage();
-                    gfx = XGraphics.FromPdfPage(page);
-                    y = margin;
-                    DrawTableHeader(gfx, headers, colWidths, tableStartX, ref y, headerFont, null);
+                    string? content = File.ReadAllText(counterFile).Trim();
+                    if (int.TryParse(content, out int parsed))
+                        reportNumber = parsed + 1;
                 }
-
-                DrawTableRow(
-                    gfx,
-                    new[]
-                    {
-                        m.Category,
-                        m.Name,
-                        m.Color ?? "",
-                        m.Price.ToString("0.00"),
-                        m.Unit,
-                        m.Description ?? ""
-                    },
-                    colWidths,
-                    tableStartX,
-                    ref y,
-                    textFont,
-                    alternate ? XBrushes.WhiteSmoke : XBrushes.White
-                );
-                alternate = !alternate;
+                File.WriteAllText(counterFile, reportNumber.ToString());
             }
-
-            // === Нижній колонтитул ===
-            y = page.Height - 40;
-            gfx.DrawLine(XPens.Gray, margin, y, page.Width - margin, y);
-            gfx.DrawString($"Експортовано: {DateTime.Now:dd.MM.yyyy HH:mm}",
-                italicFont, XBrushes.Gray,
-                new XRect(margin, y + 5, page.Width - margin * 2, 20),
-                XStringFormats.TopLeft);
-
-            // === Зберегти ===
-            document.Save(filePath);
-            document.Close();
-
-            Console.WriteLine($"✅ PDF успішно створено: {Path.GetFileName(filePath)}");
-
-            try { Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true }); }
-            catch { /* ігноруємо */ }
-        }
-
-        // =====================================================================
-        // === Таблиця ===
-        // =====================================================================
-        private static void DrawTableHeader(
-            XGraphics gfx,
-            string[] headers,
-            double[] widths,
-            double startX,
-            ref double y,
-            XFont font,
-            PdfPage _)
-        {
-            double x = startX;
-            double height = 25;
-
-            gfx.DrawRectangle(XBrushes.LightGray, startX - 2, y - 2, Sum(widths) + 4, height + 4);
-            for (int i = 0; i < headers.Length; i++)
+            catch
             {
-                gfx.DrawString(headers[i], font, XBrushes.Black,
-                    new XRect(x + 3, y + 5, widths[i], height), XStringFormats.TopLeft);
-                x += widths[i];
+                // ігноруємо помилки з файлом
             }
 
-            y += height;
-        }
+            string reportId = reportNumber.ToString("D6");
 
-        private static void DrawTableRow(
-            XGraphics gfx,
-            string[] values,
-            double[] widths,
-            double startX,
-            ref double y,
-            XFont font,
-            XBrush background)
-        {
-            double x = startX;
-            double rowHeight = 20;
+            // 🧠 нове — беремо користувача з data.User (а не з Windows)
+            string user = !string.IsNullOrWhiteSpace(data.User) ? data.User : "admin";
 
-            gfx.DrawRectangle(background, startX - 2, y, Sum(widths) + 4, rowHeight);
+            gfx.DrawString($"Розрахунок № {reportId}", textFont, XBrushes.Gray,
+                new XRect(textStartX, textY, page.Width - textStartX - margin, 20), XStringFormats.TopLeft);
+            textY += 22;
 
-            for (int i = 0; i < values.Length; i++)
+            gfx.DrawString($"Користувач: {user}", textFont, XBrushes.Gray,
+                new XRect(textStartX, textY, page.Width - textStartX - margin, 20), XStringFormats.TopLeft);
+            textY += 25;
+
+            // === Інформаційні поля ===
+            void DrawLine(string label, string value)
             {
-                string text = values[i] ?? "";
-                var rect = new XRect(x + 3, y + 3, widths[i], rowHeight);
-                gfx.DrawString(WrapText(gfx, text, font, widths[i]), font, XBrushes.Black, rect, XStringFormats.TopLeft);
-                x += widths[i];
+                gfx.DrawString(label + ":", labelFont, XBrushes.Black,
+                    new XRect(textStartX, textY, 160, 20), XStringFormats.TopLeft);
+                gfx.DrawString(value, textFont, XBrushes.Black,
+                    new XRect(textStartX + 160, textY, page.Width - textStartX - margin, 20), XStringFormats.TopLeft);
+                textY += 22;
             }
 
-            y += rowHeight;
-        }
+            DrawLine("Бренд профілю", data.Profile);
+            DrawLine("Склопакет", data.GlassPack);
+            DrawLine("Колір", data.Color);
+            DrawLine("Підвіконник", data.Sill);
+            DrawLine("Відлив", data.Drain);
+            DrawLine("Москітна сітка", data.HasMosquito ? "Так" : "Ні");
 
-        // =====================================================================
-        // === Утиліти ===
-        // =====================================================================
-        private static double Sum(double[] arr)
-        {
-            double total = 0;
-            foreach (double d in arr)
-                total += d;
-            return total;
-        }
+            // === Розділювальна лінія ===
+            textY += 20;
+            gfx.DrawLine(XPens.Gray, margin, textY, page.Width - margin, textY);
+            textY += 25;
 
-        private static string WrapText(XGraphics gfx, string text, XFont font, double maxWidth)
-        {
-            if (string.IsNullOrEmpty(text))
-                return "";
+            // === Ціна ===
+            gfx.DrawRectangle(XBrushes.AliceBlue, margin - 5, textY - 5, page.Width - margin * 2 + 10, 40);
+            gfx.DrawString($"Загальна вартість: {data.TotalPriceUAH:0.00} грн  /  €{data.TotalPriceEUR:0.00}",
+                labelFont, XBrushes.DarkBlue,
+                new XRect(margin, textY + 5, page.Width - margin * 2, 20), XStringFormats.TopLeft);
 
-            var words = text.Split(' ');
-            string line = "";
-            string result = "";
+            // === Футер ===
+            gfx.DrawLine(XPens.LightGray, margin, page.Height - 60, page.Width - margin, page.Height - 60);
+            gfx.DrawString($"WinCalc © {DateTime.Now.Year}  |  Автоматичний розрахунок віконних конструкцій",
+                footerFont, XBrushes.Gray,
+                new XRect(margin, page.Height - 50, page.Width - margin * 2, 20), XStringFormats.TopLeft);
 
-            foreach (var word in words)
-            {
-                string testLine = (line.Length == 0 ? word : line + " " + word);
-                if (gfx.MeasureString(testLine, font).Width > maxWidth)
-                {
-                    result += line + "\n";
-                    line = word;
-                }
-                else
-                {
-                    line = testLine;
-                }
-            }
-
-            result += line;
-            return result.Trim();
+            doc.Save(filePath);
+            doc.Close();
         }
     }
+
+
+
+
 }

@@ -288,35 +288,70 @@ namespace WinCalc
 
 
         // 📤 Експорт у PDF
-        private void btnExportCsv_Click(object sender, RoutedEventArgs e)
+
+
+
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string pdfPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "calculation_report.pdf");
-                var sb = new StringBuilder();
-                sb.AppendLine("=== WinCalc Звіт про обчислення ===");
-                sb.AppendLine($"Дата: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-                sb.AppendLine($"Користувач: {AppSession.CurrentUser?.Username ?? "Невідомий"}");
-                sb.AppendLine();
-                sb.AppendLine($"Тип вікна: {cmbWindowType.SelectedItem}");
-                sb.AppendLine($"Бренд: {cmbBrand.SelectedItem}");
-                sb.AppendLine($"Профіль: {cmbProfileThickness.SelectedItem}");
-                sb.AppendLine($"Склопакет: {cmbGlassPack.SelectedItem}");
-                sb.AppendLine($"Підвіконня: {(rbSill300.IsChecked == true ? "Білий 300мм" : "Білий 200мм")}");
-                sb.AppendLine($"Відлив: {(rbDrain200.IsChecked == true ? "Білий 200мм" : "Білий 150мм")}");
-                sb.AppendLine($"Москітна сітка: {(chkMosquito.IsChecked == true ? "Так" : "Ні")}");
-                sb.AppendLine();
-                sb.AppendLine($"Розміри: {txtWidth.Text} мм x {txtHeight.Text} мм");
-                sb.AppendLine(lblResult.Text);
+                if (!decimal.TryParse(txtWidth.Text, out decimal width) ||
+                    !decimal.TryParse(txtHeight.Text, out decimal height))
+                {
+                    MessageBox.Show("Будь ласка, введіть розміри перед експортом!", "Увага",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
-                File.WriteAllText(pdfPath, sb.ToString(), Encoding.UTF8);
-                MessageBox.Show($"✅ Звіт збережено як PDF: {pdfPath}", "Експорт", MessageBoxButton.OK, MessageBoxImage.Information);
+                bool sill300 = rbSill300.IsChecked == true;
+                bool drain200 = rbDrain200.IsChecked == true;
+                bool handlePremium = rbHandlePremium.IsChecked == true;
+                bool hasMosquito = chkMosquito.IsChecked == true;
+
+                var config = new WindowConfig
+                {
+                    Width = width,
+                    Height = height,
+                    Brand = cmbBrand.Text,
+                    GlassType = cmbGlassPack.Text,
+                    HandleType = handlePremium ? "Преміум" : "Стандартна",
+                    SillType = sill300 ? "300 мм" : "200 мм",
+                    DrainType = drain200 ? "200 мм" : "150 мм",
+                    HasMosquito = hasMosquito
+                };
+
+                // 🔹 Розрахунок
+                var calc = new Obchyslennya();
+                decimal totalUAH = calc.CalculateWindowPrice(config);
+                decimal eurRate = 41.5m;
+                decimal totalEUR = Math.Round(totalUAH / eurRate, 2);
+
+                // 🔹 Дані для звіту
+                var data = new ProjectReportData
+                {
+                    ProjectName = "Розрахунок вартості вікна",
+                    User = AppSession.CurrentUser?.Username ?? "admin",
+                    Profile = cmbBrand.Text,
+                    GlassPack = cmbGlassPack.Text,
+                    Color = "Білий",
+                    HasMosquito = hasMosquito,
+                    Sill = sill300 ? "300 мм" : "200 мм",
+                    Drain = drain200 ? "200 мм" : "150 мм",
+                    TotalPriceUAH = (double)totalUAH,
+                    TotalPriceEUR = (double)totalEUR
+                };
+
+                string path = ReportService.ExportPdfReport(data);
+                MessageBox.Show($"✅ Звіт створено:\n{path}", "Експорт PDF",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Помилка експорту PDF: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"❌ Помилка експорту: {ex.Message}",
+                    "WinCalc", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
 
     }

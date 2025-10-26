@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GUr63t85n00=",
+  "dgSpecHash": "5OtDjW5Q0Bw=",
   "success": true,
-  "projectFilePath": "D:\\Step\\Курсова-Розрахунку вартості м-п вікна\\пробна ver 0.0.7b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+  "projectFilePath": "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\arikc\\.nuget\\packages\\microsoft.data.sqlite\\9.0.9\\microsoft.data.sqlite.9.0.9.nupkg.sha512",
     "C:\\Users\\arikc\\.nuget\\packages\\microsoft.data.sqlite.core\\9.0.9\\microsoft.data.sqlite.core.9.0.9.nupkg.sha512",
