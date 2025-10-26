@@ -7,6 +7,8 @@
     {
         public decimal Width { get; set; }       // мм
         public decimal Height { get; set; }      // мм
+        public string WindowType { get; set; } = "";
+        public int SashCount { get; set; } = 1;
         public string Brand { get; set; } = "";
         public string GlassType { get; set; } = "";
         public string HandleType { get; set; } = "";
