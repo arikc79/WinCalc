@@ -20,10 +20,12 @@
     <None Remove="Image\6.png" />
     <None Remove="Image\7.png" />
     <None Remove="Image\default.png" />
+    <None Remove="Image\logo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.9" />
+    <PackageReference Include="PDFsharp" Version="6.2.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +61,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Image\default.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Image\logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
