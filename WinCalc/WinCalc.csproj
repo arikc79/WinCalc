@@ -12,6 +12,7 @@
 	
 	
   <ItemGroup>
+    <None Remove="Help\help_ua.md" />
     <None Remove="Image\1.png" />
     <None Remove="Image\2.png" />
     <None Remove="Image\3.png" />
@@ -24,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Markdig.Wpf" Version="0.5.0.1" />
+    <PackageReference Include="MaterialDesignColors" Version="5.3.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.3.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.9" />
     <PackageReference Include="PDFsharp" Version="6.2.2" />
   </ItemGroup>
@@ -39,6 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Help\help_ua.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Image\1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
