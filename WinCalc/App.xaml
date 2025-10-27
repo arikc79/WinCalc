@@ -18,7 +18,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!-- ✅ Глобальні кути -->
-            <CornerRadius x:Key="MaterialDesignCornerRadius">12</CornerRadius>
+            <CornerRadius x:Key="MaterialDesignCornerRadius">20</CornerRadius>
 
             <!-- 🔹 Глобальний стиль для всіх вікон -->
             <Style TargetType="Window">
@@ -29,22 +29,22 @@
             </Style>
 
             <!-- 🧱🔹 Контролли -->
-
-          
-
           
             <!-- CheckBox -->
-            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
-             
-            </Style>
+            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">  </Style>
+
 
             <!-- 🔹 Глобальний стиль для кнопок -->
             <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignOutlinedButton}">
                 <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}"/>
                 <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidBrush}"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
+
+              
                 <Setter Property="FontSize" Value="14"/>
             </Style>
+
+        
 
         </ResourceDictionary>
     </Application.Resources>
