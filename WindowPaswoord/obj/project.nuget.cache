@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XDF8wd2X6U4=",
+  "dgSpecHash": "BSDC09cX9e0=",
   "success": true,
-  "projectFilePath": "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
+  "projectFilePath": "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\arikc\\.nuget\\packages\\microsoft.data.sqlite\\9.0.9\\microsoft.data.sqlite.9.0.9.nupkg.sha512",
     "C:\\Users\\arikc\\.nuget\\packages\\microsoft.data.sqlite.core\\9.0.9\\microsoft.data.sqlite.core.9.0.9.nupkg.sha512",

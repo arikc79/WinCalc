@@ -950,11 +950,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+      "projectUniqueName": "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
       "projectName": "WindowProfileCalculatorLibrary",
-      "projectPath": "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+      "projectPath": "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
       "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-      "outputPath": "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\WindowProfileCalculatorLibrary\\obj\\",
+      "outputPath": "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\WindowProfileCalculatorLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -976,11 +976,11 @@
         "net9.0-windows7.0": {
           "targetAlias": "net9.0-windows",
           "projectReferences": {
-            "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\AuditLog\\AuditLog.csproj": {
-              "projectPath": "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\AuditLog\\AuditLog.csproj"
+            "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\AuditLog\\AuditLog.csproj": {
+              "projectPath": "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\AuditLog\\AuditLog.csproj"
             },
-            "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
-              "projectPath": "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj"
+            "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
+              "projectPath": "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj"
             }
           }
         }

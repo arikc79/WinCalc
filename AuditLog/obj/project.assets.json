@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\AuditLog\\AuditLog.csproj",
+      "projectUniqueName": "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\AuditLog\\AuditLog.csproj",
       "projectName": "AuditLog",
-      "projectPath": "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\AuditLog\\AuditLog.csproj",
+      "projectPath": "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\AuditLog\\AuditLog.csproj",
       "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-      "outputPath": "D:\\Step\\WInCalcCurs\\ver0.0.7b\\WinCalc\\AuditLog\\obj\\",
+      "outputPath": "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\AuditLog\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-        xmlns:local="clr-namespace:WinCalc"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:WinCalc"      
         mc:Ignorable="d"
         Title="WinCalc — Розрахунок вартості вікна"
         WindowStartupLocation="CenterScreen"
@@ -127,7 +126,7 @@
                         <ComboBoxItem Content="1"/>
                         <ComboBoxItem Content="2"/>
                     </ComboBox>
-                </WrapPanel>
+                </StackPanel>
 
                 <!-- 🔹 Третя лінія -->
                 <StackPanel Orientation="Horizontal" Margin="5,8,0,0" Height="28">

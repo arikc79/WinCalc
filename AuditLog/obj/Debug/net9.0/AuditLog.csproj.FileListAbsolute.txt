@@ -70,3 +70,15 @@ D:\Step\WInCalcCurs\ver0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.dll
 D:\Step\WInCalcCurs\ver0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\refint\AuditLog.dll
 D:\Step\WInCalcCurs\ver0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.pdb
 D:\Step\WInCalcCurs\ver0.0.7b\WinCalc\AuditLog\obj\Debug\net9.0\ref\AuditLog.dll
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\bin\Debug\net9.0\AuditLog.deps.json
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\bin\Debug\net9.0\AuditLog.dll
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\bin\Debug\net9.0\AuditLog.pdb
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.GeneratedMSBuildEditorConfig.editorconfig
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.AssemblyInfoInputs.cache
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.AssemblyInfo.cs
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.csproj.CoreCompileInputs.cache
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.sourcelink.json
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.dll
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\obj\Debug\net9.0\refint\AuditLog.dll
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.pdb
+D:\Step\WInCalcCurs\ver0.08b\WinCalc\AuditLog\obj\Debug\net9.0\ref\AuditLog.dll
