@@ -69,7 +69,7 @@ namespace WinCalc
             }
         }
 
-        // 🔹 створення менеджера (для першого запуску)
+        //  створення менеджера (для першого запуску)
         private async void CreateManager_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -93,5 +93,17 @@ namespace WinCalc
                                 "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        // кнопка HElP
+        private void btnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            var help = new HelpWindow
+            {
+                Owner = this
+            };
+            help.ShowDialog();
+        }
+
+
     }
 }

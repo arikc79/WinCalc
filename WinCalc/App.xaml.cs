@@ -37,8 +37,7 @@ namespace WinCalc
 
                 if (result == true && AppSession.CurrentUser != null)
                 {
-                    var main = new MainWindow();
-                    main.Show();
+                   
                     this.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 }
                 else
