@@ -1,12 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3xqEiUdMY5I=",
+  "dgSpecHash": "vO/8MUy5BYU=",
   "success": true,
-  "projectFilePath": "D:\\Step\\WInCalcCurs\\ver0.08b\\WinCalc\\AuditLog\\AuditLog.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\arikc\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.10\\microsoft.windowsdesktop.app.ref.9.0.10.nupkg.sha512",
-    "C:\\Users\\arikc\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.10\\microsoft.netcore.app.ref.9.0.10.nupkg.sha512",
-    "C:\\Users\\arikc\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.10\\microsoft.aspnetcore.app.ref.9.0.10.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\Глеб\\Desktop\\proga\\AuditLog\\AuditLog.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }
