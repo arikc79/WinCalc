@@ -284,7 +284,12 @@ namespace WinCalc
                 {
                     ProjectName = "Розрахунок вартості вікна",
                     User = AppSession.CurrentUser?.Username ?? "admin",
-                    Profile = config.Brand,
+                    Brand = config.Brand,
+                    ProfileThickness = cmbProfileThickness.Text,
+                    WindowType = cmbWindowType.Text,
+                    Width = double.TryParse(txtWidth.Text, out double w) ? w : 0,
+                    Height = double.TryParse(txtHeight.Text, out double h) ? h : 0,
+                    HandleType = rbHandlePremium.IsChecked == true ? "Преміум" : "Стандарт",
                     GlassPack = config.GlassType,
                     Color = "Білий",
                     HasMosquito = config.HasMosquito,

@@ -17,7 +17,7 @@ namespace WinCalc
             InitializeComponent();
         }
 
-        // 🔹 Вхід у систему
+        //  Вхід у систему
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -25,7 +25,7 @@ namespace WinCalc
                 var username = txtUsername.Text.Trim();
                 var password = txtPassword.Password.Trim();
 
-                // ✅ аварійний логін, якщо _authService не спрацював або БД пуста
+                // аварійний логін
                 if (username == "admin" && password == "admin")
                 {
                     AppSession.SetCurrentUser(new User { Username = "admin", Role = Roles.Admin });
@@ -37,7 +37,7 @@ namespace WinCalc
                     return;
                 }
 
-                // 🔹 Виклик асинхронної авторизації
+                //  Виклик асинхронної авторизації
                 var result = await _authService.LoginAsync(username, password);
 
                 if (result.ok)
