@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-        xmlns:local="clr-namespace:WinCalc"      
+        xmlns:local="clr-namespace:WinCalc"
         mc:Ignorable="d"
         Title="WinCalc — Розрахунок вартості вікна"
         WindowStartupLocation="CenterScreen"
@@ -21,12 +21,40 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- ====================== HEADER ====================== -->
-        <TextBlock Text="Розрахунок вартості вікна"
-                   FontSize="26"
-                   FontWeight="SemiBold"
-                   Foreground="{DynamicResource MaterialDesignBody}"
-                   Margin="0,0,0,10"/>
+        <!-- ====================== HEADER (слева) ====================== -->
+        <Grid Grid.Row="0" Margin="0,0,0,10">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                <!-- Заголовок выше кнопок -->
+                <TextBlock Text="Розрахунок вартості вікна"
+                           FontSize="26"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource MaterialDesignBody}"
+                           Margin="0,0,0,6"/>
+
+                <!-- Кнопки слева под заголовком -->
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="btnMaterials"
+                            Content="Каталог матеріалів"
+                            Width="150"
+                            Height="30"
+                            Margin="0,0,5,0"
+                            Click="btnMaterials_Click" />
+
+                    <Button x:Name="btnManageUsers"
+                            Content="Користувачі"
+                            Width="150"
+                            Height="30"
+                            Margin="5,0,5,0"
+                            Click="btnManageUsers_Click" />
+
+                    <Button x:Name="btnExportCsv"
+                            Content="Експорт PDF"
+                            Width="150"
+                            Height="30"
+                            Click="btnExportPdf_Click" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
 
         <!-- ====================== INPUTS SECTION ====================== -->
         <materialDesign:Card Grid.Row="1"
@@ -36,12 +64,12 @@
 
             <StackPanel Orientation="Vertical">
 
-                <!-- 🔹 Перша лінія параметрів -->
+                <!-- 🔹 Первая линия параметров -->
                 <StackPanel Orientation="Horizontal" Height="99">
                     <TextBlock Text="Ширина(мм):"
                                Width="97"
                                VerticalAlignment="Center"
-                               Margin="0,0,5,0"/>
+                               Margin="20,0,5,0"/>
                     <TextBox x:Name="txtWidth"
                              Width="100"
                              Height="35" />
@@ -49,8 +77,7 @@
                     <TextBlock Text="Висота (мм):"
                                Width="92"
                                VerticalAlignment="Center"
-                               Margin="10,0,5,0"/>
-                    
+                               Margin="20,0,5,0"/>
                     <TextBox x:Name="txtHeight"
                              Width="100"
                              Height="35"  />
@@ -58,43 +85,20 @@
                     <Button x:Name="btnCalculate"
                             Content="Розрахувати"
                             Click="btnCalculate_Click"
-                            Width="250"
+                            Width="350"
                             Height="45"
-                            Margin="20,0,20,0" />
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0">
-                        <Button x:Name="btnMaterials"
-                                Content="Каталог матеріалів"
-                                Width="150"
-                                Height="36"
-                                Margin="5,8,5,0"
-                                Click="btnMaterials_Click" />
-
-                        <Button x:Name="btnManageUsers"
-                                Content="Користувачі"
-                                Click="btnManageUsers_Click"
-                                Width="130"
-                                Height="36"
-                                Margin="5,8,5,0" />
-
-                        <Button x:Name="btnExportCsv"
-                                Content="Експорт PDF"
-                                Click="btnExportPdf_Click"
-                                Width="120"
-                                Height="36"
-                                Margin="5,8,5,0" />
-                    </StackPanel>
+                            Margin="120,0,0,0" />
                 </StackPanel>
 
-                <!-- 🔹 Друга лінія параметрів -->
+                <!-- 🔹 Вторая линия параметров -->
                 <StackPanel Orientation="Horizontal" Margin="5,8,0,0">
-                    <TextBlock Text="Тип вікна:" 
-                               Width="114" 
+                    <TextBlock Text="Тип вікна:"
+                               Width="80"
                                VerticalAlignment="Center"
-                               Margin="0,0,2,0"/>
-                    
+                               Margin="0,0,5,0"/>
+
                     <ComboBox x:Name="cmbWindowType"
-                              Width="180" Height="32"
+                              Width="160" Height="32"
                               Margin="5,0,2,0"
                               SelectionChanged="cmbWindowType_SelectionChanged"/>
 
@@ -103,11 +107,11 @@
                                VerticalAlignment="Center"
                                Margin="5,0,0,0"/>
                     <ComboBox x:Name="cmbBrand"
-                              Width="180" Height="32" 
+                              Width="180" Height="32"
                               Margin="2,0,2,0" />
 
                     <TextBlock Text="Товщина профілю:"
-                               Width="140" 
+                               Width="140"
                                VerticalAlignment="Center"
                                Margin="5,0,0,0"/>
                     <ComboBox x:Name="cmbProfileThickness"
@@ -122,29 +126,28 @@
                               Width="60" Height="32"
                               SelectedIndex="0"
                               Margin="0,0,2,0">
-
                         <ComboBoxItem Content="1"/>
                         <ComboBoxItem Content="2"/>
                     </ComboBox>
                 </StackPanel>
 
-                <!-- 🔹 Третя лінія -->
+                <!-- 🔹 Третья линия -->
                 <StackPanel Orientation="Horizontal" Margin="5,8,0,0" Height="28">
                     <TextBlock Text="Склопакет:"
                                Width="114"
                                VerticalAlignment="Center"
                                Margin="0,0,7,0"/>
-                    
+
                     <ComboBox x:Name="cmbGlassPack"
                               Width="180" />
-                    
+
                     <CheckBox x:Name="chkMosquito"
                               Content="Москітна сітка"
                               VerticalAlignment="Center"
                               Margin="10,0,0,0" />
                 </StackPanel>
 
-                <!-- 🔹 Опції (групи RadioButton) -->
+                <!-- 🔹 Опции (RadioButton группы) -->
                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                     <materialDesign:Card Width="180" Margin="0,0,15,0" Padding="8" materialDesign:ElevationAssist.Elevation="Dp1">
                         <StackPanel>
@@ -187,20 +190,19 @@
                                Source="/WinCalc;component/Image/1.png"/>
                     </Border>
                 </DockPanel>
-              
             </GroupBox>
         </materialDesign:Card>
 
         <!-- ====================== RESULT SECTION ====================== -->
         <materialDesign:Card Grid.Row="3" Padding="10" materialDesign:ElevationAssist.Elevation="Dp2">
             <StackPanel>
-                <TextBlock Text="Результат розрахунку:" FontWeight="Bold" FontSize="16" Margin="0,0,0,5"/>
+                <TextBlock Text="Результат розрахунку:" FontWeight="Bold" FontSize="18" Margin="0,0,0,5"/>
                 <Border BorderBrush="{DynamicResource MaterialDesignDivider}" BorderThickness="1"
                         Background="{DynamicResource MaterialDesignCardBackground}" Height="100" Padding="0">
                     <TextBlock x:Name="lblResult"
                                Text="Введіть параметри та натисніть 'Розрахувати'"
                                TextWrapping="Wrap"
-                               FontSize="14"
+                               FontSize="16"
                                Foreground="{DynamicResource MaterialDesignBody}"
                                Padding="10"/>
                 </Border>

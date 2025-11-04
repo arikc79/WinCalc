@@ -8,7 +8,7 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <!-- 🔹 Підключення тем і палітри -->
+            <!--  Підключення тем і палітри -->
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme BaseTheme="Dark"
                                              PrimaryColor="Teal"
@@ -17,10 +17,10 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <!-- ✅ Глобальні кути -->
+            <!--  Глобальні кути -->
             <CornerRadius x:Key="MaterialDesignCornerRadius">20</CornerRadius>
 
-            <!-- 🔹 Глобальний стиль для всіх вікон -->
+            <!--  Глобальний стиль для всіх вікон -->
             <Style TargetType="Window">
                 <Setter Property="FontFamily" Value="Segoe UI"/>
                 <Setter Property="FontSize" Value="14"/>
@@ -28,23 +28,115 @@
                 <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
             </Style>
 
-            <!-- 🧱🔹 Контролли -->
-          
+            <Style TargetType="TextBlock" x:Key="HeaderText">
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="#EEEEEE"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
+
+
+
+
             <!-- CheckBox -->
             <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">  </Style>
 
-
-            <!-- 🔹 Глобальний стиль для кнопок -->
-            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignOutlinedButton}">
-                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}"/>
-                <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidBrush}"/>
+            <!-- 🌈 Глобальний стиль для кнопок -->
+            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <!-- Основний вигляд -->
+                <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}"/>
+                <Setter Property="Foreground" Value="White"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Width" Value="180"/>
+                <Setter Property="Height" Value="45"/>
+                <Setter Property="Margin" Value="5"/>
 
-              
+                <!-- Центр для анімації масштабування -->
+                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                    </Setter.Value>
+                </Setter>
+
+                <!-- Тінь -->
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="10"
+                              ShadowDepth="4"
+                              Color="#66000000"/>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Triggers>
+                    <!-- 🖱️ Наведення -->
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#FF26C6DA"/>
+                        <!-- Трохи світліший -->
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect BlurRadius="16"
+                                      ShadowDepth="2"
+                                      Color="#AA00BCD4"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+
+                    <!-- 🎬 Натискання (анімація просідання) -->
+                    <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonDown">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                     To="0.96" Duration="0:0:0.05"/>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                     To="0.96" Duration="0:0:0.05"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Effect).(DropShadowEffect.ShadowDepth)"
+                                     To="1" Duration="0:0:0.05"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+
+                    <!-- 🕊️ Відпускання (повернення до нормального стану) -->
+                    <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonUp">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                     To="1" Duration="0:0:0.1"/>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                     To="1" Duration="0:0:0.1"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Effect).(DropShadowEffect.ShadowDepth)"
+                                     To="4" Duration="0:0:0.1"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Style.Triggers>
+            </Style>
+
+
+            <Style TargetType="DataGrid">
+                <Setter Property="Background" Value="#2B2B2B"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="#444"/>
+                <Setter Property="RowBackground" Value="#333333"/>
+                <Setter Property="AlternatingRowBackground" Value="#1E1E1E"/>
+                <Setter Property="GridLinesVisibility" Value="None"/>
+                <Setter Property="SelectionMode" Value="Single"/>
+                <Setter Property="SelectionUnit" Value="FullRow"/>
                 <Setter Property="FontSize" Value="14"/>
             </Style>
 
-        
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="#222"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Padding" Value="6"/>
+                <Setter Property="BorderBrush" Value="#444"/>
+            </Style>
+
+
+
+
 
         </ResourceDictionary>
     </Application.Resources>
