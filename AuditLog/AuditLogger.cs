@@ -13,7 +13,7 @@ public sealed class AuditLogger
 
         if (File.Exists(_dir))
         {
-            try { File.Move(_dir, _dir + ".bak", true); } catch {  }
+            try { File.Move(_dir, _dir + ".bak", true); } catch { }
         }
 
         Directory.CreateDirectory(_dir);
