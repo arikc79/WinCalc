@@ -46,7 +46,7 @@ namespace WindowProfileCalculatorLibrary
                     continue;
 
                 var parts = line.Split(';', StringSplitOptions.TrimEntries);
-                if (parts.Length < 7)
+                if (parts.Length < 6)
                 {
                     Console.WriteLine($"⚠️ Пропущено рядок {lineNum}: неправильний формат CSV.");
                     continue;
@@ -68,7 +68,7 @@ namespace WindowProfileCalculatorLibrary
                         Color = parts[2],
                         Price = (double)priceValue,
                         Unit = parts[4],
-                        Description = parts[6]
+                        Description = parts[5]
                     };
 
                     materials.Add(material);

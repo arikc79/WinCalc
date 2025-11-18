@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using WinCalc.Security;
 using WindowProfileCalculatorLibrary;
@@ -67,8 +69,9 @@ namespace WinCalc
             }
         }
 
+
         // ===============================================================
-        //  ЗМІНА ТИПУ ВІКНА → ЗАВАНТАЖЕННЯ КАРТИНКИ
+        //  ТИП ВІКНА → ЗАВАНТАЖЕННЯ КАРТИНКИ
         // ===============================================================
         private void cmbWindowType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -78,10 +81,11 @@ namespace WinCalc
             }
             else
             {
-                // 🔸 fallback — якщо користувач вибрав невідомий тип
+                // fallback — якщо користувач вибрав невідомий тип
                 LoadDefaultPreview();
             }
         }
+
 
         // ===============================================================
         //  ЗАВАНТАЖЕННЯ ЗОБРАЖЕННЯ З ПАПКИ Image
@@ -111,6 +115,10 @@ namespace WinCalc
             }
         }
 
+
+        // ===============================================================
+        // Завантаження зображення за замовчуванням
+        // ===============================================================
         private void LoadDefaultPreview()
         {
             try
@@ -127,6 +135,11 @@ namespace WinCalc
             catch { /* нічого не робимо */ }
         }
 
+
+
+        // ===============================================================
+        // 🧩 ЗБІР КОНФІГУРАЦІЇ ВІКНА
+        // ===============================================================
         private WindowConfig? BuildWindowConfig(out string? errorMessage)
         {
             errorMessage = null;
@@ -169,8 +182,9 @@ namespace WinCalc
             };
         }
 
+
         // ===============================================================
-        //  КНОПКА РОЗРАХУНКУ
+        // 🧮 РОЗРАХУНОК ВАРТОСТІ ВІКНА
         // ===============================================================
         private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
@@ -226,8 +240,28 @@ namespace WinCalc
 
 
         // ===============================================================
+        // 🛑 Валідація  ПОЛЯ РОЗМІРІВ
+        private static readonly Regex _numericRegex = new Regex("^[0-9]+$");
 
-        // 👥 Керування користувачами
+        private void NumericOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !_numericRegex.IsMatch(e.Text);
+
+            if (e.Handled && sender is TextBox tb)
+            {
+                tb.ToolTip = "❌ Дозволено вводити лише цілі числа";
+                tb.ToolTipOpening += (_, _) =>
+                {
+                    tb.ToolTip = "❌ Дозволено вводити лише цілі числа";
+                };
+            }
+        }
+
+
+
+        // ===============================================================
+        // 🛠️ Керування матеріалами
+        // ===============================================================
         private void btnMaterials_Click(object sender, RoutedEventArgs e)
         {
             if (!AppSession.IsInRole(Roles.Admin))
@@ -239,7 +273,11 @@ namespace WinCalc
             var win = new MaterialsWindow();
             win.ShowDialog();
         }
-                     
+
+
+        // ===============================================================
+        // 👥 Керування користувачами
+        // ===============================================================
         private void btnManageUsers_Click(object sender, RoutedEventArgs e)
         {
             if (!AppSession.IsInRole(Roles.Admin))
@@ -256,11 +294,10 @@ namespace WinCalc
 
         }
 
+
         // ===============================================================
-
         // 📤 Експорт у PDF
-
-
+        // ===============================================================
         private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -310,7 +347,17 @@ namespace WinCalc
             }
         }
 
+        // ===============================================================
+        //  Вихід
+        // ===============================================================
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
 
+        private void chkMosquito_Checked(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

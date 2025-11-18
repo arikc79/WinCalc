@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using WindowProfileCalculatorLibrary;
+using Microsoft.Win32;
 
 namespace WinCalc
 {
@@ -83,10 +84,53 @@ namespace WinCalc
         // 📁 Імпорт з CSV
         private void btnImportCsv_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Функція імпорту CSV поки не реалізована.",
-                      "Імпорт CSV", MessageBoxButton.OK, MessageBoxImage.Information);
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*",
+                Title = "Виберіть файл матеріалів (CSV)"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    string filePath = openFileDialog.FileName;
+
+                    //  Читаємо файл через ваш готовий імпортер
+                    List<Material> importedMaterials = CsvMaterialImporter.Import(filePath);
+
+                    if (importedMaterials.Count == 0)
+                    {
+                        MessageBox.Show("Файл порожній або не містить коректних даних.",
+                                        "Імпорт", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    // Додаємо в базу
+                    int addedCount = 0;
+                    foreach (var mat in importedMaterials)
+                    {
+                        // Тут можна додати перевірку на дублікати, якщо потрібно.
+                        if (_dataAccess.AddMaterial(mat))
+                        {
+                            addedCount++;
+                        }
+                    }
+
+                    //  Оновлюємо таблицю та показуємо результат
+                    LoadMaterials();
+                    MessageBox.Show($"✅ Успішно імпортовано {addedCount} матеріалів з {importedMaterials.Count}.",
+                                    "Імпорт завершено", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // Запис в аудит
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Помилка при імпорті: {ex.Message}",
+                                    "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
-        
 
     }
 }

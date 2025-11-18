@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WindowPaswoord")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+94cfaab78660546faf77dbc57cd09027d8515572")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+22111f7b58293dbb125cb59ba32df77632de251f")]
 [assembly: System.Reflection.AssemblyProductAttribute("WindowPaswoord")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WindowPaswoord")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -9,8 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Repositories\" />
+    <Compile Remove="Data\**" />
+    <Compile Remove="Repositories\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="Data\**" />
+    <None Remove="Repositories\**" />
+    <Page Remove="Data\**" />
+    <Page Remove="Repositories\**" />
   </ItemGroup>
 
   <ItemGroup>

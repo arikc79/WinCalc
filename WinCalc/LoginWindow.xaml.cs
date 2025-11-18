@@ -1,9 +1,10 @@
-﻿
-using System;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using WinCalc.Security;
 using WinCalc.Services;
-using WinCalc.Storage;
 using WindowPaswoord.Models;
 
 namespace WinCalc
@@ -11,6 +12,7 @@ namespace WinCalc
     public partial class LoginWindow : Window
     {
         private readonly AuthService _authService = new();
+        private static readonly Regex validChars = new(@"^[A-Za-zА-Яа-яІіЇїЄєҐґ]+$");
 
         public LoginWindow()
         {
@@ -20,11 +22,33 @@ namespace WinCalc
         //  Вхід у систему
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            //  Перевірка логіну
+            string username = txtUsername.Text.Trim();
+            var password = txtPassword.Password.Trim();
+
+            // якщо пусто
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                MessageBox.Show("Будь ласка, введіть логін.", "Помилка авторизації",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // регулярки для кирилиці / латиниці
+            bool isCyrillic = Regex.IsMatch(username, @"^[А-Яа-яЇїІіЄєҐґ]+$");
+            bool isLatin = Regex.IsMatch(username, @"^[A-Za-z]+$");
+
+            // Якщо логін НЕ кирилиця І НЕ латиниця 
+            if (!isCyrillic && !isLatin)
+            {
+                MessageBox.Show("Логін має містити лише кирилицю або лише латиницю.\nЗмішаний варіант не дозволено.",
+                    "Помилка введення", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+         
+
             try
             {
-                var username = txtUsername.Text.Trim();
-                var password = txtPassword.Password.Trim();
-
                 // аварійний логін
                 if (username == "admin" && password == "admin")
                 {
@@ -68,6 +92,32 @@ namespace WinCalc
                                 "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
+
+
+        // Підказка при наведенні
+        private void Username_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (sender is TextBox tb)
+            {
+                bool isValid = validChars.IsMatch(e.Text);
+                e.Handled = !isValid;
+
+                // якщо користувач натиснув не ту клавішу — тимчасово підсвічуємо червоним
+                if (!isValid)
+                {
+                    tb.BorderBrush = Brushes.IndianRed;
+                    tb.ToolTip = " Можна вводити лише кирилицю або латиницю, без цифр!";
+                }
+                else
+                {
+                    tb.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00BCD4"));
+                    tb.ToolTip = "✅ Дозволено вводити лише кирилицю або лише латиницю (без цифр)";
+                }
+            }
+        }
+
 
         //  створення менеджера (для першого запуску)
         private async void CreateManager_Click(object sender, RoutedEventArgs e)

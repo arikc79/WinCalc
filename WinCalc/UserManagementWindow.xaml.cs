@@ -38,21 +38,46 @@ namespace WinCalc
 
         private async void btnAddUser_Click(object sender, RoutedEventArgs e)
         {
-            var login = Microsoft.VisualBasic.Interaction.InputBox("Введіть логін нового користувача:", "Новий користувач");
-            if (string.IsNullOrWhiteSpace(login)) return;
+            // . Запитуємо Логін через наше нове вікно
+            var dialogLogin = new SimpleInputDialog("Введіть логін нового користувача:", "Новий користувач");
+            if (dialogLogin.ShowDialog() != true) return; // Якщо натиснули "Скасувати"
 
-            var pass = Microsoft.VisualBasic.Interaction.InputBox($"Введіть пароль для {login}:", "Пароль користувача");
-            if (string.IsNullOrWhiteSpace(pass)) return;
-
-            var (ok, err) = await _auth.RegisterAsync(login, pass, Roles.Manager);
-            if (ok)
+            string login = dialogLogin.Answer.Trim();
+            if (string.IsNullOrWhiteSpace(login))
             {
-                MessageBox.Show($"✅ Користувача '{login}' створено (роль: менеджер).",
-                                "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
-                LoadUsersAsync();
+                MessageBox.Show("Логін не може бути порожнім.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
-            else
-                MessageBox.Show($"Помилка: {err}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            //  Запитуємо Пароль
+            var dialogPass = new SimpleInputDialog($"Введіть пароль для {login}:", "Створення пароля");
+            if (dialogPass.ShowDialog() != true) return;
+
+            string pass = dialogPass.Answer.Trim();
+            if (string.IsNullOrWhiteSpace(pass))
+            {
+                MessageBox.Show("Пароль не може бути порожнім.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Створюємо користувача
+            try
+            {
+                var (ok, err) = await _auth.RegisterAsync(login, pass, Roles.Manager);
+                if (ok)
+                {
+                    MessageBox.Show($"✅ Користувача '{login}' успішно створено!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
+                    LoadUsersAsync(); // Оновлюємо таблицю
+                }
+                else
+                {
+                    MessageBox.Show($"❌ Помилка: {err}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Критична помилка: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private async void btnChangePassword_Click(object sender, RoutedEventArgs e)

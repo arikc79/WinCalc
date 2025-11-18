@@ -22,6 +22,8 @@
     <None Remove="Image\7.png" />
     <None Remove="Image\default.png" />
     <None Remove="Image\logo.jpg" />
+    <None Remove="Image\logo2.jpg" />
+    <None Remove="Image\logo3.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -75,6 +77,12 @@
     <Content Include="Image\logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Image\logo3.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
