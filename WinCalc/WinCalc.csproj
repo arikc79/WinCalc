@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <PlatformTarget>x64</PlatformTarget>
+    <ApplicationIcon>Ico exe\exe.ico</ApplicationIcon>
   </PropertyGroup>
 
 	
@@ -50,6 +51,7 @@
     <Content Include="Help\help_ua.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Ico exe\exe.ico" />
     <Content Include="Image\1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

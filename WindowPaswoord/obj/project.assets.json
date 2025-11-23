@@ -332,23 +332,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\arikc\\.nuget\\packages\\": {},
+    "C:\\Users\\Глеб\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Step\\WInCalcCurs\\ver0.09b\\WindowPaswoord\\WindowPaswoord.csproj",
+      "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\лого\\WindowPaswoord\\WindowPaswoord.csproj",
       "projectName": "WindowPaswoord",
-      "projectPath": "D:\\Step\\WInCalcCurs\\ver0.09b\\WindowPaswoord\\WindowPaswoord.csproj",
-      "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-      "outputPath": "D:\\Step\\WInCalcCurs\\ver0.09b\\WindowPaswoord\\obj\\",
+      "projectPath": "C:\\Users\\Глеб\\Desktop\\лого\\WindowPaswoord\\WindowPaswoord.csproj",
+      "packagesPath": "C:\\Users\\Глеб\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Глеб\\Desktop\\лого\\WindowPaswoord\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\arikc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Глеб\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -376,7 +376,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0-windows7.0": {
@@ -406,7 +406,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
