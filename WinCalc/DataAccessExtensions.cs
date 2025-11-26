@@ -1,5 +1,4 @@
-﻿// WinCalc/DataAccessExtensions.cs
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using System;
 using System.IO;
 using WindowProfileCalculatorLibrary;
@@ -11,7 +10,8 @@ namespace WinCalc
     /// </summary>
     public static class DataAccessExtensions
     {
-        private static readonly string _dbPath = Path.Combine(AppContext.BaseDirectory, "window_calc.db");
+        // ✅ ТЕПЕР ШЛЯХ БЕРЕТЬСЯ З КОНФІГУРАЦІЇ
+        private static string ConnectionString => WindowProfileCalculatorLibrary.DbConfig.ConnectionString;
 
         /// <summary>
         /// Видаляє матеріал з таблиці Materials за Id.
@@ -20,7 +20,7 @@ namespace WinCalc
         {
             try
             {
-                using var con = new SqliteConnection($"Data Source={_dbPath}");
+                using var con = new SqliteConnection(ConnectionString);
                 con.Open();
 
                 using var cmd = new SqliteCommand("DELETE FROM Materials WHERE Id=@id;", con);
@@ -39,6 +39,10 @@ namespace WinCalc
         public static void ExportToCsv(this DataAccess da, string filePath)
         {
             var materials = da.GetAllMaterials();
+
+            // 👇 ВИПРАВЛЕНО ТУТ:
+            // Було: CsvMaterialImporter.Export(materials, filePath);
+            // Стало (правильний порядок): спочатку шлях, потім дані
             CsvMaterialImporter.Export(filePath, materials);
         }
     }

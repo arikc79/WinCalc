@@ -27,12 +27,31 @@
                            FontSize="26"
                            FontWeight="SemiBold"
                            Foreground="{DynamicResource MaterialDesignBody}"
-                           Margin="0,0,0,6"/>
-                <StackPanel Orientation="Horizontal" >
-                    <Button x:Name="btnMaterials" Content="Каталог матеріалів" Width="150" Height="30" Margin="0,0,5,0" Click="btnMaterials_Click" />
-                    <Button x:Name="btnManageUsers" Content="Користувачі" Width="150" Height="30" Margin="5,0,5,0" Click="btnManageUsers_Click" />
-                    <Button x:Name="btnExportCsv" Content="Експорт PDF" Margin="5,0,5,0" Width="150" Height="30" Click="btnExportPdf_Click" />
-                    <Button x:Name="btnExit" Content="Вихід" Width="150" Height="30" Margin="5,0,5,0" Click="btnClose_Click" />
+                           Margin="0,0,0,6"
+                           />
+
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="btnMaterials" 
+            Content="Каталог матеріалів" 
+            Width="160" 
+            Click="btnMaterials_Click"
+           Style="{StaticResource NeonButtonStyle}" />
+                    <Button x:Name="btnManageUsers" 
+            Content="Користувачі" 
+            Width="150" 
+            Click="btnManageUsers_Click" 
+            Style="{StaticResource NeonButtonStyle}" />
+                    <Button x:Name="btnExportCsv" 
+            Content="Експорт PDF" 
+            Width="150" 
+            Click="btnExportPdf_Click" 
+            Style="{StaticResource NeonButtonStyle}" />
+                    <Button x:Name="btnExit" 
+            Content="Вихід" 
+            Width="150" 
+            Click="btnClose_Click" 
+           
+            Style="{StaticResource NeonButtonStyle}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -47,7 +66,7 @@
                     <TextBox x:Name="txtWidth" Width="100" FontSize="18" Height="35" PreviewTextInput="NumericOnly_PreviewTextInput" ToolTip="Введіть лише цілі числа (мм)" ToolTipService.ShowDuration="8000"/>
                     <TextBlock Text="Висота (мм):" Foreground="#EEEEEE" Width="92" VerticalAlignment="Center" Margin="20,0,5,0"/>
                     <TextBox x:Name="txtHeight" Width="100" FontSize="18" Height="35" PreviewTextInput="NumericOnly_PreviewTextInput" ToolTip="Введіть лише цілі числа (мм)" ToolTipService.ShowDuration="8000"/>
-                    <Button x:Name="btnCalculate" Content="Розрахувати" Click="btnCalculate_Click" Width="350" Height="45" Margin="120,0,0,0" />
+                    <Button x:Name="btnCalculate" Style="{StaticResource NeonButtonStyle}" Content="Розрахувати" Click="btnCalculate_Click" Width="350" Height="45" Margin="120,0,0,0" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5,8,0,0">
                     <TextBlock Text="Тип вікна:" Width="80" Foreground="#EEEEEE" VerticalAlignment="Center" Margin="0,0,5,0"/>

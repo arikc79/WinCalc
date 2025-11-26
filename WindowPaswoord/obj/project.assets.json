@@ -2,10 +2,10 @@
   "version": 3,
   "targets": {
     "net9.0-windows7.0": {
-      "Microsoft.Data.Sqlite/9.0.9": {
+      "Microsoft.Data.Sqlite/9.0.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Data.Sqlite.Core": "9.0.9",
+          "Microsoft.Data.Sqlite.Core": "9.0.0",
           "SQLitePCLRaw.bundle_e_sqlite3": "2.1.10",
           "SQLitePCLRaw.core": "2.1.10"
         },
@@ -16,7 +16,7 @@
           "lib/netstandard2.0/_._": {}
         }
       },
-      "Microsoft.Data.Sqlite.Core/9.0.9": {
+      "Microsoft.Data.Sqlite.Core/9.0.0": {
         "type": "package",
         "dependencies": {
           "SQLitePCLRaw.core": "2.1.10"
@@ -179,24 +179,24 @@
     }
   },
   "libraries": {
-    "Microsoft.Data.Sqlite/9.0.9": {
-      "sha512": "23V9T+bci2R6YZ48PkXH84ceCVY0K+4CnkUuD/jMQmP7ZCg2n0ZC/G+ATl8MNV0OeVE6+2+gCaY3BeNSotbObg==",
+    "Microsoft.Data.Sqlite/9.0.0": {
+      "sha512": "lw6wthgXGx3r/U775k1UkUAWIn0kAT0wj4ZRq0WlhPx4WAOiBsIjgDKgWkXcNTGT0KfHiClkM+tyPVFDvxeObw==",
       "type": "package",
-      "path": "microsoft.data.sqlite/9.0.9",
+      "path": "microsoft.data.sqlite/9.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "PACKAGE.md",
         "lib/netstandard2.0/_._",
-        "microsoft.data.sqlite.9.0.9.nupkg.sha512",
+        "microsoft.data.sqlite.9.0.0.nupkg.sha512",
         "microsoft.data.sqlite.nuspec"
       ]
     },
-    "Microsoft.Data.Sqlite.Core/9.0.9": {
-      "sha512": "DjxZRueHp0qvZxhvW+H1IWYkSofZI8Chg710KYJjNP/6S4q3rt97pvR8AHOompkSwaN92VLKz5uw01iUt85cMg==",
+    "Microsoft.Data.Sqlite.Core/9.0.0": {
+      "sha512": "cFfZjFL+tqzGYw9lB31EkV1IWF5xRQNk2k+MQd+Cf86Gl6zTeAoiZIFw5sRB1Z8OxpEC7nu+nTDsLSjieBAPTw==",
       "type": "package",
-      "path": "microsoft.data.sqlite.core/9.0.9",
+      "path": "microsoft.data.sqlite.core/9.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -208,7 +208,7 @@
         "lib/net8.0/Microsoft.Data.Sqlite.xml",
         "lib/netstandard2.0/Microsoft.Data.Sqlite.dll",
         "lib/netstandard2.0/Microsoft.Data.Sqlite.xml",
-        "microsoft.data.sqlite.core.9.0.9.nupkg.sha512",
+        "microsoft.data.sqlite.core.9.0.0.nupkg.sha512",
         "microsoft.data.sqlite.core.nuspec"
       ]
     },
@@ -328,27 +328,27 @@
   },
   "projectFileDependencyGroups": {
     "net9.0-windows7.0": [
-      "Microsoft.Data.Sqlite >= 9.0.9"
+      "Microsoft.Data.Sqlite >= 9.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Глеб\\.nuget\\packages\\": {},
+    "C:\\Users\\arikc\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\лого\\WindowPaswoord\\WindowPaswoord.csproj",
+      "projectUniqueName": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
       "projectName": "WindowPaswoord",
-      "projectPath": "C:\\Users\\Глеб\\Desktop\\лого\\WindowPaswoord\\WindowPaswoord.csproj",
-      "packagesPath": "C:\\Users\\Глеб\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Глеб\\Desktop\\лого\\WindowPaswoord\\obj\\",
+      "projectPath": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
+      "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
+      "outputPath": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowPaswoord\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Глеб\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\arikc\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -376,7 +376,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net9.0-windows7.0": {
@@ -384,7 +384,7 @@
         "dependencies": {
           "Microsoft.Data.Sqlite": {
             "target": "Package",
-            "version": "[9.0.9, )"
+            "version": "[9.0.0, )"
           }
         },
         "imports": [
@@ -406,7 +406,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

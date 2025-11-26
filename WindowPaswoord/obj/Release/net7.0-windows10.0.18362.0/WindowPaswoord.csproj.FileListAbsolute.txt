@@ -1,0 +1,1 @@
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Release\net7.0-windows10.0.18362.0\WindowPaswoord.csproj.AssemblyReference.cache

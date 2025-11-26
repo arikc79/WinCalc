@@ -1,0 +1,13 @@
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\bin\Release\net9.0-windows10.0.18362.0\WindowPaswoord.deps.json
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\bin\Release\net9.0-windows10.0.18362.0\WindowPaswoord.dll
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\bin\Release\net9.0-windows10.0.18362.0\WindowPaswoord.pdb
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Release\net9.0-windows10.0.18362.0\WindowPaswoord.csproj.AssemblyReference.cache
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Release\net9.0-windows10.0.18362.0\WindowPaswoord.GeneratedMSBuildEditorConfig.editorconfig
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Release\net9.0-windows10.0.18362.0\WindowPaswoord.AssemblyInfoInputs.cache
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Release\net9.0-windows10.0.18362.0\WindowPaswoord.AssemblyInfo.cs
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Release\net9.0-windows10.0.18362.0\WindowPaswoord.csproj.CoreCompileInputs.cache
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Release\net9.0-windows10.0.18362.0\WindowPaswoord.sourcelink.json
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Release\net9.0-windows10.0.18362.0\WindowPaswoord.dll
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Release\net9.0-windows10.0.18362.0\refint\WindowPaswoord.dll
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Release\net9.0-windows10.0.18362.0\WindowPaswoord.pdb
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Release\net9.0-windows10.0.18362.0\ref\WindowPaswoord.dll

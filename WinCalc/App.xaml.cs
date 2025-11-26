@@ -55,7 +55,7 @@ namespace WinCalc
 
         private void InitializeDatabase()
         {
-            string dbPath = Path.Combine(AppContext.BaseDirectory, "window_calc.db");
+            string dbPath = WindowProfileCalculatorLibrary.DbConfig.DbPath;
 
             using var connection = new SqliteConnection($"Data Source={dbPath}");
             connection.Open();

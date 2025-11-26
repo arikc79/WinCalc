@@ -290,8 +290,6 @@ namespace WinCalc
             win.ShowDialog();
 
 
-
-
         }
 
 

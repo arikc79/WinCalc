@@ -729,3 +729,16 @@ C:\Users\Глеб\Desktop\лого\WindowPaswoord\obj\Debug\net9.0-windows\refin
 C:\Users\Глеб\Desktop\лого\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.pdb
 C:\Users\Глеб\Desktop\лого\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.genruntimeconfig.cache
 C:\Users\Глеб\Desktop\лого\WindowPaswoord\obj\Debug\net9.0-windows\ref\WindowPaswoord.dll
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\bin\Debug\net9.0-windows\WindowPaswoord.deps.json
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\bin\Debug\net9.0-windows\WindowPaswoord.dll
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\bin\Debug\net9.0-windows\WindowPaswoord.pdb
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.csproj.AssemblyReference.cache
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.GeneratedMSBuildEditorConfig.editorconfig
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.AssemblyInfoInputs.cache
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.AssemblyInfo.cs
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.csproj.CoreCompileInputs.cache
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.sourcelink.json
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.dll
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\refint\WindowPaswoord.dll
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.pdb
+D:\Step\WInCalcCurs\ver0.10\WinCalc\WindowPaswoord\obj\Debug\net9.0-windows\ref\WindowPaswoord.dll

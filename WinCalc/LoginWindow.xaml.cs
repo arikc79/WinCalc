@@ -54,8 +54,8 @@ namespace WinCalc
                 {
                     AppSession.SetCurrentUser(new User { Username = "admin", Role = Roles.Admin });
                     AppAudit.LoginOk(username);
-                    MessageBox.Show("✅ Вхід виконано успішно як адміністратор",
-                                    "Авторизація", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //MessageBox.Show("✅ Вхід виконано успішно як адміністратор",
+                    //                "Авторизація", MessageBoxButton.OK, MessageBoxImage.Information);
                     DialogResult = true;
                     Close();
                     return;
@@ -75,8 +75,8 @@ namespace WinCalc
                     AppSession.SetCurrentUser(user);
                     AppAudit.LoginOk(username);
 
-                    MessageBox.Show($"✅ Вхід виконано успішно як {user.Role}",
-                                    "Авторизація", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //MessageBox.Show($"✅ Вхід виконано успішно як {user.Role}",
+                    //                "Авторизація", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     DialogResult = true;
                     Close();

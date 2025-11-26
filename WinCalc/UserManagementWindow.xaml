@@ -53,21 +53,25 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,40,0,15">
             <Button x:Name="btnAddUser"
+                    Style="{StaticResource NeonButtonStyle}"
                     Content="➕ Додати користувача"
                     Width="180"
                     Click="btnAddUser_Click"/>
 
             <Button x:Name="btnChangePassword"
+                    Style="{StaticResource NeonButtonStyle}"
                     Content="🔑 Змінити пароль"
                     Width="190"
                     Click="btnChangePassword_Click"/>
 
             <Button x:Name="btnDeleteUser"
+                   Style="{StaticResource NeonButtonStyle}"
                     Content="🗑️ Видалити користувача"
                     Width="190"
                     Click="btnDeleteUser_Click"/>
 
             <Button x:Name="btnRefresh"
+                    Style="{StaticResource NeonButtonStyle}"
                     Content="🔄 Оновити"
                     Width="190"
                     Click="btnRefresh_Click"/>
@@ -113,6 +117,7 @@
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Закрити"
+                    Style="{StaticResource NeonButtonStyle}"
                     Width="200"
                     Click="Close_Click"/>
         </StackPanel>

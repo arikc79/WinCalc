@@ -1,26 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
 
-  <ItemGroup>
-    <Compile Remove="Data\**" />
-    <Compile Remove="Repositories\**" />
-    <EmbeddedResource Remove="Data\**" />
-    <EmbeddedResource Remove="Repositories\**" />
-    <None Remove="Data\**" />
-    <None Remove="Repositories\**" />
-    <Page Remove="Data\**" />
-    <Page Remove="Repositories\**" />
-  </ItemGroup>
+		<TargetFramework>net9.0-windows</TargetFramework>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.9" />
-  </ItemGroup>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Data\**" />
+		<Compile Remove="Repositories\**" />
+		<EmbeddedResource Remove="Data\**" />
+		<EmbeddedResource Remove="Repositories\**" />
+		<None Remove="Data\**" />
+		<None Remove="Repositories\**" />
+		<Page Remove="Data\**" />
+		<Page Remove="Repositories\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.0" />
+	</ItemGroup>
 
 </Project>
