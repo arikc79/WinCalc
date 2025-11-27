@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
         Title="Керування користувачами"
-        Height="480"
-        Width="820"
-        Background="#1E1E1E"
+        MinHeight="480"
+        MinWidth="1050"
+        Background="#2B2B2B"
         Foreground="White"
+         WindowStartupLocation="CenterScreen"
         FontFamily="Segoe UI">
 
     <Window.Resources>
@@ -51,31 +52,32 @@
         <TextBlock Text="Керування користувачами" 
                    Style="{StaticResource HeaderText}" />
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,40,0,15">
-            <Button x:Name="btnAddUser"
-                    Style="{StaticResource NeonButtonStyle}"
-                    Content="➕ Додати користувача"
-                    Width="180"
-                    Click="btnAddUser_Click"/>
+        <UniformGrid Grid.Row="0" Rows="1" Margin="0,40,0,15">
 
+            <Button x:Name="btnAddUser"
+            Style="{StaticResource NeonButtonStyle}"
+            Content="➕ Додати користувача"
+            Margin="5" 
+            Click="btnAddUser_Click"/>
             <Button x:Name="btnChangePassword"
-                    Style="{StaticResource NeonButtonStyle}"
-                    Content="🔑 Змінити пароль"
-                    Width="190"
-                    Click="btnChangePassword_Click"/>
+            Style="{StaticResource NeonButtonStyle}"
+            Content="🔑 Змінити пароль"
+            Margin="5"
+            Click="btnChangePassword_Click"/>
 
             <Button x:Name="btnDeleteUser"
-                   Style="{StaticResource NeonButtonStyle}"
-                    Content="🗑️ Видалити користувача"
-                    Width="190"
-                    Click="btnDeleteUser_Click"/>
+            Style="{StaticResource NeonButtonStyle}"
+            Content="🗑️ Видалити користувача"
+            Margin="5"
+            Click="btnDeleteUser_Click"/>
 
             <Button x:Name="btnRefresh"
-                    Style="{StaticResource NeonButtonStyle}"
-                    Content="🔄 Оновити"
-                    Width="190"
-                    Click="btnRefresh_Click"/>
-        </StackPanel>
+            Style="{StaticResource NeonButtonStyle}"
+            Content="🔄 Оновити"
+            Margin="5"
+            Click="btnRefresh_Click"/>
+
+        </UniformGrid>
 
         <DataGrid x:Name="dgUsers"
                   Grid.Row="1"
@@ -83,7 +85,7 @@
                   CanUserAddRows="False"
                   IsReadOnly="False"
                   RowEditEnding="dgUsers_RowEditEnding"
-                  Margin="0,0,0,10"
+                  Margin="0,2,0,8"
                   AlternationCount="2">
 
             <DataGrid.ColumnHeaderStyle>

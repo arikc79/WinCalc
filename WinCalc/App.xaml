@@ -8,12 +8,28 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+
                 <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Cyan" SecondaryColor="Lime" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <CornerRadius x:Key="MaterialDesignCornerRadius">15</CornerRadius>
-
+            <!--стиль для тексту з ефектом тіні-->
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <!--ефект тіні для тексту-->
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="Black" 
+                                          Direction="320" 
+                                          ShadowDepth="3" 
+                                          BlurRadius="3" 
+                                          Opacity="1"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!--стиль неонової кнопки-->
             <Style x:Key="NeonButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                 <Setter Property="Height" Value="45"/>
                 <Setter Property="FontSize" Value="16"/>
@@ -21,29 +37,29 @@
                 <Setter Property="Margin" Value="6"/>
                 <Setter Property="Cursor" Value="Hand"/>
 
-                <Setter Property="Background" Value="#00E5FF"/>
+              <!--контур кнопки-->
                 <Setter Property="BorderBrush" Value="#00E5FF"/>
                 <Setter Property="Foreground" Value="#121212"/>
-
+                <!--тінь кнопки-->
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#00E5FF" Opacity="0.6"/>
+                        <DropShadowEffect BlurRadius="15" ShadowDepth="9" Color="Black" Opacity="0.6"/>
                     </Setter.Value>
                 </Setter>
-
+                <!--трансформація кнопки-->
                 <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
                 <Setter Property="RenderTransform">
                     <Setter.Value>
                         <ScaleTransform ScaleX="1" ScaleY="1"/>
                     </Setter.Value>
                 </Setter>
-
+                <!--мишка над кнопкою-->
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#80F3FF"/>
+                        <Setter Property="Background" Value="Black"/>
                         <Setter Property="Effect">
                             <Setter.Value>
-                                <DropShadowEffect BlurRadius="25" ShadowDepth="0" Color="#00E5FF" Opacity="0.9"/>
+                                <DropShadowEffect BlurRadius="15" ShadowDepth="3" Color="#00E5FF" Opacity="0.9"/>
                             </Setter.Value>
                         </Setter>
                         <Setter Property="RenderTransform">
@@ -52,13 +68,14 @@
                             </Setter.Value>
                         </Setter>
                     </Trigger>
-
+                    <!--кнопка натиснута-->
                     <Trigger Property="IsPressed" Value="True">
                         <Setter Property="RenderTransform">
                             <Setter.Value>
                                 <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
                             </Setter.Value>
                         </Setter>
+                        
                         <Setter Property="Effect">
                             <Setter.Value>
                                 <DropShadowEffect BlurRadius="5" Color="#00E5FF" Opacity="0.4"/>
@@ -67,18 +84,18 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-
+            <!--кнопка виходу-->
             <Style x:Key="NeonExitButtonStyle" TargetType="Button" BasedOn="{StaticResource NeonButtonStyle}">
                 <Setter Property="Background" Value="#FF1744"/>
                 <Setter Property="BorderBrush" Value="#FF1744"/>
-                <Setter Property="Foreground" Value="White"/>
+                <!--<Setter Property="Foreground" Value="White"/>-->
 
                 <Setter Property="Effect">
                     <Setter.Value>
                         <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#FF1744" Opacity="0.6"/>
                     </Setter.Value>
                 </Setter>
-
+                <!--мишка над кнопкою-->
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Background" Value="#FF6179"/>
@@ -93,7 +110,7 @@
                             </Setter.Value>
                         </Setter>
                     </Trigger>
-
+                    
                     <Trigger Property="IsPressed" Value="True">
                         <Setter Property="RenderTransform">
                             <Setter.Value>
@@ -103,7 +120,7 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-
+            <!--грід для таблиці матеріалів-->
             <Style TargetType="DataGrid">
                 <Setter Property="Background" Value="#1E1E1E"/>
                 <Setter Property="Foreground" Value="White"/>
@@ -116,30 +133,30 @@
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="HeadersVisibility" Value="Column"/>
             </Style>
-
+            <!--колір заголовків таблиці-->
             <Style TargetType="DataGridColumnHeader">
                 <Setter Property="Background" Value="#333"/>
                 <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidBrush}"/>
                 <Setter Property="FontWeight" Value="Bold"/>
-                    <Setter Property="Padding" Value="10"/>
-                    <Setter Property="BorderBrush" Value="#444"/>
-                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BorderBrush" Value="#444"/>
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
             </Style>
-
+            <!--шрифт вікна-->
             <Style TargetType="Window">
                 <Setter Property="FontFamily" Value="Segoe UI"/>
-                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontSize" Value="18"/>
                 <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}"/>
                 <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
             </Style>
-
+            <!--текст заголовків-->
             <Style x:Key="HeaderText" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="24"/>
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect BlurRadius="10" ShadowDepth="2" Color="Black" Opacity="0.5"/>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="3" Color="Black" Opacity="0.7"/>
                     </Setter.Value>
                 </Setter>
             </Style>
