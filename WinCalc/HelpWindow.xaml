@@ -5,15 +5,14 @@
         Title="Довідка" 
         Height="650" 
         Width="900"
-        WindowStartupLocation="CenterOwner" 
-        Background="#2D2D2D" >
-    <Grid>
+        WindowStartupLocation="CenterOwner" >
+    <Grid Background="#FF424343">
 
         <FlowDocumentScrollViewer x:Name="DocViewer"
                                  VerticalScrollBarVisibility="Auto"
                                  Padding="16"
                                  IsSelectionEnabled="True"
-                                 FontSize="14" 
+                                 FontSize="16" 
                                  Foreground="{DynamicResource MaterialDesignBody}"/>
         <Image Source="pack://application:,,,/WinCalc;component/Image/logo3.PNG"
                Stretch="Uniform"

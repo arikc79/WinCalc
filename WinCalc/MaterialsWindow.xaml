@@ -52,7 +52,7 @@
             <Button x:Name="btnSave"
                     Style="{StaticResource NeonButtonStyle}"
                     Height="35" Margin="5"
-                    Click="btnSave_Click">
+                    Click="btnSave_Click" Background="#FF198593">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="ContentSave" Width="20" Height="20" Margin="0,0,6,0"/>
                     <TextBlock Text="Зберегти зміни"/>
@@ -62,7 +62,7 @@
             <Button x:Name="btnImportCsv"
                     Style="{StaticResource NeonButtonStyle}"
                     Height="35" Margin="5"
-                    Click="btnImportCsv_Click">
+                    Click="btnImportCsv_Click" Background="#FF198593">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="FileImportOutline" Width="20" Height="20" Margin="0,0,6,0"/>
                     <TextBlock Text="Імпорт CSV"/>
@@ -72,7 +72,7 @@
             <Button x:Name="AddMateria"
                     Style="{StaticResource NeonButtonStyle}"
                     Height="35" Margin="5"
-                    Click="btnAdd_Click">
+                    Click="btnAdd_Click" Background="#FF198593">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="PlusBoxOutline" Width="20" Height="20" Margin="0,0,6,0"/>
                     <TextBlock Text="Додати матеріал"/>
@@ -82,7 +82,7 @@
             <Button x:Name="btnClose"
                     Height="35" Margin="5"
                     Style="{StaticResource NeonButtonStyle}"
-                    Click="btnClose_Click">
+                    Click="btnClose_Click" Background="#FF198593">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="Close" Width="20" Height="20" Margin="0,0,6,0"/>
                     <TextBlock Text="Закрити"/>

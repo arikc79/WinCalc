@@ -58,24 +58,24 @@
             Style="{StaticResource NeonButtonStyle}"
             Content="➕ Додати користувача"
             Margin="5" 
-            Click="btnAddUser_Click"/>
+            Click="btnAddUser_Click" Background="#FF198593"/>
             <Button x:Name="btnChangePassword"
             Style="{StaticResource NeonButtonStyle}"
             Content="🔑 Змінити пароль"
             Margin="5"
-            Click="btnChangePassword_Click"/>
+            Click="btnChangePassword_Click" Background="#FF198593"/>
 
             <Button x:Name="btnDeleteUser"
             Style="{StaticResource NeonButtonStyle}"
             Content="🗑️ Видалити користувача"
             Margin="5"
-            Click="btnDeleteUser_Click"/>
+            Click="btnDeleteUser_Click" Background="#FF198593"/>
 
             <Button x:Name="btnRefresh"
             Style="{StaticResource NeonButtonStyle}"
             Content="🔄 Оновити"
             Margin="5"
-            Click="btnRefresh_Click"/>
+            Click="btnRefresh_Click" Background="#FF198593"/>
 
         </UniformGrid>
 
@@ -121,7 +121,7 @@
             <Button Content="Закрити"
                     Style="{StaticResource NeonButtonStyle}"
                     Width="200"
-                    Click="Close_Click"/>
+                    Click="Close_Click" Background="#FF198593"/>
         </StackPanel>
 
         <Image Grid.RowSpan="3" 

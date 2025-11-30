@@ -38,7 +38,7 @@
                 <Setter Property="Cursor" Value="Hand"/>
 
               <!--контур кнопки-->
-                <Setter Property="BorderBrush" Value="#00E5FF"/>
+                <Setter Property="BorderBrush" Value="#FF198593"/>
                 <Setter Property="Foreground" Value="#121212"/>
                 <!--тінь кнопки-->
                 <Setter Property="Effect">
@@ -59,7 +59,7 @@
                         <Setter Property="Background" Value="Black"/>
                         <Setter Property="Effect">
                             <Setter.Value>
-                                <DropShadowEffect BlurRadius="15" ShadowDepth="3" Color="#00E5FF" Opacity="0.9"/>
+                                <DropShadowEffect BlurRadius="15" ShadowDepth="3" Color="#FF198593" Opacity="0.9"/>
                             </Setter.Value>
                         </Setter>
                         <Setter Property="RenderTransform">
@@ -78,7 +78,7 @@
                         
                         <Setter Property="Effect">
                             <Setter.Value>
-                                <DropShadowEffect BlurRadius="5" Color="#00E5FF" Opacity="0.4"/>
+                                <DropShadowEffect BlurRadius="5" Color="#FF198593" Opacity="0.4"/>
                             </Setter.Value>
                         </Setter>
                     </Trigger>

@@ -6,10 +6,10 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         WindowStyle="None"
-        Background="{DynamicResource MaterialDesignPaper}"
+         Background="#FF424343"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
-    <Border BorderBrush="{DynamicResource PrimaryHueMidBrush}" BorderThickness="1">
+    <Border BorderBrush="{DynamicResource PrimaryHueMidBrush}" BorderThickness="1" Background="#FF424343">
         <Grid Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -23,7 +23,7 @@
             <TextBox x:Name="txtAnswer" Grid.Row="1" 
                      VerticalAlignment="Center" 
                      FontSize="16"
-                     materialDesign:HintAssist.Hint="Ваша відповідь"
+                     materialDesign:HintAssist.Hint="Користувач:"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">

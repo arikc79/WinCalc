@@ -36,19 +36,19 @@
                             Content="Каталог матеріалів" 
                             Margin="5" 
                             Click="btnMaterials_Click"
-                            Style="{StaticResource NeonButtonStyle}" />
+                            Style="{StaticResource NeonButtonStyle}" Background="#FF198593" />
 
                     <Button x:Name="btnManageUsers" 
                             Content="Користувачі" 
                             Margin="5" 
                             Click="btnManageUsers_Click" 
-                            Style="{StaticResource NeonButtonStyle}" />
+                            Style="{StaticResource NeonButtonStyle}" Background="#FF198593" />
 
                     <Button x:Name="btnExportCsv" 
                             Content="Експорт PDF" 
                             Margin="5"
                             Click="btnExportPdf_Click" 
-                            Style="{StaticResource NeonButtonStyle}" />
+                            Style="{StaticResource NeonButtonStyle}" Background="#FF198593" />
 
                     <Button x:Name="btnExit" 
                             Content="Вихід" 
@@ -77,7 +77,7 @@
                             Content="Розрахувати" 
                             Click="btnCalculate_Click" 
                             Width="350" Height="45" 
-                            Margin="100,0,0,0" />
+                            Margin="100,0,0,0" Background="#FF198593" />
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5,15,0,0">
