@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {}
+    "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {}
   },
   "projects": {
-    "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\AuditLog\\AuditLog.csproj": {
+    "C:\\Users\\Глеб\\Desktop\\прога баги\\AuditLog\\AuditLog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\AuditLog\\AuditLog.csproj",
+        "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\прога баги\\AuditLog\\AuditLog.csproj",
         "projectName": "AuditLog",
-        "projectPath": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\AuditLog\\AuditLog.csproj",
-        "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-        "outputPath": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\AuditLog\\obj\\",
+        "projectPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\AuditLog\\AuditLog.csproj",
+        "packagesPath": "C:\\Users\\Глеб\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\AuditLog\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\arikc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Глеб\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -45,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -66,24 +66,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
+    "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowPaswoord\\WindowPaswoord.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
+        "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowPaswoord\\WindowPaswoord.csproj",
         "projectName": "WindowPaswoord",
-        "projectPath": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj",
-        "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-        "outputPath": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowPaswoord\\obj\\",
+        "projectPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowPaswoord\\WindowPaswoord.csproj",
+        "packagesPath": "C:\\Users\\Глеб\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowPaswoord\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\arikc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Глеб\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -111,7 +111,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0-windows7.0": {
@@ -141,24 +141,24 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
+    "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
         "projectName": "WindowProfileCalculatorLibrary",
-        "projectPath": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
-        "packagesPath": "C:\\Users\\arikc\\.nuget\\packages\\",
-        "outputPath": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowProfileCalculatorLibrary\\obj\\",
+        "projectPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+        "packagesPath": "C:\\Users\\Глеб\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowProfileCalculatorLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\arikc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Глеб\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -174,11 +174,11 @@
           "net9.0-windows7.0": {
             "targetAlias": "net9.0-windows",
             "projectReferences": {
-              "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\AuditLog\\AuditLog.csproj": {
-                "projectPath": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\AuditLog\\AuditLog.csproj"
+              "C:\\Users\\Глеб\\Desktop\\прога баги\\AuditLog\\AuditLog.csproj": {
+                "projectPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\AuditLog\\AuditLog.csproj"
               },
-              "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj": {
-                "projectPath": "D:\\Step\\WInCalcCurs\\ver0.10\\WinCalc\\WindowPaswoord\\WindowPaswoord.csproj"
+              "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowPaswoord\\WindowPaswoord.csproj": {
+                "projectPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowPaswoord\\WindowPaswoord.csproj"
               }
             }
           }
@@ -193,7 +193,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0-windows7.0": {
@@ -231,7 +231,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
