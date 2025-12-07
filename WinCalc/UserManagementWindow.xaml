@@ -7,7 +7,7 @@
         MinWidth="1050"
         Background="#2B2B2B"
         Foreground="White"
-         WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterScreen"
         FontFamily="Segoe UI">
 
     <Window.Resources>
@@ -40,6 +40,47 @@
             <Setter Property="Padding" Value="6,4"/>
         </Style>
 
+        <Style x:Key="RolesComboItemsStyle" TargetType="ComboBoxItem">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#2B2B2B"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                Padding="3,1">
+                            <ContentPresenter Margin="5,1"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd"
+                                        Property="Background"
+                                        Value="#444444"/>
+                            </Trigger>
+
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd"
+                                        Property="Background"
+                                        Value="#555555"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd"
+                                        Property="Opacity"
+                                        Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
     <Grid Margin="15">
@@ -55,27 +96,28 @@
         <UniformGrid Grid.Row="0" Rows="1" Margin="0,40,0,15">
 
             <Button x:Name="btnAddUser"
-            Style="{StaticResource NeonButtonStyle}"
-            Content="➕ Додати користувача"
-            Margin="5" 
-            Click="btnAddUser_Click" Background="#FF198593"/>
+                    Style="{StaticResource NeonButtonStyle}"
+                    Content="➕ Додати користувача"
+                    Margin="5" 
+                    Click="btnAddUser_Click" Background="#FF198593"/>
+
             <Button x:Name="btnChangePassword"
-            Style="{StaticResource NeonButtonStyle}"
-            Content="🔑 Змінити пароль"
-            Margin="5"
-            Click="btnChangePassword_Click" Background="#FF198593"/>
+                    Style="{StaticResource NeonButtonStyle}"
+                    Content="🔑 Змінити пароль"
+                    Margin="5"
+                    Click="btnChangePassword_Click" Background="#FF198593"/>
 
             <Button x:Name="btnDeleteUser"
-            Style="{StaticResource NeonButtonStyle}"
-            Content="🗑️ Видалити користувача"
-            Margin="5"
-            Click="btnDeleteUser_Click" Background="#FF198593"/>
+                    Style="{StaticResource NeonButtonStyle}"
+                    Content="🗑️ Видалити користувача"
+                    Margin="5"
+                    Click="btnDeleteUser_Click" Background="#FF198593"/>
 
             <Button x:Name="btnRefresh"
-            Style="{StaticResource NeonButtonStyle}"
-            Content="🔄 Оновити"
-            Margin="5"
-            Click="btnRefresh_Click" Background="#FF198593"/>
+                    Style="{StaticResource NeonButtonStyle}"
+                    Content="🔄 Оновити"
+                    Margin="5"
+                    Click="btnRefresh_Click" Background="#FF198593"/>
 
         </UniformGrid>
 
@@ -89,7 +131,8 @@
                   AlternationCount="2">
 
             <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}"/>
+                <Style TargetType="DataGridColumnHeader"
+                       BasedOn="{StaticResource {x:Type DataGridColumnHeader}}"/>
             </DataGrid.ColumnHeaderStyle>
 
             <DataGrid.Columns>
@@ -99,20 +142,33 @@
                 <DataGridComboBoxColumn Header="Роль"
                                         Width="160"
                                         SelectedItemBinding="{Binding Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
                             <Setter Property="ItemsSource"
                                     Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=RolesList}"/>
                             <Setter Property="IsHitTestVisible" Value="False"/>
                             <Setter Property="Focusable" Value="False"/>
+
+                            <Setter Property="Background" Value="#2B2B2B"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="ItemContainerStyle"
+                                    Value="{StaticResource RolesComboItemsStyle}"/>
                         </Style>
                     </DataGridComboBoxColumn.ElementStyle>
+
                     <DataGridComboBoxColumn.EditingElementStyle>
                         <Style TargetType="ComboBox">
                             <Setter Property="ItemsSource"
                                     Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=RolesList}"/>
+
+                            <Setter Property="Background" Value="#2B2B2B"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="ItemContainerStyle"
+                                    Value="{StaticResource RolesComboItemsStyle}"/>
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
+
                 </DataGridComboBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
