@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ldbiKZ4BLA4=",
+  "dgSpecHash": "Vdh5l4cCoTA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
+  "projectFilePath": "C:\\Users\\Глеб\\Desktop\\прога\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Глеб\\.nuget\\packages\\microsoft.data.sqlite\\9.0.9\\microsoft.data.sqlite.9.0.9.nupkg.sha512",
     "C:\\Users\\Глеб\\.nuget\\packages\\microsoft.data.sqlite.core\\9.0.9\\microsoft.data.sqlite.core.9.0.9.nupkg.sha512",

@@ -972,11 +972,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\прога баги\\ReportLIb\\ReportLIb.csproj",
+      "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\прога\\ReportLIb\\ReportLIb.csproj",
       "projectName": "ReportLIb",
-      "projectPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\ReportLIb\\ReportLIb.csproj",
+      "projectPath": "C:\\Users\\Глеб\\Desktop\\прога\\ReportLIb\\ReportLIb.csproj",
       "packagesPath": "C:\\Users\\Глеб\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\ReportLIb\\obj\\",
+      "outputPath": "C:\\Users\\Глеб\\Desktop\\прога\\ReportLIb\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -998,11 +998,11 @@
         "net9.0-windows7.0": {
           "targetAlias": "net9.0-windows",
           "projectReferences": {
-            "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowPaswoord\\WindowPaswoord.csproj": {
-              "projectPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowPaswoord\\WindowPaswoord.csproj"
+            "C:\\Users\\Глеб\\Desktop\\прога\\WindowPaswoord\\WindowPaswoord.csproj": {
+              "projectPath": "C:\\Users\\Глеб\\Desktop\\прога\\WindowPaswoord\\WindowPaswoord.csproj"
             },
-            "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
-              "projectPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj"
+            "C:\\Users\\Глеб\\Desktop\\прога\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj": {
+              "projectPath": "C:\\Users\\Глеб\\Desktop\\прога\\WindowProfileCalculatorLibrary\\WindowProfileCalculatorLibrary.csproj"
             }
           }
         }

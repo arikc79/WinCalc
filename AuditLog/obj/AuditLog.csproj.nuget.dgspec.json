@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Глеб\\Desktop\\прога баги\\AuditLog\\AuditLog.csproj": {}
+    "C:\\Users\\Глеб\\Desktop\\прога\\AuditLog\\AuditLog.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Глеб\\Desktop\\прога баги\\AuditLog\\AuditLog.csproj": {
+    "C:\\Users\\Глеб\\Desktop\\прога\\AuditLog\\AuditLog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\прога баги\\AuditLog\\AuditLog.csproj",
+        "projectUniqueName": "C:\\Users\\Глеб\\Desktop\\прога\\AuditLog\\AuditLog.csproj",
         "projectName": "AuditLog",
-        "projectPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\AuditLog\\AuditLog.csproj",
+        "projectPath": "C:\\Users\\Глеб\\Desktop\\прога\\AuditLog\\AuditLog.csproj",
         "packagesPath": "C:\\Users\\Глеб\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Глеб\\Desktop\\прога баги\\AuditLog\\obj\\",
+        "outputPath": "C:\\Users\\Глеб\\Desktop\\прога\\AuditLog\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "r7OYwW5SVoE=",
+  "dgSpecHash": "KcDSM9VlxYA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Глеб\\Desktop\\прога баги\\WindowPaswoord\\WindowPaswoord.csproj",
+  "projectFilePath": "C:\\Users\\Глеб\\Desktop\\прога\\WindowPaswoord\\WindowPaswoord.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Глеб\\.nuget\\packages\\microsoft.data.sqlite\\9.0.0\\microsoft.data.sqlite.9.0.0.nupkg.sha512",
     "C:\\Users\\Глеб\\.nuget\\packages\\microsoft.data.sqlite.core\\9.0.0\\microsoft.data.sqlite.core.9.0.0.nupkg.sha512",

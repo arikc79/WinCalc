@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ja0uf/08PsE=",
+  "dgSpecHash": "CEdQeByLX0g=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Глеб\\Desktop\\прога баги\\ReportLIb\\ReportLIb.csproj",
+  "projectFilePath": "C:\\Users\\Глеб\\Desktop\\прога\\ReportLIb\\ReportLIb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Глеб\\.nuget\\packages\\microsoft.data.sqlite\\9.0.9\\microsoft.data.sqlite.9.0.9.nupkg.sha512",
     "C:\\Users\\Глеб\\.nuget\\packages\\microsoft.data.sqlite.core\\9.0.9\\microsoft.data.sqlite.core.9.0.9.nupkg.sha512",

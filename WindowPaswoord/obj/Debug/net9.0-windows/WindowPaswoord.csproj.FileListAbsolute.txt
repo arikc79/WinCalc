@@ -755,3 +755,16 @@ C:\Users\Глеб\Desktop\прога баги\WindowPaswoord\obj\Debug\net9.0-wi
 C:\Users\Глеб\Desktop\прога баги\WindowPaswoord\obj\Debug\net9.0-windows\refint\WindowPaswoord.dll
 C:\Users\Глеб\Desktop\прога баги\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.pdb
 C:\Users\Глеб\Desktop\прога баги\WindowPaswoord\obj\Debug\net9.0-windows\ref\WindowPaswoord.dll
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\bin\Debug\net9.0-windows\WindowPaswoord.deps.json
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\bin\Debug\net9.0-windows\WindowPaswoord.dll
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\bin\Debug\net9.0-windows\WindowPaswoord.pdb
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.csproj.AssemblyReference.cache
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.AssemblyInfoInputs.cache
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.AssemblyInfo.cs
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.csproj.CoreCompileInputs.cache
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.sourcelink.json
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.dll
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\obj\Debug\net9.0-windows\refint\WindowPaswoord.dll
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\obj\Debug\net9.0-windows\WindowPaswoord.pdb
+C:\Users\Глеб\Desktop\прога\WindowPaswoord\obj\Debug\net9.0-windows\ref\WindowPaswoord.dll
