@@ -258,7 +258,7 @@ namespace WinCalc
             try
             {
                 var config = BuildWindowConfig(out string? errorMessage);
-                if config == null)
+                if (config == null)
                 {
                     MessageBox.Show(errorMessage ?? "Будь ласка, введіть коректні дані.", "Помилка",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
