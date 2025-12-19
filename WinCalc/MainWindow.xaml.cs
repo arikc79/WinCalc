@@ -202,7 +202,7 @@ namespace WinCalc
 
             string windowType = cmbWindowType.SelectedItem?.ToString() ?? "Одностулкове вікно";
 
-            // Бренд (наприклад "WDS")
+            // Бренд 
             string brandShort = cmbBrand.SelectedItem?.ToString() ?? cmbBrand.Text ?? string.Empty;
 
             // Число камер (4,5,6,7)
