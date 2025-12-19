@@ -14,6 +14,7 @@ namespace WindowProfileCalculatorLibrary
         // ЧИТАННЯ МАТЕРІАЛІВ (READ)
         // =====================================================================
 
+        // метод для отримання всіх матеріалів з усіх таблиць
         public List<Material> GetAllMaterials()
         {
             var materials = new List<Material>();
@@ -21,7 +22,7 @@ namespace WindowProfileCalculatorLibrary
             {
                 conn.Open();
 
-                // Объединяем записи из всех специализированных таблиц
+                // Объединяем записи из всех специализированных таблиц + generic Materials
                 string sql = @"
                     SELECT Id, 'Профіль' AS CategoryName, Name, Color, Price, Unit, Description FROM Profiles
                     UNION ALL
@@ -34,6 +35,10 @@ namespace WindowProfileCalculatorLibrary
                     SELECT Id, 'Ущільнювач' AS CategoryName, Name, Color, Price, Unit, Description FROM Seals
                     UNION ALL
                     SELECT Id, 'Москітна сітка' AS CategoryName, Name, Color, Price, Unit, Description FROM Accessories
+                    UNION ALL
+                    SELECT m.Id, c.Name AS CategoryName, m.Name, m.Color, m.Price, m.Unit, m.Description
+                      FROM Materials m
+                      LEFT JOIN Categories c ON c.Id = m.CategoryId
                     ;";
 
                 using var cmd = new SqliteCommand(sql, conn);
@@ -46,6 +51,7 @@ namespace WindowProfileCalculatorLibrary
             return materials;
         }
 
+        // метод для отримання матеріалу за категорією та фільтром по назві
         public Material? GetMaterialByCategory(string categoryName, string nameFilter = "")
         {
             using var conn = new SqliteConnection(ConnectionString);
@@ -59,24 +65,53 @@ namespace WindowProfileCalculatorLibrary
                 "Армування" => "Reinforcements",
                 "Ущільнювач" => "Seals",
                 "Москітна сітка" => "Accessories",
-                _ => "Materials" // fallback
+                _ => null  // For Підвіконня, Відлив and other categories, use Materials table
             };
 
-            string sql = $"SELECT Id, Name, Color, Price, Unit, Description FROM {table} WHERE 1=1";
-
-            if (!string.IsNullOrEmpty(nameFilter))
-                sql += " AND Name LIKE @filter";
-
-            sql += " LIMIT 1";
-
-            using var cmd = new SqliteCommand(sql, conn);
-            if (!string.IsNullOrEmpty(nameFilter))
-                cmd.Parameters.AddWithValue("@filter", $"%{nameFilter}%");
-
-            using var reader = cmd.ExecuteReader();
-            if (reader.Read())
+            if (table != null)
             {
-                return MapMaterialFromSpecific(reader, categoryName);
+                // Search in specialized table
+                string sql = $"SELECT Id, Name, Color, Price, Unit, Description FROM {table} WHERE 1=1";
+
+                if (!string.IsNullOrEmpty(nameFilter))
+                    sql += " AND Name LIKE @filter";
+
+                sql += " LIMIT 1";
+
+                using var cmd = new SqliteCommand(sql, conn);
+                if (!string.IsNullOrEmpty(nameFilter))
+                    cmd.Parameters.AddWithValue("@filter", $"%{nameFilter}%");
+
+                using var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    return MapMaterialFromSpecific(reader, categoryName);
+                }
+            }
+            else
+            {
+                // Search in generic Materials table for Підвіконня, Відлив, etc.
+                string sql = @"
+                    SELECT m.Id, m.Name, m.Color, m.Price, m.Unit, m.Description
+                      FROM Materials m
+                      LEFT JOIN Categories c ON c.Id = m.CategoryId
+                      WHERE c.Name = @categoryName";
+
+                if (!string.IsNullOrEmpty(nameFilter))
+                    sql += " AND m.Name LIKE @filter";
+
+                sql += " LIMIT 1";
+
+                using var cmd = new SqliteCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@categoryName", categoryName);
+                if (!string.IsNullOrEmpty(nameFilter))
+                    cmd.Parameters.AddWithValue("@filter", $"%{nameFilter}%");
+
+                using var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    return MapMaterialFromSpecific(reader, categoryName);
+                }
             }
 
             return null;
@@ -90,7 +125,7 @@ namespace WindowProfileCalculatorLibrary
         // =====================================================================
         // ДОПОМІЖНІ МЕТОДИ (HELPER METHODS)
         // =====================================================================
-
+        // метод для отримання унікальних брендів профілів
         public List<string> GetDistinctBrands()
         {
             var list = new List<string>();
@@ -110,6 +145,7 @@ namespace WindowProfileCalculatorLibrary
             return new List<string> { "60 мм", "70 мм", "80 мм" };
         }
 
+        // метод для отримання всіх категорій
         public List<Category> GetAllCategories()
         {
             var list = new List<Category>();
@@ -127,7 +163,7 @@ namespace WindowProfileCalculatorLibrary
         // =====================================================================
         // СТВОРЕННЯ ТА РЕДАГУВАННЯ (CREATE / UPDATE)
         // =====================================================================
-
+        // метод для додавання нового матеріалу
         public bool AddMaterial(Material m)
         {
             // Если категория указана — попробуем определить целевую таблицу
@@ -149,6 +185,7 @@ namespace WindowProfileCalculatorLibrary
             return cmd.ExecuteNonQuery() > 0;
         }
 
+        // метод для оновлення матеріалу
         public bool UpdateMaterial(Material m)
         {
             string table = CategoryToTable(m.Category);
@@ -182,13 +219,11 @@ namespace WindowProfileCalculatorLibrary
         }
 
         // =====================================================================
-        // ПРИВАТНІ ДОПОМІЖНІ МЕТОДИ
+        // ДОПОМІЖНІ МЕТОДИ
         // =====================================================================
-
+        // метод для відображення матеріалу з конкретної таблиці
         private Material MapMaterialFromSpecific(SqliteDataReader reader, string categoryName = null)
         {
-            // reader columns: Id, [maybe CategoryName], Name, Color, Price, Unit, Description
-            // We handle both: unioned query in GetAllMaterials returns (Id, CategoryName, Name, Color, Price, Unit, Description)
             var mat = new Material();
             int ordinal = 0;
 
@@ -220,6 +255,7 @@ namespace WindowProfileCalculatorLibrary
             return mat;
         }
 
+        // метод для отримання ідентифікатора категорії за назвою
         private int GetCategoryIdByName(string name)
         {
             using var conn = new SqliteConnection(ConnectionString);
@@ -230,6 +266,7 @@ namespace WindowProfileCalculatorLibrary
             return res != null ? Convert.ToInt32(res) : -1;
         }
 
+        //  метод для визначення цільової таблиці за назвою категорії
         private string? CategoryToTable(string? category)
         {
             return category switch

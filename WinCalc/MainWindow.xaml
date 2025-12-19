@@ -84,8 +84,13 @@
                     <TextBlock Text="Тип вікна:" Foreground="#EEEEEE" VerticalAlignment="Center" Margin="0,0,5,0"/>
                     <ComboBox x:Name="cmbWindowType" Width="160" Height="32" Foreground="#EEEEEE" Margin="5,0,15,0" SelectionChanged="cmbWindowType_SelectionChanged"/>
 
-                    <TextBlock Text="Бренд:" Foreground="#EEEEEE" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                    <ComboBox x:Name="cmbBrand" Foreground="#EEEEEE" Width="150" Height="32" Margin="0,0,15,0" />
+                    <TextBlock Text="Бренд:" Foreground="#EEEEEE" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                    <ComboBox x:Name="cmbBrand"
+                              Foreground="#EEEEEE"
+                              Width="150"
+                              Height="32"
+                              Margin="0,0,15,0"
+                              SelectionChanged="cmbBrand_SelectionChanged" />
 
                     <TextBlock Text="Профіль:" Foreground="#EEEEEE" VerticalAlignment="Center" Margin="0,0,5,0"/>
                     <ComboBox x:Name="cmbProfileThickness" Foreground="#EEEEEE" Width="140" Height="32" Margin="0,0,15,0" />
@@ -124,8 +129,8 @@
                     <materialDesign:Card Width="200" Margin="5" Padding="10" materialDesign:ElevationAssist.Elevation="Dp1">
                         <StackPanel>
                             <TextBlock Text="Відлив" FontWeight="SemiBold" Margin="0,0,0,10" Foreground="#EEEEEE"/>
-                            <RadioButton x:Name="rbDrain150" Content="150 мм" IsChecked="True" Margin="0,0,0,5"/>
-                            <RadioButton x:Name="rbDrain200" Content="200 мм"/>
+                            <RadioButton x:Name="rbDrain150" Content="200 мм" IsChecked="True" Margin="0,0,0,5"/>
+                            <RadioButton x:Name="rbDrain200" Content="300 мм"/>
                         </StackPanel>
                     </materialDesign:Card>
                 </StackPanel>

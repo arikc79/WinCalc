@@ -241,11 +241,11 @@ namespace WinCalc
                 Height = height,
                 WindowType = windowType,
                 SashCount = sashCount,
-                Brand = profileFullName, // передаємо повну назву профілю сюди
+                Brand = profileFullName,
                 GlassType = glassType,
-                HandleType = handlePremium ? "Преміум" : "Стандарт",
-                SillType = sill300 ? "Білий 300мм" : "Білий 200мм",
-                DrainType = drain200 ? "Білий 200мм" : "Білий 150мм",
+                HandleType = handlePremium ? "Преміум (Hoppe)" : "Стандартна",
+                SillType = sill300 ? "300 мм" : "200 мм",
+                DrainType = drain200 ? "300 мм" : "200 мм",
                 HasMosquito = hasMosquito
             };
         }
@@ -258,7 +258,7 @@ namespace WinCalc
             try
             {
                 var config = BuildWindowConfig(out string? errorMessage);
-                if (config == null)
+                if config == null)
                 {
                     MessageBox.Show(errorMessage ?? "Будь ласка, введіть коректні дані.", "Помилка",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
