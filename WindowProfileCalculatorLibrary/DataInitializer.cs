@@ -1,8 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using Microsoft.Data.Sqlite;
-using WinCalc.Common; // <- явно используем общий DbConfig
+﻿using Microsoft.Data.Sqlite;
+    using System.IO;
+    using System.Collections.Generic;
+    using Microsoft.Data.Sqlite;
+    using System.Collections.Generic;
+    using Microsoft.Data.Sqlite;
+using WinCalc.Common;
+
+
 
 namespace WindowProfileCalculatorLibrary
 {
@@ -128,6 +132,7 @@ namespace WindowProfileCalculatorLibrary
 
                     // Заполняем базовые справочники/данные
                     FillCategories(connection);
+                    FillMaterials(connection);
                     FillProfiles(connection);
                     FillGlassPacks(connection);
                     FillFittings(connection);
@@ -218,8 +223,13 @@ namespace WindowProfileCalculatorLibrary
             Add("Петлі", "Комплект", 120, "шт", "Метал");
             Add("Фурнітура", "Vorne", 350, "комплект", "Метал");
 
+            // Підвіконня — два типи: 200 і 300 мм (ціни в грн/м.п.)
             Add("Підвіконня", "200 мм", 100, "м.п.", "Білий");
-            Add("Відлив", "150 мм", 60, "м.п.", "Білий");
+            Add("Підвіконня", "300 мм", 140, "м.п.", "Білий");
+
+            // Відливи — два типи: 200 і 300 мм (ціни в грн/м.п.)
+            Add("Відлив", "200 мм", 60, "м.п.", "Білий");
+            Add("Відлив", "300 мм", 90, "м.п.", "Білий");
 
             Add("Москітна сітка", "Стандарт", 200, "м2", "Сіра");
             Add("Армування", "П-подібне", 45, "м.п.", "Метал");
@@ -290,7 +300,6 @@ namespace WindowProfileCalculatorLibrary
 
         private static void FillFittings(SqliteConnection connection)
         {
-            // Проверяем, есть ли уже фурнитура
             using var cmdCheck = new SqliteCommand("SELECT COUNT(*) FROM Fittings", connection);
             if ((long)cmdCheck.ExecuteScalar() > 0) return;
 
@@ -300,17 +309,19 @@ namespace WindowProfileCalculatorLibrary
             {
                 var cmd = connection.CreateCommand();
                 cmd.Transaction = transaction;
-                cmd.CommandText = @"INSERT INTO Fittings (Name, Price, Unit, Color, Description) 
-                                    VALUES (@n, @p, @u, @c, @d)";
+                cmd.CommandText = @"INSERT OR IGNORE INTO Fittings (Name, Color, Price, Unit, Description) 
+                                    VALUES (@n, @c, @p, @u, @d)";
                 cmd.Parameters.AddWithValue("@n", name);
+                cmd.Parameters.AddWithValue("@c", (object)color ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@p", price);
                 cmd.Parameters.AddWithValue("@u", unit);
-                cmd.Parameters.AddWithValue("@c", (object)color ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@d", (object)desc ?? DBNull.Value);
                 cmd.ExecuteNonQuery();
             }
 
-            // --- ЗАПОВНЕННЯ ---
+            // Ручки та комплекти фурнітури
+            Add("Стандартна", 50, "шт", "Біла");
+            Add("Преміум (Hoppe)", 150, "шт", "Біла");
             Add("Vorne", 350, "комплект", "Метал");
 
             transaction.Commit();
@@ -318,27 +329,24 @@ namespace WindowProfileCalculatorLibrary
 
         private static void FillReinforcements(SqliteConnection connection)
         {
-            // Проверяем, есть ли уже армирование
-            using var cmdCheck = new SqliteCommand("SELECT COUNT(*) FROM Reinforcements", connection);
-            if ((long)cmdCheck.ExecuteScalar() > 0) return;
+            using var check = new SqliteCommand("SELECT COUNT(*) FROM Reinforcements", connection);
+            if ((long)check.ExecuteScalar() > 0) return;
 
             using var transaction = connection.BeginTransaction();
 
-            void Add(string name, double price, string unit, string color = null, string desc = null)
+            void Add(string name, double price, string unit, string color = null)
             {
                 var cmd = connection.CreateCommand();
                 cmd.Transaction = transaction;
-                cmd.CommandText = @"INSERT INTO Reinforcements (Name, Price, Unit, Color, Description) 
-                                    VALUES (@n, @p, @u, @c, @d)";
+                cmd.CommandText = @"INSERT OR IGNORE INTO Reinforcements (Name, Color, Price, Unit, Description) VALUES (@n, @c, @p, @u, @d)";
                 cmd.Parameters.AddWithValue("@n", name);
+                cmd.Parameters.AddWithValue("@c", (object)color ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@p", price);
                 cmd.Parameters.AddWithValue("@u", unit);
-                cmd.Parameters.AddWithValue("@c", (object)color ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@d", (object)desc ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@d", DBNull.Value);
                 cmd.ExecuteNonQuery();
             }
 
-            // --- ЗАПОВНЕННЯ ---
             Add("П-подібне", 45, "м.п.", "Метал");
 
             transaction.Commit();
@@ -346,27 +354,24 @@ namespace WindowProfileCalculatorLibrary
 
         private static void FillSeals(SqliteConnection connection)
         {
-            // Проверяем, есть ли уже уплотнители
-            using var cmdCheck = new SqliteCommand("SELECT COUNT(*) FROM Seals", connection);
-            if ((long)cmdCheck.ExecuteScalar() > 0) return;
+            using var check = new SqliteCommand("SELECT COUNT(*) FROM Seals", connection);
+            if ((long)check.ExecuteScalar() > 0) return;
 
             using var transaction = connection.BeginTransaction();
 
-            void Add(string name, double price, string unit, string color = null, string desc = null)
+            void Add(string name, double price, string unit, string color = null)
             {
                 var cmd = connection.CreateCommand();
                 cmd.Transaction = transaction;
-                cmd.CommandText = @"INSERT INTO Seals (Name, Price, Unit, Color, Description) 
-                                    VALUES (@n, @p, @u, @c, @d)";
+                cmd.CommandText = @"INSERT OR IGNORE INTO Seals (Name, Color, Price, Unit, Description) VALUES (@n, @c, @p, @u, @d)";
                 cmd.Parameters.AddWithValue("@n", name);
+                cmd.Parameters.AddWithValue("@c", (object)color ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@p", price);
                 cmd.Parameters.AddWithValue("@u", unit);
-                cmd.Parameters.AddWithValue("@c", (object)color ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@d", (object)desc ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@d", DBNull.Value);
                 cmd.ExecuteNonQuery();
             }
 
-            // --- ЗАПОВНЕННЯ ---
             Add("Гумовий", 15, "м.п.", "Чорний");
 
             transaction.Commit();
@@ -374,9 +379,8 @@ namespace WindowProfileCalculatorLibrary
 
         private static void FillAccessories(SqliteConnection connection)
         {
-            // Проверяем, есть ли уже аксессуары
-            using var cmdCheck = new SqliteCommand("SELECT COUNT(*) FROM Accessories", connection);
-            if ((long)cmdCheck.ExecuteScalar() > 0) return;
+            using var check = new SqliteCommand("SELECT COUNT(*) FROM Accessories", connection);
+            if ((long)check.ExecuteScalar() > 0) return;
 
             using var transaction = connection.BeginTransaction();
 
@@ -384,26 +388,27 @@ namespace WindowProfileCalculatorLibrary
             {
                 var cmd = connection.CreateCommand();
                 cmd.Transaction = transaction;
-                cmd.CommandText = @"INSERT INTO Accessories (Name, Price, Unit, Color, Description) 
-                                    VALUES (@n, @p, @u, @c, @d)";
+                cmd.CommandText = @"INSERT INTO Accessories (Name, Color, Price, Unit, Description) 
+                                    VALUES (@n, @c, @p, @u, @d)";
                 cmd.Parameters.AddWithValue("@n", name);
+                cmd.Parameters.AddWithValue("@c", (object)color ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@p", price);
                 cmd.Parameters.AddWithValue("@u", unit);
-                cmd.Parameters.AddWithValue("@c", (object)color ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@d", (object)desc ?? DBNull.Value);
                 cmd.ExecuteNonQuery();
             }
+
+            // Москітна сітка та інші аксесуари
+            Add("Москітна сітка", 200, "м2", "Сіра", "Стандартна москітна сітка");
 
             transaction.Commit();
         }
 
         private static void FillMaterialAttributes(SqliteConnection connection)
         {
-            // Если уже есть атрибуты — не добавляем повторно
             using var check = new SqliteCommand("SELECT COUNT(*) FROM MaterialAttributes", connection);
             if ((long)check.ExecuteScalar() > 0) return;
 
-            // Для примера: добавляем атрибут "Thickness" для профильных материалов
             var profileNames = new Dictionary<string, string>
             {
                 { "WDS 500", "60 мм" },

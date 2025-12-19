@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -33,9 +34,6 @@ namespace WinCalc
             Loaded += MainWindow_Loaded;
         }
 
-        // ===============================================================
-        //  ІНІЦІАЛІЗАЦІЯ ПРИ ЗАПУСКУ
-        // ===============================================================
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -44,17 +42,23 @@ namespace WinCalc
                 cmbWindowType.ItemsSource = new List<string>(_windowImageMap.Keys);
                 cmbWindowType.SelectedIndex = 0;
 
-                // 🔹 Наповнення брендів профілів із БД
-                var brands = _dataAccess.GetDistinctBrands();
+                // 🔹 Отримуємо зіставлені назви профілів (повні назви з таблиці Profiles)
+                var profileFullNames = _dataAccess.GetDistinctBrands(); // повертає Name з Profiles
+                // Парсимо бренди (перше слово до пробілу)
+                var brands = profileFullNames
+                    .Select(n => (n ?? string.Empty).Split(' ')[0])
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .Distinct()
+                    .OrderBy(s => s)
+                    .ToList();
+
                 cmbBrand.ItemsSource = brands;
                 if (brands.Count > 0)
                     cmbBrand.SelectedIndex = 0;
 
-                // 🔹 Наповнення товщин профілю
-                var thicknesses = _dataAccess.GetDistinctProfileThicknesses();
-                cmbProfileThickness.ItemsSource = thicknesses;
-                if (thicknesses.Count > 0)
-                    cmbProfileThickness.SelectedIndex = 0;
+                // 🔹 Заповнимо товщини для поточного бренду
+                if (cmbBrand.SelectedItem is string selBrand)
+                    PopulateProfileThicknesses(selBrand);
 
                 // 🔹 Наповнення склопакетів
                 cmbGlassPack.ItemsSource = new List<string> { "1-камерний", "2-камерний", "Енергозберігаючий" };
@@ -69,6 +73,62 @@ namespace WinCalc
             }
         }
 
+        // Обработчик, добавленный для XAML
+        private void cmbBrand_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbBrand.SelectedItem is string brand)
+            {
+                PopulateProfileThicknesses(brand);
+            }
+        }
+
+        private void PopulateProfileThicknesses(string brand)
+        {
+            try
+            {
+                var profileFullNames = _dataAccess.GetDistinctBrands();
+                // варіанти суфіксів для даного бренду
+                var variants = profileFullNames
+                    .Where(n => n != null && n.StartsWith(brand + " "))
+                    .Select(n => n.Substring(brand.Length + 1).Trim()) // суфікс: "4-камерний", "6i" і т.д.
+                    .Distinct()
+                    .ToList();
+
+                // Перетворюємо суфікс у число камер для відображення: 4,5,6,7
+                var numbers = variants
+                    .Select(v => VariantToNumber(v))
+                    .Where(x => !string.IsNullOrEmpty(x))
+                    .Distinct()
+                    .OrderBy(x => x)
+                    .ToList();
+
+                // Якщо немає варіантів у спеціальних таблицях, fallback — стандартні
+                if (numbers.Count == 0)
+                {
+                    numbers = new List<string> { "4", "5", "6", "7" };
+                }
+
+                cmbProfileThickness.ItemsSource = numbers;
+                if (numbers.Count > 0)
+                    cmbProfileThickness.SelectedIndex = 0;
+            }
+            catch
+            {
+                // не фатально
+                cmbProfileThickness.ItemsSource = new List<string> { "4", "5", "6", "7" };
+                cmbProfileThickness.SelectedIndex = 0;
+            }
+        }
+
+        private static string VariantToNumber(string variant)
+        {
+            if (string.IsNullOrEmpty(variant)) return string.Empty;
+            if (variant.Contains("4")) return "4";
+            if (variant.Contains("5")) return "5";
+            if (variant.Contains("6")) return "6";
+            if (variant.Contains("7")) return "7";
+            return string.Empty;
+        }
 
         // ===============================================================
         //  ТИП ВІКНА → ЗАВАНТАЖЕННЯ КАРТИНКИ
@@ -81,15 +141,10 @@ namespace WinCalc
             }
             else
             {
-                // fallback — якщо користувач вибрав невідомий тип
                 LoadDefaultPreview();
             }
         }
 
-
-        // ===============================================================
-        //  ЗАВАНТАЖЕННЯ ЗОБРАЖЕННЯ З ПАПКИ Image
-        // ===============================================================
         private void LoadWindowPreview(string windowType)
         {
             try
@@ -115,10 +170,6 @@ namespace WinCalc
             }
         }
 
-
-        // ===============================================================
-        // Завантаження зображення за замовчуванням
-        // ===============================================================
         private void LoadDefaultPreview()
         {
             try
@@ -135,8 +186,6 @@ namespace WinCalc
             catch { /* нічого не робимо */ }
         }
 
-
-
         // ===============================================================
         // 🧩 ЗБІР КОНФІГУРАЦІЇ ВІКНА
         // ===============================================================
@@ -152,7 +201,26 @@ namespace WinCalc
             }
 
             string windowType = cmbWindowType.SelectedItem?.ToString() ?? "Одностулкове вікно";
-            string brand = string.IsNullOrWhiteSpace(cmbBrand.Text) ? "" : cmbBrand.Text;
+
+            // Бренд (наприклад "WDS")
+            string brandShort = cmbBrand.SelectedItem?.ToString() ?? cmbBrand.Text ?? string.Empty;
+
+            // Число камер (4,5,6,7)
+            string chambersNumber = cmbProfileThickness.SelectedItem?.ToString() ?? cmbProfileThickness.Text ?? string.Empty;
+
+            // Перетворюємо назад у суфікс, що зберігається в базі
+            string suffix = chambersNumber switch
+            {
+                "4" => "4-камерний",
+                "5" => "5-камерний",
+                "6" => "6i",
+                "7" => "7i",
+                _ => chambersNumber
+            };
+
+            // Повна назва профілю, яку будемо передавати в обчислення (йде в GetMaterialByCategory як filter)
+            string profileFullName = string.IsNullOrWhiteSpace(brandShort) ? string.Empty : $"{brandShort} {suffix}";
+
             string glassType = string.IsNullOrWhiteSpace(cmbGlassPack.Text) ? "" : cmbGlassPack.Text;
 
             int sashCount = 1;
@@ -173,7 +241,7 @@ namespace WinCalc
                 Height = height,
                 WindowType = windowType,
                 SashCount = sashCount,
-                Brand = brand,
+                Brand = profileFullName, // передаємо повну назву профілю сюди
                 GlassType = glassType,
                 HandleType = handlePremium ? "Преміум" : "Стандарт",
                 SillType = sill300 ? "Білий 300мм" : "Білий 200мм",
@@ -181,7 +249,6 @@ namespace WinCalc
                 HasMosquito = hasMosquito
             };
         }
-
 
         // ===============================================================
         // 🧮 РОЗРАХУНОК ВАРТОСТІ ВІКНА
@@ -238,9 +305,9 @@ namespace WinCalc
             }
         }
 
-
         // ===============================================================
         // 🛑 Валідація  ПОЛЯ РОЗМІРІВ
+        // ===============================================================
         private static readonly Regex _numericRegex = new Regex("^[0-9]+$");
 
         private void NumericOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -256,8 +323,6 @@ namespace WinCalc
                 };
             }
         }
-
-
 
         // ===============================================================
         // 🛠️ Керування матеріалами
