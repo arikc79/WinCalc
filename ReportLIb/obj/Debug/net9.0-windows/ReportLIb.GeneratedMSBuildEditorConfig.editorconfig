@@ -10,7 +10,11 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ReportLIb
+<<<<<<< HEAD
 build_property.ProjectDir = D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\
+=======
+build_property.ProjectDir = C:\Users\Глеб\Desktop\прога\ReportLIb\
+>>>>>>> e1e33e79e4f015a7a239ed7e76ff504c03c02d5c
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false

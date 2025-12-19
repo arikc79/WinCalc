@@ -364,6 +364,7 @@ C:\Users\Глеб\Desktop\прога баги\WindowProfileCalculatorLibrary\obj
 C:\Users\Глеб\Desktop\прога баги\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\refint\WindowProfileCalculatorLibrary.dll
 C:\Users\Глеб\Desktop\прога баги\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
 C:\Users\Глеб\Desktop\прога баги\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\ref\WindowProfileCalculatorLibrary.dll
+<<<<<<< HEAD
 D:\Step\WInCalcCurs\ver0.13\WinCalc\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.deps.json
 D:\Step\WInCalcCurs\ver0.13\WinCalc\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.dll
 D:\Step\WInCalcCurs\ver0.13\WinCalc\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
@@ -386,3 +387,23 @@ D:\Step\WInCalcCurs\ver0.13\WinCalc\WindowProfileCalculatorLibrary\obj\Debug\net
 D:\Step\WInCalcCurs\ver0.13\WinCalc\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\refint\WindowProfileCalculatorLibrary.dll
 D:\Step\WInCalcCurs\ver0.13\WinCalc\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
 D:\Step\WInCalcCurs\ver0.13\WinCalc\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\ref\WindowProfileCalculatorLibrary.dll
+=======
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.deps.json
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.dll
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\AuditLog.dll
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.dll
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\AuditLog.pdb
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\bin\Debug\net9.0-windows\WindowPaswoord.pdb
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.csproj.AssemblyReference.cache
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.AssemblyInfoInputs.cache
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.AssemblyInfo.cs
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.sourcelink.json
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowPr.2DD3A9E6.Up2Date
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.dll
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\refint\WindowProfileCalculatorLibrary.dll
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\WindowProfileCalculatorLibrary.pdb
+C:\Users\Глеб\Desktop\прога\WindowProfileCalculatorLibrary\obj\Debug\net9.0-windows\ref\WindowProfileCalculatorLibrary.dll
+>>>>>>> e1e33e79e4f015a7a239ed7e76ff504c03c02d5c

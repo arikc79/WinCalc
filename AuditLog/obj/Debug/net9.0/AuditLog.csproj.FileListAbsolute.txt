@@ -142,6 +142,7 @@ C:\Users\Глеб\Desktop\прога баги\AuditLog\obj\Debug\net9.0\AuditLog
 C:\Users\Глеб\Desktop\прога баги\AuditLog\obj\Debug\net9.0\refint\AuditLog.dll
 C:\Users\Глеб\Desktop\прога баги\AuditLog\obj\Debug\net9.0\AuditLog.pdb
 C:\Users\Глеб\Desktop\прога баги\AuditLog\obj\Debug\net9.0\ref\AuditLog.dll
+<<<<<<< HEAD
 D:\Step\WInCalcCurs\ver0.13\WinCalc\AuditLog\bin\Debug\net9.0\AuditLog.deps.json
 D:\Step\WInCalcCurs\ver0.13\WinCalc\AuditLog\bin\Debug\net9.0\AuditLog.dll
 D:\Step\WInCalcCurs\ver0.13\WinCalc\AuditLog\bin\Debug\net9.0\AuditLog.pdb
@@ -154,3 +155,17 @@ D:\Step\WInCalcCurs\ver0.13\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.dll
 D:\Step\WInCalcCurs\ver0.13\WinCalc\AuditLog\obj\Debug\net9.0\refint\AuditLog.dll
 D:\Step\WInCalcCurs\ver0.13\WinCalc\AuditLog\obj\Debug\net9.0\AuditLog.pdb
 D:\Step\WInCalcCurs\ver0.13\WinCalc\AuditLog\obj\Debug\net9.0\ref\AuditLog.dll
+=======
+C:\Users\Глеб\Desktop\прога\AuditLog\bin\Debug\net9.0\AuditLog.deps.json
+C:\Users\Глеб\Desktop\прога\AuditLog\bin\Debug\net9.0\AuditLog.dll
+C:\Users\Глеб\Desktop\прога\AuditLog\bin\Debug\net9.0\AuditLog.pdb
+C:\Users\Глеб\Desktop\прога\AuditLog\obj\Debug\net9.0\AuditLog.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Глеб\Desktop\прога\AuditLog\obj\Debug\net9.0\AuditLog.AssemblyInfoInputs.cache
+C:\Users\Глеб\Desktop\прога\AuditLog\obj\Debug\net9.0\AuditLog.AssemblyInfo.cs
+C:\Users\Глеб\Desktop\прога\AuditLog\obj\Debug\net9.0\AuditLog.csproj.CoreCompileInputs.cache
+C:\Users\Глеб\Desktop\прога\AuditLog\obj\Debug\net9.0\AuditLog.sourcelink.json
+C:\Users\Глеб\Desktop\прога\AuditLog\obj\Debug\net9.0\AuditLog.dll
+C:\Users\Глеб\Desktop\прога\AuditLog\obj\Debug\net9.0\refint\AuditLog.dll
+C:\Users\Глеб\Desktop\прога\AuditLog\obj\Debug\net9.0\AuditLog.pdb
+C:\Users\Глеб\Desktop\прога\AuditLog\obj\Debug\net9.0\ref\AuditLog.dll
+>>>>>>> e1e33e79e4f015a7a239ed7e76ff504c03c02d5c

@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WindowProfileCalculatorLibrary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d6a57564ef2794e780a8d79e97ef1ac4aef6296")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cca4ccb63505a541706d98e0f2fd5f082954fce2")]
+>>>>>>> e1e33e79e4f015a7a239ed7e76ff504c03c02d5c
 [assembly: System.Reflection.AssemblyProductAttribute("WindowProfileCalculatorLibrary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WindowProfileCalculatorLibrary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
