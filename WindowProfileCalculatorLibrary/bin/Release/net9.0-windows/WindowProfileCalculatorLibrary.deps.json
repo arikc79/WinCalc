@@ -9,9 +9,11 @@
       "WindowProfileCalculatorLibrary/1.0.0": {
         "dependencies": {
           "AuditLog": "1.0.0",
+          "Common": "1.0.0",
           "Microsoft.Data.Sqlite": "9.0.9",
           "Microsoft.Data.Sqlite.Core": "9.0.9",
           "PDFsharp": "6.2.2",
+          "ReportLIb": "1.0.0",
           "WindowPaswoord": "1.0.0"
         },
         "runtime": {
@@ -290,8 +292,32 @@
           }
         }
       },
+      "Common/1.0.0": {
+        "dependencies": {
+          "Microsoft.Data.Sqlite": "9.0.9"
+        },
+        "runtime": {
+          "Common.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ReportLIb/1.0.0": {
+        "dependencies": {
+          "Common": "1.0.0",
+          "WindowPaswoord": "1.0.0"
+        },
+        "runtime": {
+          "ReportLIb.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "WindowPaswoord/1.0.0": {
         "dependencies": {
+          "Common": "1.0.0",
           "Microsoft.Data.Sqlite": "9.0.9"
         },
         "runtime": {
@@ -401,6 +427,16 @@
       "hashPath": "sqlitepclraw.provider.e_sqlite3.2.1.10.nupkg.sha512"
     },
     "AuditLog/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ReportLIb/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

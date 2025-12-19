@@ -166,23 +166,67 @@ namespace WindowProfileCalculatorLibrary
         // метод для додавання нового матеріалу
         public bool AddMaterial(Material m)
         {
-            // Если категория указана — попробуем определить целевую таблицу
+            // Якщо категорія вказана — визначимо цільову таблицю
             string table = CategoryToTable(m.Category);
             if (table == null) return false;
 
             using var conn = new SqliteConnection(ConnectionString);
             conn.Open();
-            string sql = $@"INSERT INTO {table} (Name, Color, Price, Unit, Description) 
-                           VALUES (@n, @c, @p, @u, @d)";
 
-            using var cmd = new SqliteCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@n", m.Name);
-            cmd.Parameters.AddWithValue("@c", (object?)m.Color ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@p", m.Price);
-            cmd.Parameters.AddWithValue("@u", m.Unit);
-            cmd.Parameters.AddWithValue("@d", (object?)m.Description ?? DBNull.Value);
+            // Якщо вставляємо в загальну таблицю Materials — потрібно вказати CategoryId
+            if (table == "Materials")
+            {
+                int catId = GetOrCreateCategoryId(conn, m.Category);
+                if (catId < 0) return false;
 
-            return cmd.ExecuteNonQuery() > 0;
+                string sql = @"INSERT INTO Materials (CategoryId, Name, Color, Price, Unit, Description) 
+                               VALUES (@cid, @n, @c, @p, @u, @d)";
+
+                using var cmd = new SqliteCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@cid", catId);
+                cmd.Parameters.AddWithValue("@n", m.Name);
+                cmd.Parameters.AddWithValue("@c", (object?)m.Color ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@p", m.Price);
+                cmd.Parameters.AddWithValue("@u", m.Unit);
+                cmd.Parameters.AddWithValue("@d", (object?)m.Description ?? DBNull.Value);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+
+            // Інакше — вставляємо у спеціалізовану таблицю
+            string sqlSpec = $@"INSERT INTO {table} (Name, Color, Price, Unit, Description) 
+                               VALUES (@n, @c, @p, @u, @d)";
+
+            using var cmdSpec = new SqliteCommand(sqlSpec, conn);
+            cmdSpec.Parameters.AddWithValue("@n", m.Name);
+            cmdSpec.Parameters.AddWithValue("@c", (object?)m.Color ?? DBNull.Value);
+            cmdSpec.Parameters.AddWithValue("@p", m.Price);
+            cmdSpec.Parameters.AddWithValue("@u", m.Unit);
+            cmdSpec.Parameters.AddWithValue("@d", (object?)m.Description ?? DBNull.Value);
+
+            return cmdSpec.ExecuteNonQuery() > 0;
+        }
+
+        // Повертає Id категорії, створюючи її при відсутності
+        private int GetOrCreateCategoryId(SqliteConnection conn, string? categoryName)
+        {
+            if (string.IsNullOrWhiteSpace(categoryName))
+                categoryName = "(без категорії)";
+
+            using var cmdSel = new SqliteCommand("SELECT Id FROM Categories WHERE Name = @n LIMIT 1", conn);
+            cmdSel.Parameters.AddWithValue("@n", categoryName);
+            var res = cmdSel.ExecuteScalar();
+            if (res != null && res != DBNull.Value)
+                return Convert.ToInt32(res);
+
+            using var cmdIns = new SqliteCommand("INSERT OR IGNORE INTO Categories (Name) VALUES (@n);", conn);
+            cmdIns.Parameters.AddWithValue("@n", categoryName);
+            cmdIns.ExecuteNonQuery();
+
+            using var cmdGet = new SqliteCommand("SELECT Id FROM Categories WHERE Name = @n LIMIT 1", conn);
+            cmdGet.Parameters.AddWithValue("@n", categoryName);
+            var res2 = cmdGet.ExecuteScalar();
+            return res2 != null && res2 != DBNull.Value ? Convert.ToInt32(res2) : -1;
         }
 
         // метод для оновлення матеріалу
