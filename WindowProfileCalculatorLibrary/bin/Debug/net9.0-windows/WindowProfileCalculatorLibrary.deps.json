@@ -9,9 +9,11 @@
       "WindowProfileCalculatorLibrary/1.0.0": {
         "dependencies": {
           "AuditLog": "1.0.0",
+          "Common": "1.0.0",
           "Microsoft.Data.Sqlite": "9.0.9",
           "Microsoft.Data.Sqlite.Core": "9.0.9",
           "PDFsharp": "6.2.2",
+          "ReportLIb": "1.0.0",
           "WindowPaswoord": "1.0.0"
         },
         "runtime": {
@@ -101,8 +103,7 @@
       },
       "PDFsharp/6.2.2": {
         "dependencies": {
-          "Microsoft.Extensions.Logging": "8.0.1",
-          "System.Security.Cryptography.Pkcs": "8.0.1"
+          "Microsoft.Extensions.Logging": "8.0.1"
         },
         "runtime": {
           "lib/net8.0/PdfSharp.BarCodes.dll": {
@@ -156,9 +157,6 @@
         }
       },
       "SQLitePCLRaw.core/2.1.10": {
-        "dependencies": {
-          "System.Memory": "4.5.3"
-        },
         "runtime": {
           "lib/netstandard2.0/SQLitePCLRaw.core.dll": {
             "assemblyVersion": "2.1.10.2445",
@@ -286,8 +284,6 @@
           }
         }
       },
-      "System.Memory/4.5.3": {},
-      "System.Security.Cryptography.Pkcs/8.0.1": {},
       "AuditLog/1.0.0": {
         "runtime": {
           "AuditLog.dll": {
@@ -296,8 +292,32 @@
           }
         }
       },
+      "Common/1.0.0": {
+        "dependencies": {
+          "Microsoft.Data.Sqlite": "9.0.9"
+        },
+        "runtime": {
+          "Common.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ReportLIb/1.0.0": {
+        "dependencies": {
+          "Common": "1.0.0",
+          "WindowPaswoord": "1.0.0"
+        },
+        "runtime": {
+          "ReportLIb.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "WindowPaswoord/1.0.0": {
         "dependencies": {
+          "Common": "1.0.0",
           "Microsoft.Data.Sqlite": "9.0.9"
         },
         "runtime": {
@@ -406,21 +426,17 @@
       "path": "sqlitepclraw.provider.e_sqlite3/2.1.10",
       "hashPath": "sqlitepclraw.provider.e_sqlite3.2.1.10.nupkg.sha512"
     },
-    "System.Memory/4.5.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
-      "path": "system.memory/4.5.3",
-      "hashPath": "system.memory.4.5.3.nupkg.sha512"
-    },
-    "System.Security.Cryptography.Pkcs/8.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-CoCRHFym33aUSf/NtWSVSZa99dkd0Hm7OCZUxORBjRB16LNhIEOf8THPqzIYlvKM0nNDAPTRBa1FxEECrgaxxA==",
-      "path": "system.security.cryptography.pkcs/8.0.1",
-      "hashPath": "system.security.cryptography.pkcs.8.0.1.nupkg.sha512"
-    },
     "AuditLog/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ReportLIb/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -306,3 +306,21 @@ C:\Users\Глеб\Desktop\прога баги\ReportLIb\obj\Debug\net9.0-windows
 C:\Users\Глеб\Desktop\прога баги\ReportLIb\obj\Debug\net9.0-windows\refint\ReportLIb.dll
 C:\Users\Глеб\Desktop\прога баги\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.pdb
 C:\Users\Глеб\Desktop\прога баги\ReportLIb\obj\Debug\net9.0-windows\ref\ReportLIb.dll
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.deps.json
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.dll
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\bin\Debug\net9.0-windows\ReportLIb.pdb
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\bin\Debug\net9.0-windows\Common.dll
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.dll
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\bin\Debug\net9.0-windows\Common.pdb
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\bin\Debug\net9.0-windows\WindowPaswoord.pdb
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.AssemblyReference.cache
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.GeneratedMSBuildEditorConfig.editorconfig
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.AssemblyInfoInputs.cache
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.AssemblyInfo.cs
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.CoreCompileInputs.cache
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.sourcelink.json
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.csproj.Up2Date
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.dll
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\obj\Debug\net9.0-windows\refint\ReportLIb.dll
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ReportLIb.pdb
+D:\Step\WInCalcCurs\ver0.13\WinCalc\ReportLIb\obj\Debug\net9.0-windows\ref\ReportLIb.dll

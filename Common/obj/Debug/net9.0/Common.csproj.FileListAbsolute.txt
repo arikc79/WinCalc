@@ -1,0 +1,13 @@
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\bin\Debug\net9.0\Common.deps.json
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\bin\Debug\net9.0\Common.dll
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\bin\Debug\net9.0\Common.pdb
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\obj\Debug\net9.0\Common.csproj.AssemblyReference.cache
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\obj\Debug\net9.0\Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\obj\Debug\net9.0\Common.AssemblyInfoInputs.cache
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\obj\Debug\net9.0\Common.AssemblyInfo.cs
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\obj\Debug\net9.0\Common.csproj.CoreCompileInputs.cache
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\obj\Debug\net9.0\Common.sourcelink.json
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\obj\Debug\net9.0\Common.dll
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\obj\Debug\net9.0\refint\Common.dll
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\obj\Debug\net9.0\Common.pdb
+D:\Step\WInCalcCurs\ver0.13\WinCalc\Common\obj\Debug\net9.0\ref\Common.dll

@@ -1,17 +1,19 @@
 ﻿namespace WindowProfileCalculatorLibrary
 {
-    /// <summary>
-    /// Модель одного матеріалу з бази даних.
-    /// </summary>
     public class Material
     {
         public int Id { get; set; }
-        public string Category { get; set; } = string.Empty;   // Напр.: "Профіль", "Ручка", "Підвіконня"
-        public string Name { get; set; } = string.Empty;       // Напр.: "Steko S500", "Преміум", "200 мм"
+
+        // Зв'язок з базою (Foreign Key)
+        public int CategoryId { get; set; }
+
+        // Це поле заповнюється через JOIN (для відображення в таблиці XAML)
+        public string Category { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
         public string? Color { get; set; }
-        public double Price { get; set; }                      // Ціна
-        public string Unit { get; set; } = string.Empty;       // Напр.: "м.п.", "м²", "шт."
-      
+        public double Price { get; set; }
+        public string Unit { get; set; } = string.Empty;
         public string? Description { get; set; }
     }
 }

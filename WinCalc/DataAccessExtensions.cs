@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using WindowProfileCalculatorLibrary;
+using WinCalc.Common;
 
 namespace WinCalc
 {
@@ -10,8 +11,8 @@ namespace WinCalc
     /// </summary>
     public static class DataAccessExtensions
     {
-        // ✅ ТЕПЕР ШЛЯХ БЕРЕТЬСЯ З КОНФІГУРАЦІЇ
-        private static string ConnectionString => WindowProfileCalculatorLibrary.DbConfig.ConnectionString;
+        //  ШЛЯХ БЕРЕТЬСЯ З КОНФІГУРАЦІЇ
+        private static string ConnectionString => DbConfig.ConnectionString;
 
         /// <summary>
         /// Видаляє матеріал з таблиці Materials за Id.
@@ -40,9 +41,6 @@ namespace WinCalc
         {
             var materials = da.GetAllMaterials();
 
-            // 👇 ВИПРАВЛЕНО ТУТ:
-            // Було: CsvMaterialImporter.Export(materials, filePath);
-            // Стало (правильний порядок): спочатку шлях, потім дані
             CsvMaterialImporter.Export(filePath, materials);
         }
     }

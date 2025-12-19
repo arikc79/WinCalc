@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -45,6 +45,7 @@
     -->
     <ProjectReference Include="..\WindowPaswoord\WindowPaswoord.csproj" />
     <ProjectReference Include="..\WindowProfileCalculatorLibrary\WindowProfileCalculatorLibrary.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -88,3 +89,4 @@
   </ItemGroup>
 
 </Project>
+

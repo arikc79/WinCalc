@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0-windows</TargetFramework>
@@ -15,7 +15,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuditLog\AuditLog.csproj" />
+    <ProjectReference Include="..\ReportLIb\ReportLIb.csproj" />
     <ProjectReference Include="..\WindowPaswoord\WindowPaswoord.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
 </Project>

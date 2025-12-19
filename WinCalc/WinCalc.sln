@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35828.75
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11312.210 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinCalc", "WinCalc.csproj", "{1588AC11-05C6-418F-9213-A294B31A7122}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportLIb", "..\ReportLIb\ReportLIb.csproj", "{0C7F9EEF-01E9-4CA7-BB0B-F6EF8C2A5B36}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditLog", "..\AuditLog\AuditLog.csproj", "{012B4B30-EB80-4E66-BB22-4A6E7BD49DC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common.csproj", "{A2C907FA-94C4-4BFC-88E8-E0A28D577479}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{012B4B30-EB80-4E66-BB22-4A6E7BD49DC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{012B4B30-EB80-4E66-BB22-4A6E7BD49DC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{012B4B30-EB80-4E66-BB22-4A6E7BD49DC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2C907FA-94C4-4BFC-88E8-E0A28D577479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2C907FA-94C4-4BFC-88E8-E0A28D577479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2C907FA-94C4-4BFC-88E8-E0A28D577479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2C907FA-94C4-4BFC-88E8-E0A28D577479}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

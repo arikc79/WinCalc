@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <!-- Сделали совместимый TFM с WPF-проектами -->
     <TargetFramework>net9.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\WindowPaswoord\WindowPaswoord.csproj" />
-    <ProjectReference Include="..\WindowProfileCalculatorLibrary\WindowProfileCalculatorLibrary.csproj" />
   </ItemGroup>
 
 </Project>

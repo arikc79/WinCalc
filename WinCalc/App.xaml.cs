@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
-using Microsoft.Data.Sqlite;
-using WinCalc.Security;
-using WinCalc.Services;
+using WinCalc.Common;
 using WindowProfileCalculatorLibrary;
+using WinCalc.Services;
+using WinCalc.Security;
 
 namespace WinCalc
 {
@@ -16,58 +16,39 @@ namespace WinCalc
         {
             base.OnStartup(e);
 
+            string dbPath = DbConfig.DbPath;
+            File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "app_log.txt"), $"OnStartup: DbPath = {dbPath} at {DateTime.Now}\n");
+
             try
             {
-                // 1️⃣ Ініціалізація бази
-                InitializeDatabase();
+                // Инициализация БД (таблицы + справочники)
+                DataInitializer.InsertInitialData();
+                File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "app_log.txt"), $"InsertInitialData completed at {DateTime.Now}\n");
 
-                // 2️⃣ Гарантовано створюємо адміна (з хешем)
+                // Гарантируем наличие админа с правильным хешем
                 await _authService.EnsureAdminSeedAsync();
 
-
-                File.AppendAllText("app_log.txt", $"Init DB at {DateTime.Now}\n");
-                InitializeDatabase();
-                File.AppendAllText("app_log.txt", $"DB initialized\n");
-
-                // 3️⃣ Запускаємо LoginWindow
+                // Показываем окно логина
                 this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
                 var loginWindow = new LoginWindow();
                 bool? result = loginWindow.ShowDialog();
 
                 if (result == true && AppSession.CurrentUser != null)
                 {
-                   
+                    // Успешный логин — запускаем основное приложение
                     this.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 }
                 else
                 {
+                    // Пользователь не залогинен — завершаем
                     Shutdown();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"❌ Помилка запуску: {ex.Message}",
-                    "Критична помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "app_log.txt"), $"InsertInitialData threw: {ex.Message}\n{ex.StackTrace}\n");
+                MessageBox.Show($"Ошибка инициализации: {ex.Message}\nСм. app_log.txt", "Критическая ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 Shutdown();
-            }
-        }
-
-        private void InitializeDatabase()
-        {
-            string dbPath = WindowProfileCalculatorLibrary.DbConfig.DbPath;
-
-            using var connection = new SqliteConnection($"Data Source={dbPath}");
-            connection.Open();
-
-            try
-            {
-              //  Obchyslennya.CreateTables();
-                DataInitializer.InsertInitialData(); // створює таблиці + базові дані
-            }
-            catch (Exception dbEx)
-            {
-                MessageBox.Show($"⚠️ DB init error: {dbEx.Message}");
             }
         }
     }
