@@ -112,8 +112,8 @@ namespace WinCalc
                                 "Підтвердження", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 await _store.DeleteAsync(user.Id);
-                AppAudit.MaterialDelete(AppSession.CurrentUser?.Username ?? "?", user.Id, user.Username);
-                MessageBox.Show("🗑️ Користувача видалено.",
+                AppAudit.UserDelete(AppSession.CurrentUser?.Username ?? "?", user.Id, user.Username);
+                MessageBox.Show("Користувача видалено.",
                                 "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
                 LoadUsersAsync();
             }

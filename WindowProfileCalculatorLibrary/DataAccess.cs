@@ -22,7 +22,6 @@ namespace WindowProfileCalculatorLibrary
             {
                 conn.Open();
 
-                // Объединяем записи из всех специализированных таблиц + generic Materials
                 string sql = @"
                     SELECT Id, 'Профіль' AS CategoryName, Name, Color, Price, Unit, Description FROM Profiles
                     UNION ALL
@@ -65,7 +64,7 @@ namespace WindowProfileCalculatorLibrary
                 "Армування" => "Reinforcements",
                 "Ущільнювач" => "Seals",
                 "Москітна сітка" => "Accessories",
-                _ => null  // For Підвіконня, Відлив and other categories, use Materials table
+                _ => null  // null → шукати в загальній таблиці Materials
             };
 
             if (table != null)
@@ -115,11 +114,6 @@ namespace WindowProfileCalculatorLibrary
             }
 
             return null;
-        }
-
-        public Material? GetMaterialByCategoryAndBrand(string categoryName, string brand)
-        {
-            return GetMaterialByCategory(categoryName, brand);
         }
 
         // =====================================================================
@@ -265,15 +259,13 @@ namespace WindowProfileCalculatorLibrary
         // =====================================================================
         // ДОПОМІЖНІ МЕТОДИ
         // =====================================================================
-        // метод для відображення матеріалу з конкретної таблиці
-        private Material MapMaterialFromSpecific(SqliteDataReader reader, string categoryName = null)
+        private static Material MapMaterialFromSpecific(SqliteDataReader reader, string? categoryName = null)
         {
             var mat = new Material();
-            int ordinal = 0;
 
             if (reader.FieldCount == 7)
             {
-                // Id, CategoryName, Name, Color, Price, Unit, Description
+                // Id, CategoryName, Name, Color, Price, Unit, Description (UNION query)
                 mat.Id = reader.GetInt32(0);
                 mat.Category = reader.GetString(1);
                 mat.Name = reader.GetString(2);
@@ -281,11 +273,10 @@ namespace WindowProfileCalculatorLibrary
                 mat.Price = reader.GetDouble(4);
                 mat.Unit = reader.GetString(5);
                 mat.Description = reader.IsDBNull(6) ? null : reader.GetString(6);
-                mat.CategoryId = GetCategoryIdByName(mat.Category);
             }
             else
             {
-                // Id, Name, Color, Price, Unit, Description
+                // Id, Name, Color, Price, Unit, Description (specialized table)
                 mat.Id = reader.GetInt32(0);
                 mat.Category = categoryName ?? string.Empty;
                 mat.Name = reader.GetString(1);
@@ -293,21 +284,9 @@ namespace WindowProfileCalculatorLibrary
                 mat.Price = reader.GetDouble(3);
                 mat.Unit = reader.GetString(4);
                 mat.Description = reader.IsDBNull(5) ? null : reader.GetString(5);
-                mat.CategoryId = GetCategoryIdByName(mat.Category);
             }
 
             return mat;
-        }
-
-        // метод для отримання ідентифікатора категорії за назвою
-        private int GetCategoryIdByName(string name)
-        {
-            using var conn = new SqliteConnection(ConnectionString);
-            conn.Open();
-            using var cmd = new SqliteCommand("SELECT Id FROM Categories WHERE Name = @n", conn);
-            cmd.Parameters.AddWithValue("@n", name);
-            var res = cmd.ExecuteScalar();
-            return res != null ? Convert.ToInt32(res) : -1;
         }
 
         //  метод для визначення цільової таблиці за назвою категорії

@@ -15,6 +15,9 @@ internal static class AppAudit
     public static void MaterialDelete(string user, int id, string name) =>
         _log.Write(user, "material_delete", $"id={id}; name={name}", "Material");
 
+    public static void UserDelete(string actor, int id, string username) =>
+        _log.Write(actor ?? "anonymous", "user_delete", $"id={id}; username={username}", "User");
+
     public static void RoleChanged(string actor, string targetUser, string fromRole, string toRole) =>
         _log.Write(actor ?? "anonymous", "role_changed",
                    $"target={targetUser}; from={fromRole}; to={toRole}", "User");

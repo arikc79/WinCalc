@@ -12,7 +12,7 @@ namespace WinCalc
     public partial class LoginWindow : Window
     {
         private readonly AuthService _authService = new();
-        private static readonly Regex validChars = new(@"^[A-Za-zА-Яа-яІіЇїЄєҐґ]+$");
+        private static readonly Regex _validChars = new(@"^[A-Za-zА-Яа-яІіЇїЄєҐґ]+$", RegexOptions.Compiled);
 
         public LoginWindow()
         {
@@ -49,19 +49,6 @@ namespace WinCalc
 
             try
             {
-                // аварійний логін
-                if (username == "admin" && password == "admin")
-                {
-                    AppSession.SetCurrentUser(new User { Username = "admin", Role = Roles.Admin });
-                    AppAudit.LoginOk(username);
-                    //MessageBox.Show("✅ Вхід виконано успішно як адміністратор",
-                    //                "Авторизація", MessageBoxButton.OK, MessageBoxImage.Information);
-                    DialogResult = true;
-                    Close();
-                    return;
-                }
-
-                //  Виклик асинхронної авторизації
                 var result = await _authService.LoginAsync(username, password);
 
                 if (result.ok)
@@ -101,7 +88,7 @@ namespace WinCalc
         {
             if (sender is TextBox tb)
             {
-                bool isValid = validChars.IsMatch(e.Text);
+                bool isValid = _validChars.IsMatch(e.Text);
                 e.Handled = !isValid;
 
                 // якщо користувач натиснув не ту клавішу — тимчасово підсвічуємо червоним

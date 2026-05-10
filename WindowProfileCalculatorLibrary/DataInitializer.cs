@@ -1,12 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
-    using System.IO;
-    using System.Collections.Generic;
-    using Microsoft.Data.Sqlite;
-    using System.Collections.Generic;
-    using Microsoft.Data.Sqlite;
+using System.Collections.Generic;
+using System.IO;
 using WinCalc.Common;
-
-
 
 namespace WindowProfileCalculatorLibrary
 {
@@ -16,20 +11,14 @@ namespace WindowProfileCalculatorLibrary
 
         public static void InsertInitialData()
         {
-            try
+            string dbPath = DbConfig.DbPath;
+            string folder = Path.GetDirectoryName(dbPath)!;
+            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+
+            using (var connection = new SqliteConnection(ConnectionString))
             {
-                string dbPath = DbConfig.DbPath;
-                string folder = Path.GetDirectoryName(dbPath);
-                if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+                connection.Open();
 
-                // Логируем путь к БД
-                File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "app_log.txt"), $"InsertInitialData: DB path = {dbPath} at {DateTime.Now}\n");
-
-                using (var connection = new SqliteConnection(ConnectionString))
-                {
-                    connection.Open();
-
-                    // Создаём таблицы пользователей и справочников
                     connection.ExecuteNonQuery(@"
                         CREATE TABLE IF NOT EXISTS Users (
                             Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,7 +33,6 @@ namespace WindowProfileCalculatorLibrary
                             Name TEXT NOT NULL UNIQUE
                         );");
 
-                    // Общая совместимая таблица Materials (резерв)
                     connection.ExecuteNonQuery(@"
                         CREATE TABLE IF NOT EXISTS Materials (
                             Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,7 +45,6 @@ namespace WindowProfileCalculatorLibrary
                             FOREIGN KEY(CategoryId) REFERENCES Categories(Id)
                         );");
 
-                    // Специализированные таблицы (Profiles, GlassPacks, Fittings, ...)
                     connection.ExecuteNonQuery(@"
                         CREATE TABLE IF NOT EXISTS Profiles (
                             Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -130,7 +117,6 @@ namespace WindowProfileCalculatorLibrary
                             FOREIGN KEY(UserId) REFERENCES Users(Id)
                         );");
 
-                    // Заполняем базовые справочники/данные
                     FillCategories(connection);
                     FillMaterials(connection);
                     FillProfiles(connection);
@@ -140,19 +126,6 @@ namespace WindowProfileCalculatorLibrary
                     FillSeals(connection);
                     FillAccessories(connection);
 
-                    // Лог — какие таблицы теперь есть в базе
-                    using var tblCmd = new SqliteCommand("SELECT name FROM sqlite_master WHERE type='table';", connection);
-                    using var tblR = tblCmd.ExecuteReader();
-                    var sb = new System.Text.StringBuilder();
-                    sb.AppendLine($"Tables after init at {DateTime.Now}:");
-                    while (tblR.Read()) sb.AppendLine(tblR.GetString(0));
-                    File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "app_log.txt"), sb.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "app_log.txt"), $"DB Init Error: {ex.Message}\n{ex.StackTrace}\n");
-                throw; // пробрасываем — чтобы в UI вы видели ошибку и могли её диагностировать
             }
         }
 
@@ -240,7 +213,6 @@ namespace WindowProfileCalculatorLibrary
 
         private static void FillProfiles(SqliteConnection connection)
         {
-            // Проверяем, есть ли уже профили
             using var cmdCheck = new SqliteCommand("SELECT COUNT(*) FROM Profiles", connection);
             if ((long)cmdCheck.ExecuteScalar() > 0) return;
 
@@ -270,7 +242,6 @@ namespace WindowProfileCalculatorLibrary
 
         private static void FillGlassPacks(SqliteConnection connection)
         {
-            // Проверяем, есть ли уже стеклопакеты
             using var cmdCheck = new SqliteCommand("SELECT COUNT(*) FROM GlassPacks", connection);
             if ((long)cmdCheck.ExecuteScalar() > 0) return;
 
@@ -404,32 +375,5 @@ namespace WindowProfileCalculatorLibrary
             transaction.Commit();
         }
 
-        private static void FillMaterialAttributes(SqliteConnection connection)
-        {
-            using var check = new SqliteCommand("SELECT COUNT(*) FROM MaterialAttributes", connection);
-            if ((long)check.ExecuteScalar() > 0) return;
-
-            var profileNames = new Dictionary<string, string>
-            {
-                { "WDS 500", "60 мм" },
-                { "Rehau Euro 70", "70 мм" },
-                { "Steko S500", "60 мм" }
-            };
-
-            foreach (var kv in profileNames)
-            {
-                using var cmdFind = new SqliteCommand("SELECT Id FROM Materials WHERE Name = @n LIMIT 1", connection);
-                cmdFind.Parameters.AddWithValue("@n", kv.Key);
-                var res = cmdFind.ExecuteScalar();
-                if (res == null) continue;
-                long mid = (long)res;
-
-                using var cmdIns = new SqliteCommand("INSERT INTO MaterialAttributes (MaterialId, [Key], Value) VALUES (@mid, @k, @v)", connection);
-                cmdIns.Parameters.AddWithValue("@mid", mid);
-                cmdIns.Parameters.AddWithValue("@k", "Thickness");
-                cmdIns.Parameters.AddWithValue("@v", kv.Value);
-                cmdIns.ExecuteNonQuery();
-            }
-        }
     }
 }

@@ -73,7 +73,6 @@ namespace WinCalc
             }
         }
 
-        // Обработчик, добавленный для XAML
         private void cmbBrand_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cmbBrand.SelectedItem is string brand)
@@ -135,14 +134,8 @@ namespace WinCalc
         // ===============================================================
         private void cmbWindowType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cmbWindowType.SelectedItem is string selectedType && _windowImageMap.ContainsKey(selectedType))
-            {
+            if (cmbWindowType.SelectedItem is string selectedType)
                 LoadWindowPreview(selectedType);
-            }
-            else
-            {
-                LoadDefaultPreview();
-            }
         }
 
         private void LoadWindowPreview(string windowType)
@@ -150,13 +143,16 @@ namespace WinCalc
             try
             {
                 string imgDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image");
-                string fileName = _windowImageMap.ContainsKey(windowType) ? _windowImageMap[windowType] : "default.png";
+                string fileName = _windowImageMap.TryGetValue(windowType, out var mapped) ? mapped : "default.png";
                 string imagePath = Path.Combine(imgDir, fileName);
 
                 if (!File.Exists(imagePath))
                     imagePath = Path.Combine(imgDir, "default.png");
 
-                BitmapImage bitmap = new BitmapImage();
+                if (!File.Exists(imagePath))
+                    return;
+
+                var bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.UriSource = new Uri(imagePath, UriKind.Absolute);
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
@@ -168,22 +164,6 @@ namespace WinCalc
             {
                 MessageBox.Show($"Помилка при завантаженні зображення: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-        }
-
-        private void LoadDefaultPreview()
-        {
-            try
-            {
-                string imgDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image");
-                string imagePath = Path.Combine(imgDir, "default.png");
-
-                if (File.Exists(imagePath))
-                {
-                    BitmapImage bitmap = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
-                    imgPreview.Source = bitmap;
-                }
-            }
-            catch { /* нічого не робимо */ }
         }
 
         // ===============================================================
@@ -245,7 +225,7 @@ namespace WinCalc
                 GlassType = glassType,
                 HandleType = handlePremium ? "Преміум (Hoppe)" : "Стандартна",
                 SillType = sill300 ? "300 мм" : "200 мм",
-                DrainType = drain200 ? "300 мм" : "200 мм",
+                DrainType = drain200 ? "200 мм" : "300 мм",
                 HasMosquito = hasMosquito
             };
         }
@@ -378,7 +358,7 @@ namespace WinCalc
                 decimal totalEUR = Math.Round(totalUAH / eurRate, 2);
 
                 string sillDisplay = config.SillType.Contains("300") ? "300 мм" : "200 мм";
-                string drainDisplay = config.DrainType.Contains("200") ? "200 мм" : "150 мм";
+                string drainDisplay = config.DrainType.Contains("300") ? "300 мм" : "200 мм";
 
                 var data = new ProjectReportData
                 {
@@ -418,9 +398,5 @@ namespace WinCalc
             Close();
         }
 
-        private void chkMosquito_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
