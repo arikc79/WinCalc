@@ -11,26 +11,6 @@ namespace WindowProfileCalculatorLibrary
 
 
 
-        // 
-        public class SegoeFontResolver : IFontResolver
-        {
-            public static readonly SegoeFontResolver Instance = new SegoeFontResolver();
-
-            public string DefaultFontName => "Segoe UI";
-
-            public byte[]? GetFont(string faceName)
-            {
-               
-                string fontPath = @"C:\Windows\Fonts\segoeui.ttf";
-                return File.Exists(fontPath) ? File.ReadAllBytes(fontPath) : null;
-            }
-
-            public FontResolverInfo ResolveTypeface(string familyName, bool isBold, bool isItalic)
-            {
-                return new FontResolverInfo("Segoe UI");
-            }
-        }
-
         // метод  Експорт PDF
         public static string ExportPdfReport(ProjectReportData data)
         {

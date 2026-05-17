@@ -12,7 +12,7 @@ namespace WinCalc.Security
 
         public static string Hash(string password)
         {
-            if (password is null) throw new ArgumentNullException(nameof(password));
+            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Пароль не може бути порожнім.", nameof(password));
             using var rng = RandomNumberGenerator.Create();
             var salt = new byte[SaltSize];
             rng.GetBytes(salt);
@@ -30,8 +30,13 @@ namespace WinCalc.Security
             if (parts.Length != 4 || parts[0] != "v1") return false;
             if (!int.TryParse(parts[1], out var iters)) return false;
 
-            var salt = Convert.FromBase64String(parts[2]);
-            var expected = Convert.FromBase64String(parts[3]);
+            byte[] salt, expected;
+            try
+            {
+                salt = Convert.FromBase64String(parts[2]);
+                expected = Convert.FromBase64String(parts[3]);
+            }
+            catch (FormatException) { return false; }
 
             var actual = Rfc2898DeriveBytes.Pbkdf2(
                 password, salt, iters, HashAlgorithmName.SHA256, expected.Length);

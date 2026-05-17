@@ -11,7 +11,7 @@ namespace WindowProfileCalculatorLibrary
     {
         public static void ExportProjectReport(string filePath, ProjectReportData data, string? logoPath = null)
         {
-            GlobalFontSettings.FontResolver = ReportService.SegoeFontResolver.Instance;
+            GlobalFontSettings.FontResolver = SegoeFontResolver.Instance;
 
             var doc = new PdfDocument { Info = { Title = data.ProjectName } };
             var page = doc.AddPage();
@@ -33,10 +33,13 @@ namespace WindowProfileCalculatorLibrary
                 try
                 {
                     using var logo = XImage.FromFile(logoPath);
-                    double ratio = Math.Min(150.0 / logo.PixelWidth, 150.0 / logo.PixelHeight);
-                    double logoWidth = logo.PixelWidth * ratio;
-                    double logoHeight = logo.PixelHeight * ratio;
-                    gfx.DrawImage(logo, margin, y, logoWidth, logoHeight);
+                    if (logo.PixelWidth > 0 && logo.PixelHeight > 0)
+                    {
+                        double ratio = Math.Min(150.0 / logo.PixelWidth, 150.0 / logo.PixelHeight);
+                        double logoWidth = logo.PixelWidth * ratio;
+                        double logoHeight = logo.PixelHeight * ratio;
+                        gfx.DrawImage(logo, margin, y, logoWidth, logoHeight);
+                    }
                 }
                 catch { }
             }
@@ -55,12 +58,14 @@ namespace WindowProfileCalculatorLibrary
             string counterFile = Path.Combine(reportsDir, "counter.txt");
 
             int reportNumber = 1;
-            if (File.Exists(counterFile))
+            try
             {
-                if (int.TryParse(File.ReadAllText(counterFile).Trim(), out int parsed))
+                if (File.Exists(counterFile) &&
+                    int.TryParse(File.ReadAllText(counterFile).Trim(), out int parsed))
                     reportNumber = parsed + 1;
+                File.WriteAllText(counterFile, reportNumber.ToString());
             }
-            File.WriteAllText(counterFile, reportNumber.ToString());
+            catch { }
 
             string reportId = reportNumber.ToString("D6");
             string user = !string.IsNullOrWhiteSpace(data.User) ? data.User : "admin";

@@ -13,6 +13,10 @@
 	
 	
   <ItemGroup>
+    <Compile Remove="WindowProfileCalculatorLibrary\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Help\help_ua.md" />
     <None Remove="Image\1.png" />
     <None Remove="Image\2.png" />

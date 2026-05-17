@@ -24,9 +24,10 @@ namespace WindowProfileCalculatorLibrary
         /// Очікується заголовок:
         /// Category;Name;Color;Price;Unit;QuantityType;Description
         /// </summary>
-        public static List<Material> Import(string filePath)
+        public static (List<Material> Materials, int Skipped) Import(string filePath)
         {
             var materials = new List<Material>();
+            int skipped = 0;
 
             if (!File.Exists(filePath))
                 throw new FileNotFoundException($"❌ Файл не знайдено: {filePath}");
@@ -48,11 +49,10 @@ namespace WindowProfileCalculatorLibrary
                 var parts = line.Split(';', StringSplitOptions.TrimEntries);
                 if (parts.Length < 6)
                 {
-                    Console.WriteLine($"⚠️ Пропущено рядок {lineNum}: неправильний формат CSV.");
+                    skipped++;
                     continue;
                 }
 
-                // Безпечне зчитування ціни
                 decimal priceValue = 0m;
                 if (double.TryParse(parts[3], NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedDouble))
                     priceValue = (decimal)parsedDouble;
@@ -61,7 +61,7 @@ namespace WindowProfileCalculatorLibrary
 
                 try
                 {
-                    var material = new Material
+                    materials.Add(new Material
                     {
                         Category = parts[0],
                         Name = parts[1],
@@ -69,18 +69,15 @@ namespace WindowProfileCalculatorLibrary
                         Price = (double)priceValue,
                         Unit = parts[4],
                         Description = parts[5]
-                    };
-
-                    materials.Add(material);
+                    });
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Console.WriteLine($"⚠️ Помилка у рядку {lineNum}: {ex.Message}");
+                    skipped++;
                 }
             }
 
-            Console.WriteLine($"✅ Імпортовано {materials.Count} матеріалів із CSV: {Path.GetFileName(filePath)}");
-            return materials;
+            return (materials, skipped);
         }
 
         // =====================================================================

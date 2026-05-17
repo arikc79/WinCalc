@@ -11,7 +11,6 @@ namespace WinCalc.Storage
 {
     public class SqliteUserStore
     {
-        // Используем единый ConnectionString из WinCalc.Common.DbConfig
         private static string ConnString => DbConfig.ConnectionString;
 
         private static SqliteConnection Create() => new SqliteConnection(ConnString);
@@ -53,8 +52,9 @@ namespace WinCalc.Storage
             cmd.Parameters.AddWithValue("@pass", user.PasswordHash);
             cmd.Parameters.AddWithValue("@role", user.Role);
 
-            var id = (long)await cmd.ExecuteScalarAsync();
-            user.Id = (int)id;
+            var scalar = await cmd.ExecuteScalarAsync()
+                ?? throw new InvalidOperationException("INSERT не повернув ID.");
+            user.Id = (int)(long)scalar;
             return user;
         }
 
@@ -85,8 +85,8 @@ namespace WinCalc.Storage
             if (tableName == null) return false;
 
             using var cmd = new SqliteCommand("SELECT EXISTS(SELECT 1 FROM Users LIMIT 1);", con);
-            var res = (long)await cmd.ExecuteScalarAsync();
-            return res == 1;
+            var scalar = await cmd.ExecuteScalarAsync();
+            return scalar is not null && (long)scalar == 1;
         }
 
         public async Task<List<User>> GetAllAsync()

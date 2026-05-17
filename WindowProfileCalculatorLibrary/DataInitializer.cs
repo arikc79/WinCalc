@@ -152,7 +152,7 @@ namespace WindowProfileCalculatorLibrary
         {
             // Перевіряємо, чи є матеріали
             using var cmdCheck = new SqliteCommand("SELECT COUNT(*) FROM Materials", connection);
-            if ((long)cmdCheck.ExecuteScalar() > 0) return;
+            if (Convert.ToInt64(cmdCheck.ExecuteScalar() ?? 0L) > 0) return;
 
             // Словник для швидкого пошуку ID категорії за назвою
             var catIds = new Dictionary<string, int>();
@@ -214,7 +214,7 @@ namespace WindowProfileCalculatorLibrary
         private static void FillProfiles(SqliteConnection connection)
         {
             using var cmdCheck = new SqliteCommand("SELECT COUNT(*) FROM Profiles", connection);
-            if ((long)cmdCheck.ExecuteScalar() > 0) return;
+            if (Convert.ToInt64(cmdCheck.ExecuteScalar() ?? 0L) > 0) return;
 
             using var transaction = connection.BeginTransaction();
 
@@ -243,7 +243,7 @@ namespace WindowProfileCalculatorLibrary
         private static void FillGlassPacks(SqliteConnection connection)
         {
             using var cmdCheck = new SqliteCommand("SELECT COUNT(*) FROM GlassPacks", connection);
-            if ((long)cmdCheck.ExecuteScalar() > 0) return;
+            if (Convert.ToInt64(cmdCheck.ExecuteScalar() ?? 0L) > 0) return;
 
             using var transaction = connection.BeginTransaction();
 
@@ -272,7 +272,7 @@ namespace WindowProfileCalculatorLibrary
         private static void FillFittings(SqliteConnection connection)
         {
             using var cmdCheck = new SqliteCommand("SELECT COUNT(*) FROM Fittings", connection);
-            if ((long)cmdCheck.ExecuteScalar() > 0) return;
+            if (Convert.ToInt64(cmdCheck.ExecuteScalar() ?? 0L) > 0) return;
 
             using var transaction = connection.BeginTransaction();
 
@@ -301,7 +301,7 @@ namespace WindowProfileCalculatorLibrary
         private static void FillReinforcements(SqliteConnection connection)
         {
             using var check = new SqliteCommand("SELECT COUNT(*) FROM Reinforcements", connection);
-            if ((long)check.ExecuteScalar() > 0) return;
+            if (Convert.ToInt64(check.ExecuteScalar() ?? 0L) > 0) return;
 
             using var transaction = connection.BeginTransaction();
 
@@ -326,7 +326,7 @@ namespace WindowProfileCalculatorLibrary
         private static void FillSeals(SqliteConnection connection)
         {
             using var check = new SqliteCommand("SELECT COUNT(*) FROM Seals", connection);
-            if ((long)check.ExecuteScalar() > 0) return;
+            if (Convert.ToInt64(check.ExecuteScalar() ?? 0L) > 0) return;
 
             using var transaction = connection.BeginTransaction();
 
@@ -351,7 +351,7 @@ namespace WindowProfileCalculatorLibrary
         private static void FillAccessories(SqliteConnection connection)
         {
             using var check = new SqliteCommand("SELECT COUNT(*) FROM Accessories", connection);
-            if ((long)check.ExecuteScalar() > 0) return;
+            if (Convert.ToInt64(check.ExecuteScalar() ?? 0L) > 0) return;
 
             using var transaction = connection.BeginTransaction();
 

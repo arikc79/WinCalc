@@ -27,7 +27,7 @@ namespace WinCalc
                 return;
             }
 
-            NewPassword = pb1.Password;
+            NewPassword = pb1.Password.Trim();
             DialogResult = true;
         }
 

@@ -16,7 +16,9 @@ namespace WindowProfileCalculatorLibrary
         {
             try
             {
-                string fontPath = @"C:\Windows\Fonts\segoeui.ttf";
+                string winFonts = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.Windows), "Fonts");
+                string fontPath = Path.Combine(winFonts, "segoeui.ttf");
                 if (File.Exists(fontPath))
                     return File.ReadAllBytes(fontPath);
             }

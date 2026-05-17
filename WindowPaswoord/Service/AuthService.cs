@@ -13,6 +13,9 @@ namespace WinCalc.Services
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 return (false, "Введіть логін і пароль");
 
+            if (password.Trim().Length < 6)
+                return (false, "Пароль має містити щонайменше 6 символів");
+
             var existing = await _store.GetByUsernameAsync(username);
             if (existing != null)
                 return (false, "Користувач вже існує");

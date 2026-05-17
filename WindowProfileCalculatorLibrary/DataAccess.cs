@@ -133,12 +133,6 @@ namespace WindowProfileCalculatorLibrary
             return list;
         }
 
-        public List<string> GetDistinctProfileThicknesses()
-        {
-            // Повертаємо приклад значень; при потребі можна парсити Description або MaterialAttributes
-            return new List<string> { "60 мм", "70 мм", "80 мм" };
-        }
-
         // метод для отримання всіх категорій
         public List<Category> GetAllCategories()
         {
@@ -251,8 +245,7 @@ namespace WindowProfileCalculatorLibrary
             }
             catch (Exception ex)
             {
-                Console.WriteLine("❌ UpdateMaterial error: " + ex.Message);
-                return false;
+                throw new InvalidOperationException($"Помилка оновлення матеріалу ID={m.Id}: {ex.Message}", ex);
             }
         }
 

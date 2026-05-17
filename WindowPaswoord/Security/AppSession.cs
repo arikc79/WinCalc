@@ -19,6 +19,7 @@ namespace WinCalc.Security
         }
 
         public static bool IsInRole(string role)
-            => CurrentUser?.Role == role;
+            => CurrentUser != null &&
+               string.Equals(CurrentUser.Role, role, StringComparison.OrdinalIgnoreCase);
     }
 }

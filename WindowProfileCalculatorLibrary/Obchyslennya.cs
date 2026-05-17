@@ -46,21 +46,19 @@ namespace WindowProfileCalculatorLibrary
                 decimal priceSill = (decimal)(sill?.Price ?? 0);
                 decimal priceDrain = (decimal)(drain?.Price ?? 0);
 
-                double wM = (double)widthM;
-                double hM = (double)heightM;
-                double framePerimeter = (wM + hM) * 2.0;
-                double sashPerimeter = (wM + hM) * 2.0 * config.SashCount;
-                double totalProfileLength = framePerimeter + sashPerimeter;
+                decimal framePerimeter = (widthM + heightM) * 2m;
+                decimal sashPerimeter = (widthM + heightM) * 2m * config.SashCount;
+                decimal totalProfileLength = framePerimeter + sashPerimeter;
 
                 decimal glassArea = widthM * heightM;
                 int glassMultiplier = ResolveGlassMultiplier(config.GlassType);
 
                 decimal total = 0m;
 
-                total += (decimal)totalProfileLength * priceProfile;
+                total += totalProfileLength * priceProfile;
                 total += glassArea * glassMultiplier * priceGlass;
                 total += config.SashCount * (priceHardware + priceHandle + priceHinge);
-                total += (decimal)totalProfileLength * (priceReinf + priceRubber);
+                total += totalProfileLength * (priceReinf + priceRubber);
                 total += widthM * (priceSill + priceDrain);
 
                 if (config.HasMosquito)
@@ -73,8 +71,7 @@ namespace WindowProfileCalculatorLibrary
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Помилка у CalculateWindowPrice: {ex.Message}");
-                return 0m;
+                throw new InvalidOperationException($"Помилка розрахунку: {ex.Message}", ex);
             }
         }
 

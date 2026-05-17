@@ -47,7 +47,7 @@ namespace WinCalc.Storage
         public Task<User> CreateAsync(User user)
         {
             var users = ReadAll();
-            user.Id = users.Count == 0 ? 1 : users.Max(u => u.Id) + 1;
+            user.Id = users.Count == 0 ? 1 : (int)Math.Min((long)users.Max(u => u.Id) + 1, int.MaxValue);
             users.Add(user);
             WriteAll(users);
             return Task.FromResult(user);

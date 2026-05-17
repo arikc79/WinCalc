@@ -15,6 +15,8 @@ namespace WinCalc
 {
     public partial class MainWindow : Window
     {
+        private const decimal EurRate = 41.5m;
+
         private readonly DataAccess _dataAccess = new DataAccess();
         private readonly Obchyslennya _calculator = new Obchyslennya();
 
@@ -354,8 +356,7 @@ namespace WinCalc
                 }
 
                 decimal totalUAH = _calculator.CalculateWindowPrice(config);
-                decimal eurRate = 41.5m;
-                decimal totalEUR = Math.Round(totalUAH / eurRate, 2);
+                decimal totalEUR = Math.Round(totalUAH / EurRate, 2);
 
                 string sillDisplay = config.SillType.Contains("300") ? "300 мм" : "200 мм";
                 string drainDisplay = config.DrainType.Contains("300") ? "300 мм" : "200 мм";
@@ -367,8 +368,8 @@ namespace WinCalc
                     Brand = config.Brand,
                     ProfileThickness = cmbProfileThickness.Text,
                     WindowType = cmbWindowType.Text,
-                    Width = double.TryParse(txtWidth.Text, out double w) ? w : 0,
-                    Height = double.TryParse(txtHeight.Text, out double h) ? h : 0,
+                    Width = (double)config.Width,
+                    Height = (double)config.Height,
                     HandleType = rbHandlePremium.IsChecked == true ? "Преміум" : "Стандарт",
                     GlassPack = config.GlassType,
                     Color = "Білий",

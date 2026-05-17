@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using WinCalc.Security;
 using WindowProfileCalculatorLibrary;
 using Microsoft.Win32;
 
@@ -97,7 +98,7 @@ namespace WinCalc
                     string filePath = openFileDialog.FileName;
 
                     //  Читаємо файл через ваш готовий імпортер
-                    List<Material> importedMaterials = CsvMaterialImporter.Import(filePath);
+                    var (importedMaterials, skipped) = CsvMaterialImporter.Import(filePath);
 
                     if (importedMaterials.Count == 0)
                     {
@@ -106,23 +107,20 @@ namespace WinCalc
                         return;
                     }
 
-                    // Додаємо в базу
                     int addedCount = 0;
                     foreach (var mat in importedMaterials)
                     {
-                        // Тут можна додати перевірку на дублікати, якщо потрібно.
                         if (_dataAccess.AddMaterial(mat))
-                        {
                             addedCount++;
-                        }
                     }
 
-                    //  Оновлюємо таблицю та показуємо результат
                     LoadMaterials();
-                    MessageBox.Show($"✅ Успішно імпортовано {addedCount} матеріалів з {importedMaterials.Count}.",
-                                    "Імпорт завершено", MessageBoxButton.OK, MessageBoxImage.Information);
+                    AppAudit.MaterialsImport(AppSession.CurrentUser?.Username ?? "?", addedCount, 0);
 
-                    // Запис в аудит
+                    string summary = skipped > 0
+                        ? $"✅ Імпортовано {addedCount} матеріалів.\n⚠️ Пропущено рядків: {skipped} (неправильний формат)."
+                        : $"✅ Успішно імпортовано {addedCount} матеріалів.";
+                    MessageBox.Show(summary, "Імпорт завершено", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
